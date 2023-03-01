@@ -1,0 +1,40 @@
+.facetSelectorContainer {
+    border-radius: 2px;
+    letter-spacing: 0.01em;
+    border: 1px solid #EAEAEA;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.18);
+    border-right: 2px solid rgba(0, 0, 0, 0.17);
+    height: 33px;
+    width: 503px;
+    background: #FBFBFB;
+}
+
+.facetSelectorPrev,
+.facetSelectorNext {
+    width: 20px;
+    height: 22px;
+    font-size: 1.5em;
+    color: #D8D8D8;
+    border-color: #000000;
+    cursor: pointer;
+    margin-top: 3px;
+}
+
+.facetSelectorPrev {
+    margin-left: 3px;
+    /*border-right: 1px solid;*/
+    float: left;
+}
+
+.facetSelectorNext {
+    margin-right: 3px;
+    /*border-left: 1px solid #E0DEDE;*/
+    float: right;
+    padding-left: 3px;
+}
+
+.facetSelectorItems {
+    margin-left: 7px;
+    display: inline-block;
+    margin-top: 6px;
+}

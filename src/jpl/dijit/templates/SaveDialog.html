@@ -1,0 +1,24 @@
+<div>
+    <div data-dojo-attach-point="saveDialogModal" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="saveForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" data-dojo-attach-point="saveDialogTitle">Save Configuration</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-message control-message-medium" data-dojo-attach-point="saveDialogMessage"></div>
+                        <input data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="configurationName" name="configurationName" type="text" class="modal-dijit-textbox">
+                        <div class="control-message control-message-medium control-message-error" data-dojo-attach-point="saveDialogError"></div>
+                        <div class="control-message control-message-medium control-message-subheader">What gets saved?</div>
+                        <div class="control-message control-message-light control-message-explanation">A configuration holds all of your selected datasets, your selected region, and your selected date range. It does <i>not</i> remember your granule selections, variable preview toggles, or variable preview opacities.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dojo-attach-point="saveButton" type="button" class="hitide-btn hitide-btn-blue">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

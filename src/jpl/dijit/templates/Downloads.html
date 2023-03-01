@@ -1,0 +1,58 @@
+<div>
+    <h3 class="widgetTitle no-selection">Downloads</h3>
+    <p class="gallery-description">
+        Review the selections you have made then submit them for processing. We will zip and email you the results.
+    </p>
+    
+    <div data-dojo-attach-point="downloadsListingContainer" class="downloadsListingContainer" id="downloadsListingContainer"></div>
+    
+    <div id="downloadsSubmissionContainer" class="downloadsSubmissionContainer">
+
+        <div id="loginReminderMessage">
+            <h3>Please log in to enable downloads</h3>
+            <p>
+                Use the 'Log In' button above to log in using the Earth Data Login System.
+                If you haven't already registered with Earth Data, it is easy to do.
+                <a href="https://urs.earthdata.nasa.gov/users/new">Click here.</a>
+            </p>
+        </div>
+
+        <fieldset id="downloadsSubmissionControls">
+            <span class="downloadOptionLabel">Enter email address</span>
+            <input type="text" id="download-email-input" name="email" value="" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="downloadsSubmissionEmail" />
+            <span data-dojo-attach-point="downloadsSubmissionEmailError" class="downloadsSubmissionEmailError">Invalid email address</span>
+            <div class="downloadOptionContainer">
+                <span class="downloadOptionLabel cutAtScanlineLabel">Cut Scanline</span>
+                <div class="switch">
+                    <input data-dojo-attach-point="cutAtScanlineSelection" id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox">
+                    <label for="cmn-toggle-1"></label>
+                </div>
+                <span 
+                    data-dojo-attach-point="cutAtScanlineCloudWarning" 
+                    class="cutAtScanlineCloudWarning"
+                    data-toggle="tooltip" 
+                    title="Note: Cut Scanline is ALWAYS applied to subsets of cloud datasets, regardless of the position of this toggle."
+                    data-placement="right"
+                >
+                    <span class="fa fa-cloud"></span>
+                    <span class="">!</span>
+                </span>
+            </div>
+            <div class="downloadOptionContainer">
+                <span class="downloadOptionLabel mergeGranulesLabel">Merge Granules</span>
+                <div class="switch">
+                    <input data-dojo-attach-point="mergeGranulesSelection" id="cmn-toggle-2" class="cmn-toggle cmn-toggle-round" type="checkbox">
+                    <label for="cmn-toggle-2"></label>
+                </div>
+            </div>
+            <div data-dojo-attach-point="downloadsSubmissionButton" id="downloadsSubmissionButton" class="downloadsSubmissionButton no-selection disabled">
+                <span data-dojo-attach-point="downloadsSubmitSpinner" class="downloadsSubmitSpinner fa fa-spinner fa-spin hidden"></span>
+                <span data-dojo-attach-point="downloadSubmitText">Download Selected Granules</span>
+            </div>
+            <span class="downloadsSubmissionButtonNote"><i>Note: Once submitted, downloads cannot be canceled.</i></span>
+        </fieldset>
+
+    </div>
+
+    <div data-dojo-attach-point="downloadsManagerContainer" class="downloadsManagerContainer"></div>
+</div>

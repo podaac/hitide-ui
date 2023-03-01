@@ -1,0 +1,74 @@
+<div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
+    <div class="tabBarContainer no-selection">
+        <span data-dojo-attach-point="toggleClose" data-toggle="tooltip" data-placement="left" title="Close" class="tab-toggle tab-toggle-close fa fa-bars"></span>
+        <!-- <a href="//podaac.jpl.nasa.gov" class="tab-logo" data-toggle="tooltip" data-placement="bottom" title="PO.DAAC"></a> -->
+        <span data-dojo-attach-point="tabTitle" class="tab-title"><a data-dojo-attach-point="tabTitleLink" data-toggle="tooltip" title="High Level Tool for Interactive Data Extraction" data-placement="bottom">HiTIDE</a></span>
+
+        <ul id="utilityFunctions">
+
+            <li id="utilityFunction-save" data-dojo-attach-point="utilityFunctionSave">
+                <a class="utility-link" rel="Save Configuration" data-content="Save Configuration" alt="Save Configuration" data-placement="bottom">
+                    <span class="fa fa-floppy-o tooltipMe" style="font-size: 1.77em;top:7px;" data-toggle="tooltip" data-placement="bottom" title="Save"></span>
+                </a>
+            </li>
+
+            <li id="utilityFunction-load" data-dojo-attach-point="utilityFunctionLoad">
+                <a class="utility-link" rel="Load Configuration" data-content="Load Configuration" alt="Load Configuration" data-placement="bottom">
+                    <span class="fa fa-folder-open-o" style="font-size: 1.77em;top:7px;" data-toggle="tooltip" data-placement="bottom" title="Load"></span>
+                </a>
+            </li>
+
+            <li id="utilityFunction-share" data-dojo-attach-point="utilityFunctionShare">
+                <a class="utility-link" rel="Share Configuration" data-content="Share Configuration" alt="Share Configuration" data-placement="bottom">
+                    <span class="fa fa-share-alt" style="font-size: 1.77em;top:7px;" data-toggle="tooltip" data-placement="bottom" title="Share"></span>
+                </a>
+            </li>
+            
+            <li id="utilityFunction-preferences" data-dojo-attach-point="utilityFunctionPreferences">
+                <a class="utility-link" rel="Preferences" data-content="Preferences" alt="Preferences" data-placement="bottom">
+                    <span class="fa fa-cog" style="font-size: 1.77em;top:7px;" data-toggle="tooltip" data-placement="bottom" title="Preferences"></span>
+                </a>
+            </li>
+
+            <li id="utilityFunction-help" data-dojo-attach-point="utilityFunctionHelp">
+                <a class="utility-link" rel="Help" data-content="Help" alt="Help" data-placement="bottom">
+                    <span class="fa fa-question-circle" style="font-size: 1.77em;top:7px;" data-toggle="tooltip" data-placement="bottom" title="Help"></span>
+                </a>
+            </li>
+
+            <li>
+                <label class="dropdown" id="login-dropdown">
+                    <div class="dd-button">
+                        <i id="login-button-icon" class="fa fa-sign-in"></i>
+                        <span id="login-username-span">-----</span>
+                    </div>
+                    <input type="checkbox" class="dd-input" id="test">
+                    <ul class="dd-menu">
+                        <li id="login-button">-----</li>
+                        <li class="divider"></li>
+                        <li><a id="link-to-faq-why-login" href="#">Why login? (from HiTIDE FAQ)</a></li>
+                        <li><a target="_blank" href="https://earthdata.nasa.gov/about/science-system-description/eosdis-components/earthdata-login">About Earthdata Login</a></li>
+                    </ul>
+                </label>
+            </li>
+
+        </ul>
+
+
+        <ul id="tab-items">
+            <li id="tab-item-search" rel="Search" data-dojo-attach-point="tabItemSearch" class="tab-li">
+                <a class="tab-link" rel="Search" data-content="Search" alt="Search" data-placement="left">Search Datasets</a>
+            </li>
+            <li id="tab-item-granuleSelection" rel="GranuleSelection" data-dojo-attach-point="tabItemGranuleSelection" class="tab-li">
+                <a class="tab-link" rel="GranuleSelection" data-content="GranuleSelection" alt="GranuleSelection" data-placement="left">Granule Selection</a>
+                <span class="tab-badge" rel="GranuleSelection" data-dojo-attach-point="granuleSelectionTabBadge"></span>
+            </li>
+            <li id="tab-item-downloads" rel="Downloads" data-dojo-attach-point="tabItemDownloads" class="tab-li">
+                <a class="tab-link" rel="Downloads" data-content="Downloads" alt="Downloads" data-placement="left">Downloads</a>
+                <span class="tab-badge download-tab-badge" rel="Downloads" data-dojo-attach-point="downloadsTabBadge"></span>
+            </li>
+        </ul>
+        <span class="tabProgress" data-dojo-attach-point="tabProgress"><span data-dojo-attach-point="tabProgressArrow" class="fa fa-angle-right tabProgressArrow"></span><span data-dojo-attach-point="tabProgressEnd" class="fa fa-circle tabProgressEnd"></span>
+        </span>
+    </div>
+</div>

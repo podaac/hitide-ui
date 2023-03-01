@@ -1,0 +1,54 @@
+.scaleBarDistanceLabel {
+    position: relative;
+    left: 75%;
+    top: -18px;
+}
+
+.scaleBarDistanceLabelNoIcon {
+    position: relative;
+    left: 105%;
+    top: -15px;
+}
+
+.scaleBarDistanceText {
+    position: relative;
+    top: -2px;
+    left: 5px;
+}
+
+.scaleBarDistanceTextNoIcon {
+    position: relative;
+    top: 4px;
+    left: 2px;
+}
+
+.scaleBarDistanceIcon {
+    position: relative;
+    top: 6px;
+    left: 6px;
+    font-size: 1.7em;
+}
+
+.scaleBarDistanceIconNoIcon {
+    position: relative;
+    top: 4px;
+}
+
+.icon-bridge {
+    top: -3px;
+    position: relative;
+}
+
+.scaleBarDistanceIcon > .fa.fa-futbol-o {
+    display: inline;
+    position: relative;
+    top: -8px;
+    font-size: 0.6em;
+}
+
+.scaleBarDistanceIcon > .fa.fa-bus {
+    display: inline;
+    position: relative;
+    top: -8px;
+    font-size: 0.6em;
+}

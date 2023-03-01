@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# Set directory variables
+current_dir=$(pwd)
+script_dir=$(dirname $0)
+app_path=$( cd ${script_dir}/..  && echo $(pwd) )
+config_path=$( cd ${app_path}/../config && echo $(pwd) )
+
+# Set name variables
+dev_env_image_name=podaac-ci.jpl.nasa.gov:5000/podaac-hitide-dev/nginx-and-node:1.15-12.x
+tag_name=podaac-ci.jpl.nasa.gov:5000/podaac-hitide-dev/hitide-ui:4.8.1-001
+dev_container_name=hitide-ui-dev-container
+build_container_name=hitide-ui-build-container
+
+
+
+
+
+#
+#   General Purpose Docker Utilities
+#
+if [ "$1" = "sh" ]; then
+    docker container exec -it $2 sh
+
+elif [ "$1" = "rm" ]; then
+    docker container rm -f $2
+
+elif [ "$1" = "rma" ]; then
+    docker container rm -f $(docker container ls -aq)
+
+elif [ "$1" = "ls" ]; then
+    docker container ls
+
+elif [ "$1" = "lsa" ]; then
+    docker container ls -a
+
+
+#
+#   Dev Related Commands
+#
+elif [ "$1" = "startdev" ]; then
+    docker container run -d --name ${dev_container_name}\
+    -v $app_path:/app:rw \
+    -v $app_path/hitide_nginx.conf:/etc/nginx/nginx.conf:rw \
+    -v $config_path:/config:rw \
+    -p 8901:8080 \
+    -p 8902:8443 \
+    $dev_env_image_name
+
+elif [ "$1" = "rmdev" ]; then
+    doc rm ${dev_container_name}
+
+elif [ "$1" = "shdev" ]; then
+    doc sh ${dev_container_name}
+
+
+#
+#   Production Related Commands
+#
+elif [ "$1" = "tag" ]; then
+    docker build -t $tag_name -f $script_dir/Dockerfile $app_path
+
+elif [ "$1" = "push" ]; then
+    docker push $tag_name
+
+elif [ "$1" = "start" ]; then
+    docker container run -d \
+    --name hitide-ui \
+    -v $config_path:/config:ro \
+    -p 8901:8080 \
+    -p 8902:8443 \
+    $tag_name
+
+elif [ "$1" = "stop" ]; then
+    doc rm hitide-ui
+
+
+
+
+
+else
+    echo "did not enter valid command: $1"
+fi

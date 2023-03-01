@@ -1,0 +1,28 @@
+<div>
+    <h3 class="widgetTitle">My Data</h3>
+    <p class="gallery-description">
+        Select data to overlay. Expanding each item allows you to change transparency and view legends for the data.
+    </p>
+
+    <div id="layersWithHeaders" data-dojo-attach-point="layersWithHeaders" style="display:none;">
+        <div style="margin: 0 15px; display: block; float: left;">
+            <!-- <form id="layersSearchForm" data-dojo-attach-point="layersSearchForm" >
+                <div style="display: block;float: left">
+                    <input type="radio" name="showlayers" id="allLayersRadioButton" data-dojo-attach-point="allLayersRadioButton" checked value="all"/> <label for="allLayersRadioButton" style="margin-right: 5px">All</label>
+                    <input type="radio" name="showlayers" id="activeLayersRadioButton" data-dojo-attach-point="activeLayersRadioButton" value="active"/> <label for="activeLayersRadioButton"style="margin-right: 5px">Active</label>
+                    <input type="radio" name="showlayers" id="dataAvailableLayersRadioButton" data-dojo-attach-point="dataAvailableLayersRadioButton" value="active"/> <label for="dataAvailableLayersRadioButton"style="margin-right: 5px">Data Available for Date</label>
+                </div>
+                <span style="display: block; overflow: hidden; float: left;"><input data-dojo-attach-point="layersSearchTextBox" placeholder="Search..."/></span>
+            </form> -->
+            <!--<h5 class="layerTopBottomHeading">Top Layer</h5>-->
+        </div>
+        <div id="myLayersContainer" withHandles="true" class="layerGalleryContainer handles" data-dojo-attach-point="myLayersContainer"></div>
+        <div id="myNPLayersContainer" withHandles="true" class="layerGalleryContainer handles" data-dojo-attach-point="myNPLayersContainer"></div>
+        <div id="mySPLayersContainer" withHandles="true" class="layerGalleryContainer handles" data-dojo-attach-point="mySPLayersContainer"></div>
+        <!--<h5 class="layerTopBottomHeading">Bottom Layer</h5>-->
+    </div>
+
+    <div id="noLayersMessage" data-dojo-attach-point="noLayersMessage" style="margin: 30px 10px;color: #c8c8c8;">
+        <p>No Data has been added. Add data from the Search bar.</p>
+    </div>
+</div>

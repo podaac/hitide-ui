@@ -1,0 +1,29 @@
+.variableListingTableTh {
+    font-weight: 500;
+    color: #424242;
+    padding: 6px 0px 5px 8px;
+    background-color: #EEEEEE;
+    letter-spacing: 0.02em;
+}
+
+.variableListingName {
+    color: #646464;
+    font-weight: 500;
+}
+
+.variableListingTable {
+    padding: 7px 0px 7px 8px
+}
+
+.variableListingTable,
+td.variableListingTableTd,
+th.variableListingTableTh {
+    border: 1px solid #DDDDDD;
+    border-collapse: collapse;
+    line-height: 1.3em;
+}
+
+td.variableListingTableTd,
+th.variableListingTableTh {
+    padding: 4px 0px 4px 8px;
+}

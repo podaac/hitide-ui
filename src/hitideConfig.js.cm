@@ -1,0 +1,31 @@
+
+// var hitideProfileOrigin = "https://podaac-devwhale1.jpl.nasa.gov:8443";
+var hitideProfileOrigin = "$PROFILE_API";
+
+window.hitideConfig = {
+    
+    datasetSearchService: "$MIDDLEWARE_SERVICE/l2ss/dataset/search",
+    datasetMetadataService: "$MIDDLEWARE_SERVICE/l2ss/dataset/search",
+
+    granuleSearchService: "$MIDDLEWARE_SERVICE/l2ss/granule/search",
+    granuleAvailabilityService: "$MIDDLEWARE_SERVICE/l2ss/granule/availability",
+    variableService: "$MIDDLEWARE_SERVICE/l2ss/dataset/variable",
+    paletteService: "$MIDDLEWARE_SERVICE/l2ss/palettes",
+
+    authCodeUrl: "https://urs.earthdata.nasa.gov/oauth/authorize",
+    loginUrl: hitideProfileOrigin + "/hitide/api/session/login",
+    logoutUrl: hitideProfileOrigin + "/hitide/api/session/logout",
+    getUserUrl: hitideProfileOrigin + "/hitide/api/session/user/",
+
+    submitJobUrl: hitideProfileOrigin + "/hitide/api/jobs/submit",
+    jobStatusUrl: hitideProfileOrigin + "/hitide/api/jobs/status",
+    jobHistoryUrl: hitideProfileOrigin + "/hitide/api/jobs/history",
+    disableJobUrl: hitideProfileOrigin + "/hitide/api/jobs/disable",
+
+    datasetSearchServiceItemsPerPage: 200,
+    maxGranulesPerDownload: 999999999,
+    crossOriginCookies: true,
+
+    googleTagManagerId: "GTM-M5D83V6",
+    earthDataAppClientId: "-frunez5DSkvmRK_B9lg5w"
+};

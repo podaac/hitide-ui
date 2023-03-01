@@ -1,0 +1,35 @@
+<div data-dojo-attach-point="granulesControllerRoot" class="granulesControllerRoot">
+    <span class="datasetDot2" data-dojo-attach-point="datasetDot2"></span>
+    <span class="datasetDot1" data-dojo-attach-point="datasetDot1"></span>
+    <div class="datasetGranuleSectionTitle">
+        <div class="granulesControllerTitleContainer" data-dojo-attach-point="granulesControllerTitleContainer"></div>
+    </div>
+    <div class="granulesControllerFilterContainer" id="granulesControllerFilterContainer">
+        <span class="granulesControllerFilterBoxLabel">Filter by Name</span>
+        <div data-dojo-attach-point="nameFilterBoxEl"></div>
+        <span class="fa fa-search granulesControllerFilterBoxButton button" data-dojo-attach-point="granulesControllerFilterBoxButton"></span>
+    </div>
+    <div class="granulesControllerFilterContainer granulesControllerDatesContainer">
+        <span class="granulesControllerFilterBoxLabel">Filter by Date</span>
+        <span class="granulesControllerDateLabel granulesControllerStartDate">From</span>
+        <div data-dojo-attach-point="granulesControllerStartDate" class="granulesControllerDate"></div>
+        <span class="granulesControllerDateLabel granulesControllerEndDate">To</span>
+        <div data-dojo-attach-point="granulesControllerEndDate" class="granulesControllerDate"></div>
+    </div>
+    <div class="granulesControllerStatusContainer" id="granulesControllerStatusContainer">
+        <span data-dojo-attach-point="granulesControllerNumMatchingSearch" class="granulesControllerNumMatchingSearch"></span>
+        <span data-dojo-attach-point="granulesControllerNumMatchingFilter" class="granulesControllerNumMatchingFilter"></span>
+        <span data-dojo-attach-point="granulesControllerNumGranulesDisplayed" class="granulesControllerNumGranulesDisplayed"></span>
+        <span data-dojo-attach-point="granulesControllerLoadingSpinner" class="granulesControllerLoadingSpinner fa fa-spinner fa-spin"></span>
+    </div>
+    <div id="granulesControllerGrid">
+        <div data-dojo-attach-point="granulesControllerGrid" class="no-selection granulesControllerGrid"></div>
+    </div>
+    <div style="text-align: right">
+        <span class="button button-green addMatchingBtn" data-dojo-attach-point="addMatchingBtn" id="addMatchingBtn">Add Matching <span data-dojo-attach-point="matchingBtnNumGranules">0 Granules</span> to Downloads<span class="icon-in"></span></span>
+        <span class="matchingAddedMessage" data-dojo-attach-point="matchingAddedMessage"><span class="fa fa-check-circle"></span>Matching Granules Added to Downloads<span class="matchingAddedMessageUndo" data-dojo-attach-point="matchingAddedMessageUndo">Undo?</span></span>
+        </span>
+    </div>
+    <div class="variablesControllerTitle hidden">Select Image Preview Variables</div>
+    <div data-dojo-attach-point="variablesContainer" class="no-selection granulesControllerVariablesContainer hidden"></div>
+</div>

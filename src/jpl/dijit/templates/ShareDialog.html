@@ -1,0 +1,26 @@
+<div>
+    <div data-dojo-attach-point="shareDialogModal" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="shareForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" data-dojo-attach-point="shareDialogTitle">Share Configuration</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-message control-message-medium" data-dojo-attach-point="shareDialogMessage"></div>
+                        <input data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="shareableUrl" name="shareableUrl" type="text" class="modal-dijit-textbox">
+                        <div class="control-message control-message-medium control-message-error" data-dojo-attach-point="shareDialogError">&nbsp</div>
+                        <div class="control-message control-message-medium control-message-subheader">What gets shared?</div>
+                        <div class="control-message control-message-light control-message-explanation">A configuration holds all of your selected datasets, your selected region, and your selected date range.
+                            <br>
+                            <br><i>Note: You can also copy the link from your browser's address bar.</i></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dojo-attach-point="closeButton" type="button" class="btn btn-alt btn-close" style="cursor:pointer;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

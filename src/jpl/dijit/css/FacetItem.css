@@ -1,0 +1,49 @@
+.facetItemKey {
+    padding: 7px 14px 9px 0px;
+    text-transform: capitalize;
+    font-weight: 400;
+    color: #6F6F6F;
+    cursor: pointer;
+    letter-spacing: 0.025em;
+    font-size: 1.05em;
+    border: none;
+}
+
+.facetItemKey:hover {
+    color: #000000;
+}
+
+.facetItemKeyContainer > .faCaret {
+    color: #00BCD4;
+    transform-origin: 36% 50%;
+    -webkit-transition: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+}
+
+.faCaretActive {
+    margin-left: -10px;
+}
+
+.facetItemKeyContainer {
+    position: relative;
+}
+
+.facetItemContainer {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.facetItemValuesContainer {
+    background: #FFFFFF;
+    display: block;
+    position: absolute;
+    top: 23px;
+    /*box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.51);*/
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.247059), 0px 1px 2px rgba(0, 0, 0, 0.25);
+    overflow: auto;
+    width: 210px;
+    z-index: 1;
+    max-height: 300px;
+}

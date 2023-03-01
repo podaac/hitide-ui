@@ -1,0 +1,13 @@
+.downloadInfoHeaderContainer {
+	cursor: pointer;
+	font-weight: 400;
+}
+.downloadInfoInfoHeader {
+	font-weight: 400;
+}
+.downloadInfoGranuleName,
+.downloadInfoVariables {
+	margin-left: 15px;
+	overflow: hidden;
+    word-wrap: break-word;
+}

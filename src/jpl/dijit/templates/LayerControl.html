@@ -1,0 +1,26 @@
+<div class="myLayerContainer collapsed" data-dojo-attach-point="myLayerContainer">
+    <div class="controlHeader" data-dojo-attach-point="myLayerContainerToggle">
+        <span data-dojo-attach-point="btnMyLayerCollapse" class="fa fa-angle-right faCaret controlCollapseIcon"></span>
+        <span data-dojo-attach-point="myLayerTitle" class="myLayerTitle">Unknown Layer</span>
+        <span data-dojo-attach-point="myLayerToggleBox" id="toggleBox" class="fa fa-eye pull-right toggleLayerIcon"></span>
+    </div>
+    <div data-dojo-attach-point="myLayerControlsContainer" class="myLayerControls">
+        <div>
+            <em class="myLayerSubtitle" data-dojo-attach-point="myLayerSubtitle">Unknown Layer</em>
+        </div>
+        <div class="clearFix">
+            <div class="layer-slider-label">Opacity: </div>
+            <div class="layer-slider-container" data-dojo-attach-point="sliderContainer">
+                <div data-dojo-attach-point="sliderNode"></div>
+            </div>
+        </div>
+        <div class="layer-colorbar-container" data-dojo-attach-point="colorbarContainer">
+            <canvas class="layer-colorbar" data-dojo-attach-point="colorbarCanvas"></canvas>
+            <div class="layer-colorbar-label-container clearFix">
+                <div class="layer-colorbar-label-min" data-dojo-attach-point="minLabel">min</div>
+                <div class="layer-colorbar-label-mid" data-dojo-attach-point="midLabel">mid</div>
+                <div class="layer-colorbar-label-max" data-dojo-attach-point="maxLabel">max</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="downloadsListingDatasetContainer">
+    <div class="datasetListingHeader" data-dojo-attach-point="datasetListingHeader">
+        <div data-dojo-attach-point="datasetTitleContainer" class="downloadsListingDatasetTitle">
+            <span data-dojo-attach-point="detailsToggle" class="fa fa-angle-right faCaret"></span>
+            <span data-dojo-attach-point="datasetTitle" class="downloadsListingDatasetTitleText">
+        </span>
+        </div>
+        <div class="pull-right">
+            <span data-dojo-attach-point="datasetSelected" class="downloadsListingDatasetSelected"></span> Granule(s)
+            <span data-dojo-attach-point="removeDownloadQuery" class="removeDownloadsQueryButton">×</span>
+        </div>
+    </div>
+    <div data-dojo-attach-point="downloadQueryDetailsContainer" class="downloadsListingInfoContainer">
+        <div>
+            <span class="downloadsListingInfoHeader">Region:</span> <span data-dojo-attach-point="downloadQueryRegion"><em>None</em></span>
+        </div>
+        <div>
+            <span class="downloadsListingInfoHeader">Date Range:</span> <span data-dojo-attach-point="downloadQueryDateRangeStart">1999-07-10</span> <em>to</em> <span data-dojo-attach-point="downloadQueryDateRangeEnd">2015-10-10</span>
+        </div>
+        <div>
+            <span class="downloadsListingInfoHeader">Granule Name Filter:</span> <span data-dojo-attach-point="downloadQueryGranuleNameFilter"><em>None</em></span>
+        </div>
+        <div data-dojo-attach-point="granuleNamesContainer">
+            <div data-dojo-attach-point="granuleNamesTitleContainer" class="granuleNamesTitleContainer">
+                <span data-dojo-attach-point="granuleNamesToggle" class="fa fa-angle-right faCaret"></span>
+                <span class="downloadsListingInfoHeader">Selected Granule Name(s)</span>
+            </div>
+            <div data-dojo-attach-point="downloadQueryGranuleName" class="downloadQueryGranuleName"><em>None Specified</em></div>
+        </div>
+        <div class="downloadsListingVariablesContianer" data-dojo-attach-point="variablesContainer"></div>
+    </div>
+</div>

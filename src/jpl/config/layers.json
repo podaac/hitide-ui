@@ -1,0 +1,32 @@
+{
+    "Layers": {
+        "Layer": [{
+            "UUID": "918c96c4-529c-4aad-8c3f-810739d8af9e",
+            "ProductLabel": "MODIS_Terra_Land_Surface_Temp_Night",
+            "mission": "",
+            "instrument": "",
+            "ProductType": "Mosaic",
+            "ServiceProtocol": "GIBS",
+            "EndPoint": "http://map1a.vis.earthdata.nasa.gov/wmts-geo/wmts.cgi",
+            "WMSEndPoint": "",
+            "wmsLayer": "0",
+            "LayerTitle": "Land Surface Temperature",
+            "LayerService": "wmts",
+            "LayerProjection": "EPSG:3975",
+            "bounding": {
+                "westbc": -17367530.4451615,
+                "eastbc": 17367530.4451615,
+                "northbc": 7342230.13649868,
+                "southbc": -7342230.13649868
+            },
+            "description": "<p></p>",
+            "LayerSubtitle": "Nighttime, MODIS Terra",
+            "legend": "",
+            "wmts": {
+                "tileMatrixSet": "EPSG4326_1km",
+                "tileLayerName": "MODIS_Terra_Land_Surface_Temp_Night",
+                "tileFormat": "image/jpeg"
+            }
+        }]
+    }
+}

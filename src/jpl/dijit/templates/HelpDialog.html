@@ -1,0 +1,256 @@
+<div>
+    <div data-dojo-attach-point="helpDialogModal" class="modal fade bs-example-modal-md " tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-help">
+            <div class="modal-content">
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="helpForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <a class="search-result-back-btn" data-dojo-attach-point="helpGalleryBackBtn" style="cursor: pointer;position:absolute;top: 17px;left: 10px; display:none">
+                            <span id="helpRoot" class="icon-arrow225 help-arrow"></span>
+                        </a>
+                        <h4 class="modal-title help-title" data-dojo-attach-point="helpDialogTitle">Help</h4>
+                    </div>
+                    <div class="modal-body help-body">
+                        <div class="help-container" id="helpRootContent">
+                            <ul class="help-list">
+                                <li>
+                                    <a class="help-link" id="helpAbout" alt="About HiTIDE" title="About HiTIDE">About</a>
+                                </li>
+                                <li>
+                                    <a class="help-link" id="helpFaq" alt="FAQ" title="FAQ">FAQ</a>
+                                </li>
+                                <li>
+                                    <a class="help-link" id="helpTutorial" alt="Tutorial" title="Tutorial">Tutorial</a>
+                                </li>
+                                <li>
+                                    <a class="help-link" id="helpContact" alt="Contact information" title="Contact information">Contact</a>
+                                </li>
+                                <li>
+                                    <a class="help-link" id="helpReleaseNotes" alt="Release Notes" title="Release Notes">Release Notes</a>
+                                </li>
+                                <li>
+                                    <a class="help-link" id="helpSystemRecommendation" alt="Frequently Asked Questions" title="Frequently Asked Questions">System Recommendation</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="help-container help-container-hidden" id="helpAboutContent">
+                            <p>HiTIDE, the High-level Tool for Interactive Data Extraction, allows users to subset and download popular <b style="font-weight: 400"><a href="https://podaac-www.jpl.nasa.gov/" target="_blank">PO.DAAC</a></b> level 2 <i>(swath)</i> datasets. Users can search across a wide variety of parameters, such as variables, sensors and platforms, and filter the resulting data based on spatial and temporal boundaries of interest to the user. HiTIDE goes even further, offering instant previews of variable imagery, allowing users to rapidly find data of interest for download and further, rigorous scientific analysis.</p>
+                            <h5 class="help-brandVersion" data-dojo-attach-point="hitideVersion">version #.#.#</h5>
+                        </div>
+                        <div class="help-container help-container-hidden" id="helpFaqContent">
+
+                            <div class="helpFaqTitle">Why are there cloud icons (<span class='fa fa-cloud cloudIcon'></span>) next to certain datasets?</div>
+                            <div class="helpFaqContent">
+                                HiTIDE is migrating to the cloud and is also shifting to cloud based services for retrieving metadata
+                                and performing subsets on datasets.<br /><br />
+
+                                This migration is taking a phased approach where datasets will be transitioned in groups. Therefore, during the transition, you will be able to see both pre-transition (classic) datasets
+                                and post-transition (cloud) datasets in the dataset list. Cloud datasets can be identified by the presence of the <span class='fa fa-cloud cloudIcon'></span> icon.
+                            </div>
+
+                            <div class="helpFaqTitle">As a HiTIDE user, does it make any difference if a dataset has transitioned to the cloud services or not?</div>
+                            <div class="helpFaqContent">
+                                Here are the current differences between <em>Classic Datasets</em> (which have not yet transitioned to cloud services) and <em>Cloud Datasets</em>:<br /><br />
+                                <table class="faqCloudComparisonTable">
+                                    <thead>
+                                        <th>Classic Datasets</th>
+                                        <th>Cloud Datasets</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Download links work for 48 hours.</td>
+                                            <td>Download links work for 30 days.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>An email with download links is sent when the subset job is complete. The download links are also available in HiTIDE, in the 
+                                                "Your Downloads" section, under the "Downloads" tab.</td>
+                                            <td>Currently, no email is sent when the subset job is complete. Download links can only be obtained from the HiTIDE client.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>When multiple granules are subsetted, the download link is to a zip file that includes all the resulting granules.</td>
+                                            <td>Each resulting granule gets its own download link.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cut Scanline feature is optional and can be toggled on or off when submitting a subset job (see the Cut Scanline part of the FAQ for more information).</td>
+                                            <td>Cut Scanline feature is always applied when subsetting cloud datasets. The Cut Scanline toggle currently only affects classic datasets.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>There is no granule limit.</td>
+                                            <td>Current limit is 200 granules per subset. If you submit a job with more than 200 granules, the subset will still succeed, but the result will only
+                                                contain 200 granules.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="helpFaqTitle">What is Earthdata Login?</div>
+                            <div class="helpFaqContent">
+                                NASA's Earth Observation System Data and Information System (EOSDIS) Earthdata Login provides a simple, centralized mechanism for user registration and user profile management for all Distributed Active Archive Center (DAAC) users accessing data.
+                            </div>
+
+                            <div class="helpFaqTitle">Why do users have to register?</div>
+                            <div class="helpFaqContent">
+                                    The information provided by users when they register for Earthdata Login helps NASA better understand how our data are being used and the diverse needs of multiple user communities. This helps us prioritize improvements in data discovery, access, and usability. Registration also allows us to inform users with pertinent information such as the availability of new or updated data products, or data quality issues. In the future, it will allow for new value-added features and customized services resulting in a better user experience. For questions regarding Earthdata Login, see <a href="https://urs.earthdata.nasa.gov/documentation">https://urs.earthdata.nasa.gov/documentation</a>.
+                            </div>
+
+                            <div class="helpFaqTitle">What does the "Cut Scanline" download option mean?</div>
+                            <div class="helpFaqContent">Swath data are often captured in scanlines. Because HiTIDE allows users to specify custom regions of interest, this presents a dilemma when subsetting the data. Some users want only the data within their region of interest, and nothing else. Other users want the entire scanline, regardless of if it all falls within their region of interest. To this end, HiTIDE allows the option to “cut scanlines” at the granule download screen.
+                                <br>
+                                <br>
+                                <img src="jpl/assets/images/scanlinePicture1.png" style="width: 250px;display: inline-block;vertical-align: top;margin-right: 20px;">
+                                <span style="display: inline-block;width: 360px;">
+                                    <i>Not cutting scanline conserves the original scanline width.</i>
+                                    <br>
+                                    <br>The red box is the bounding box used to subset, and the blue boxes are the scanlines that intersect with the red box. The data in the blue boxes within the red box will be including in the subsetted result. The data in the blue boxes outside of the red box will be changed to No Value and included in the subsetted result to conserve the original scanline width.
+                                </span>
+                                <br>
+                                <br>
+                                <img src="jpl/assets/images/scanlinePicture2.png" style="width: 250px;display: inline-block;vertical-align: top;margin-right: 20px;">
+                                <span style="display: inline-block;width: 360px;">
+                                    <i>Cutting scanline could reduce the original scanline width to make the file size smaller.</i>
+                                    <br>
+                                    <br>The red box is the bounding box used to subset, and the blue boxes are shortened scanlines that intersect with the red box. The data in the blue boxes within the red box will be including in the subsetted result. The data in the blue boxes outside of the red box will be changed to No Value and included in the subsetted result. The original scanline width has been shortened to reduce the data size.
+                                </span>
+                            </div>
+                            <div class="helpFaqTitle">What does the "Merge Granules" download option mean?</div>
+                            <div class="helpFaqContent">
+                                By enabling the "Merge Granules" download option in the "Downloads" tab, all of the subsetted granules for a given job will be merged into a single NetCDF4 granule. This granule will have an additional index called "subset_index" added to the variables. This index maps the file from which the subsetter portion of the data comes. For example, if you have 50 files in your subset region, merging them will give you a single file back with an "subset_index" (50) for each variable found in the original files. This file is meant to be easier to work with instead of multiple individual files.
+                                <br>
+                                <br>
+                                <ul>
+                                    <li>All global metadata common to the files such as dataset IDs will be added to the merge while metadata that changes from file to file, like coverage start and stop times, will be left out.</li>
+                                    <li>The PO.DAAC dataset Persistent ID will be added to the metadata as "PODAAC-persistent-ID"</li>
+                                    <li>The "request-start-time", "request-end-time", and "request-bounding-box" parameters will be added to the merge file. These items should match the query you performed to find the data.</li>
+                                    <li>The "time_coverage_start" and "time_coverage_end" parameters will be added to the global metadata. These values represent the earliest and latest time for which data was found in the original files. Your subsetted data will fall between these bounds.</li>
+                                    <li>Merged variables are filled with a "fill_value" if there are no data for a given index into the variable array or if the data from which the subset came are the fill value.</li>
+                                </ul>
+                                <i>Some other notes:</i>
+                                <br> Only individual subset jobs can be merged together. Take the below image for example. While there are a total of 8 aquarius granules to be subset and downloaded, you will still get 3 individual files. The first 6 granules will be merged together as a single job. The next two granules will be subset, but not merged with any of the other jobs.
+                                <br>
+                                <img src="jpl/assets/images/L2SS_merge_FAQ.png" style="margin-left: auto;margin-right: auto;position: relative;border: 1px solid #ececec;    display: block;margin-top: 12px;">
+                            </div>
+                            <div class="helpFaqTitle">Where are configurations saved?</div>
+                            <div class="helpFaqContent">Configurations are saved in <a href="http://www.w3schools.com/html/html5_webstorage.asp" target="_blank">LocalStorage</a> in your browser and will persist indefinitely unless manually cleared through browser settings. Note that although LocalStorage space is limited to around 5MB per website, HiTIDE configurations are relatively small, meaning up to ~5000 configurations can be saved.</div>
+                            <div class="helpFaqTitle">Why are some variable previews not appearing?</div>
+                            <div class="helpFaqContent">Most of the time when a user clicks on the variable preview icon, the variable image appears immediately. There are times, however, when no image appears. There are several reasons this may happen, but most often this is because there are no valid data within the file being imaged. This can happen when the sensor is over land, or cloud cover interferes with the measurement, or many other possibilities. If you think an image not being available is in error, please contact us through the <b style="font-weight: 400"><a href="https://podaac.jpl.nasa.gov/HITIDE_feedback" target="_blank">PO.DAAC forum</a></b> and we will explore the issue.</div>
+                            <div class="helpFaqTitle">How does HiTIDE handle subsetting and extraction?</div>
+                            <div class="helpFaqContent">HiTIDE downloads work by submitting the searches, filters, and other parameters to a download manager service. This service grabs all of the relevant data files to a staging area, and then removing all of the data falling outside of the optionally defined bounding box. Depending on the options the user selects, all or some of the data variables can be included in the download. For each file in the download, a corresponding “subsetted-*“ file is generated in the native file format of the original granule. The resulting files are packaged and compressed, delivered as a ".zip" file to the user.</div>
+                            <div class="helpFaqTitle">Why are some completed download links returning 404s?</div>
+                            <div class="helpFaqContent">Users experiencing this issue are probably attempting to download data that is more than 48 hours old. Downloads are available for up to 48 hours, and after that are purged to make space for new job submissions. Download jobs are listed in the HiTIDE interface until the user removes them by clicking the ‘X’ next to the download link.</div>
+                            <div class="helpFaqTitle">Variable preview disclaimer:</div>
+                            <div class="helpFaqContent">It is very important for the users of HiTIDE to be aware that the variable image previews are just that: previews. No quality flags have been applied to the data. Variable imagery is designed to be a quick look product, allowing users to view a region of interest at a coarse level. Many times, quality flags are imaged as well so some degree of accurate coverage can be deduced, but HiTIDE is designed to be a “search and subset” service, where users ultimately download and analyze their own data.</div>
+                        </div>
+                        <div class="help-container help-container-hidden" id="helpTutorialContent">
+                            PLAY Tutorial? Or link? Or multiple tutorials?
+                        </div>
+                        <div class="help-container help-container-hidden" id="helpContactContent">
+                            Problems, suggestions, or need help? Visit the PO.DAAC forum at:
+                            <!-- <a style="font-weight: 500" href="mailto:podaac@podaac.jpl.nasa.gov">podaac@podaac.jpl.nasa.gov</a> -->
+                            <a style="font-weight: 500" href="https://podaac.jpl.nasa.gov/HITIDE_feedback" target="_blank">podaac.jpl.nasa.gov/HITIDE_feedback</a>
+                        </div>
+                        <div class="help-container help-container-hidden" id="helpReleaseNotesContent">
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.10.0</b> (12/16/2021)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Internal changes to support access to cloud datasets in a future version. </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.9.1</b> (11/09/2021)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">Fixed</span> Security upgrade. </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.9.0</b> (9/15/2021)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Internal changes to support access to cloud datasets in a future version. </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.8.2</b> (7/21/2021)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> HiTIDE saves application state (selected datasets, bounding box, date range, pending subset requests) when logging in. </li>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Internal changes to support access to cloud datasets in a future version. </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.8.1</b> (3/16/2020)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Internal change that allows granules from new datasets to be previewed on the map. </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.8.0</b> (8/27/2019)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Added Login Capability using Earth Data Login. Downloads now require user to be logged in.</li>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Download History is now stored online (rather than in local storage) and is retrieved upon logging in</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.2.2</b> (8/27/2019)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagFixed">Fixed</span> Security and bug fixes.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.2.0</b> (4/25/2017)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagFixed">Fixed</span> Merged granule filenames and global attributes now use dataset shortnames instead of dataset persistent IDs for easier identification.</li>
+                                    <li><span class="releaseNotesTag releaseNotesTagFixed">Fixed</span> Resolved issue where saved configurations would not always load date range and regions correctly.</li>
+                                    <li><span class="releaseNotesTag releaseNotesTagFixed">Fixed</span> Changed granule name filter to be case insensitive.</li>
+                                    <li><span class="releaseNotesTag releaseNotesTagFixed">Fixed</span> Changed label on completed download links button.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.1.0</b> (3/6/2017)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Added download option to combine extracted granules into a single merged file. Read more about this option in the FAQ section. This option is disabled by default.</li>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Added release notes section to Help.</li>
+                                    <li><span class="releaseNotesTag releaseNotesTagFixed">Fixed</span> Resolved issue where start and end date hours/minutes/seconds would vary by user timezone resulting in slightly incorrect dataset and granule search results.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="helpReleaseNotesVersionTitle">
+                                    <b>Version 4.0.1</b> (7/29/2016)
+                                </div>
+                                <ul>
+                                    <li><span class="releaseNotesTag releaseNotesTagNew">New!</span> Initial Release.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="help-container help-container-hidden" id="helpSystemRecommendationContent">
+                            <p>To best experience HiTIDE, we recommend using one of the following browsers:</p>
+                            <ol>
+                                <li>Google Chrome 18+</li>
+                                <li>Mozilla Firefox 40.0+</li>
+                                <li>Apple Safari 8+</li>
+                            </ol>
+                            <p><i>Internet Explorer is not currently supported. We suggest using a modern version of Chrome, Firefox or Safari.</i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

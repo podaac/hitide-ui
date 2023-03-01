@@ -1,0 +1,11 @@
+hitide-ui:
+  privileged: true
+  image: $DOCKER_REPO/podaac/hitide/hitide-ui:$VERSION
+  ports:
+    - $HITIDE_UI_PORT:8080
+    - $HITIDE_UI_TLS_PORT:8443
+  volumes:
+    - ./:/config
+    - $HITIDE_UI_LOGS:/var/log/nginx
+  container_name: hitide-$VERSION
+  restart: always

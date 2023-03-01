@@ -1,0 +1,8 @@
+.idea
+*.DS_STORE
+node_modules
+dist
+docs
+*.tar.gz
+src/dataset-configs/*
+src/palettes/*

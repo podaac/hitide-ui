@@ -1,0 +1,54 @@
+<div>
+    <div data-dojo-attach-point="metadataDialogModal" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-metadata">
+            <div class="modal-content metadata-content">
+                <div class="modal-header metadata-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" data-dojo-attach-point="metadataDialogTitle">Metadata & Granule Availability</h4>
+                </div>
+                <div class="modal-body metadata-body">
+                    <img class="metadataDatasetImage" src="" data-dojo-attach-point="metadataDatasetImage">
+                    <div class="metadata-padding">
+                        <div class="metadataDatasetTitle" data-dojo-attach-point="metadataDatasetShortName"></div>
+                        <div>
+                            <span class="metadataDatasetSection">Dataset Information</span>
+                        </div>
+                        <table class="metadataTable">
+                            <tr>
+                                <td class="metadataDatasetInfoLabel">Long Name</td>
+                                <td class="metadataDatasetInfoContent" data-dojo-attach-point="metadataDatasetLongName"></td>
+                            </tr>
+                            <tr>
+                                <td class="metadataDatasetInfoLabel">Spatial Resolution</td>
+                                <td class="metadataDatasetInfoContent" data-dojo-attach-point="metadataAlongAcrossRes"></td>
+                            </tr>
+                            <tr>
+                                <td class="metadataDatasetInfoLabel">Time Span</td>
+                                <td class="metadataDatasetInfoContent" data-dojo-attach-point="metadataTimeSpan"></td>
+                            </tr>
+                            <tr>
+                                <td class="metadataDatasetInfoLabel">External Link</td>
+                                <td class="metadataDatasetInfoContent">
+                                    <a target="_blank" href="" data-dojo-attach-point="metadataExternalLink"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="metadataDatasetInfoLabel">Description</td>
+                                <td class="metadataDatasetInfoContent" data-dojo-attach-point="metadataDatasetDescription"></td>
+                            </tr>
+                        </table>
+                        <div>
+                            <span class="metadataDatasetSection">Dataset Variables</span>
+                        </div>
+                        <div data-dojo-attach-point="variableListingNode"></div>
+                        <div>
+                            <span class="metadataDatasetSection">Granule Availability</span>
+                            <span class="metadataDatasetSubheader">View the number of granules available for preview and subsetting for your selected datasets. <br><i>Note: You can toggle visibility of datasets using the labels at the bottom of the chart.</i></span>
+                        </div>
+                        <div data-dojo-attach-point="datasetAvailabilityNode"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

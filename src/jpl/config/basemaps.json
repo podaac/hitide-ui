@@ -1,0 +1,24 @@
+{
+  "Layers": {
+    "Layer": [
+      {
+        "UUID": "918c96c4-529c-4aad-8c3f-810739d8af9a",
+        "ProductLabel": "BlueMarble",
+        "ProductType": "Mosaic",
+        "ServiceProtocol": "ArcGIS",
+        "EndPoint": "https://trek.nasa.gov/moon/arcgis/rest/services/earth/bluemarble2nd/MapServer",
+        "LayerTitle": "Blue Marble",
+        "LayerService": "tiled",
+        "LayerProjection": "4326",
+        "ThumbnailImage": "",
+        "opacity": 1,
+        "bounding": {
+          "westbc": "-180.00208333333333",
+          "eastbc": "179.99791666666667",
+          "northbc": "90.00208333333333",
+          "southbc": "-89.99791666666667"
+        }
+      }
+    ]
+  }
+}

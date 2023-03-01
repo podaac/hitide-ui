@@ -1,0 +1,212 @@
+#datasetGrid {
+    min-height: 210px;
+    max-height: 415px;
+}
+
+.searchNoDataMessage {
+    color: rgb(198, 198, 198);
+    font-size: 1.6em;
+    text-align: center;
+    font-weight: 100;
+    height: 101%;
+    padding-top: 14%;
+}
+
+.searchTextInput {
+    width: 171px;
+    height: 32px;
+    font-size: 1.15em;
+    background: #FBFBFB;
+    padding: 10px 10px 10px 10px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    border: none;
+    border-bottom: 1px solid #BBBBBD;
+}
+
+.searchTextInput:focus {
+    border-bottom: 1px solid #3748A9 !important;
+}
+
+.searchTextInput::-webkit-input-placeholder {
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.searchTextInput::-moz-placeholder {
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.searchTextInput:-ms-input-placeholder {
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.searchTextInput:-moz-placeholder {
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.textDateRegionContainer {
+    width: 490px;
+}
+
+.dateRangeLabel,
+.regionLabel,
+.searchFacetTag {
+    /*display: inline-block;
+    margin-top: 10px;
+    font-weight: 400;
+    color: #5C5C5C;
+    letter-spacing: 0.01em;
+    margin-right: 8px;
+    background: #F8F8F8;
+    padding: 4px 11px;
+    border-radius: 31px;
+    cursor: default;
+    border: none;
+    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);*/
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 400;
+    color: #7F7F7F;
+    letter-spacing: 0.03em;
+    margin-right: 8px;
+    padding: 4px 10px;
+    border-radius: 31px;
+    cursor: default;
+    border: 1px solid rgba(126, 145, 255, 0.22);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.24);
+}
+
+.searchFacetTagRemove {
+    cursor: pointer;
+    font-size: 1.3em;
+    line-height: 1em;
+    position: relative;
+    top: 0px;
+    left: -2px;
+    font-weight: 100;
+    color: rgba(144, 144, 144, 0.62);
+}
+
+.searchFacetTagRemove:hover {
+    color: rgba(0, 0, 0, 0.91);
+}
+
+.searchFacetTagTitle {
+    text-transform: capitalize;
+    margin-right: 4px;
+    letter-spacing: 0.01em;
+    color: #5A5A5A;
+}
+
+.facetTagOr {
+    margin-left: -4px;
+    margin-right: 4px;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.04em;
+    color: #ABB8FF;
+}
+
+.dateRangeSelector,
+.regionSelector {
+    position: relative;
+}
+
+.facetSelectorNode {
+    margin-top: 6px;
+}
+
+.searchNumResults {
+    margin-top: 20px;
+    font-weight: 400;
+    color: rgba(92, 92, 92, 0.85);
+    letter-spacing: 0.01em;
+}
+
+.field-Add {
+    width: 19px;
+}
+
+th.dgrid-cell.field-Add {
+    padding-left: 7px;
+}
+
+.field-Info {
+    width: 6px;
+    padding-left: 0px;
+}
+
+.field-Dataset-ShortName {
+    width: 100px;
+}
+
+.field-DatasetCoverage-StartTimeLong {
+    width: 42px;
+}
+
+.field-DatasetCoverage-StopTimeLong {
+    width: 39px;
+}
+
+.metadataButton {
+    color: rgb(111, 169, 255);
+    font-size: 1.3em !important;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.removeDatasetCB,
+.addDatasetCB {
+    font-size: 1.4em;
+    padding-left: 5px;
+    cursor: pointer;
+    margin-top: 3px;
+}
+
+.addDatasetCB {
+    color: #9E9E9E;
+}
+
+.removeDatasetCB {
+    color: #8BC34A;
+}
+
+.selectAndPreviewButton {
+    margin-top: 11px;
+}
+
+.addedDatasetsDisplayLabel {
+    font-size: 1.2em;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-top: 10px;
+}
+
+.addedDatasetsDisplay {}
+
+.granuleSelectionLabelArrow {
+    margin-top: -13px;
+    position: relative;
+    top: -1px;
+    font-size: 0.9em;
+    margin-left: 2px;
+    color: #00BCD4;
+}
+
+.cloudIcon {
+    color: rgb(166, 201, 253);
+    border-radius: 2px;
+}
+
+.cloudButton {
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.cloudButton:hover {
+    transform: scale(1.25); 
+}

@@ -1,0 +1,130 @@
+{
+    "title": "HiTIDE",
+    "extents": {
+        "northpole": {
+            "xmin": -9009964.76123129,
+            "ymin": -9009964.76123129,
+            "xmax": 9009964.76123129,
+            "ymax": 9009964.76123129,
+            "wkt": "PROJCS[\"WGS_1984_EASE_Grid_North\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Lambert_Azimuthal_Equal_Area\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",0.0],PARAMETER[\"Latitude_Of_Origin\",90.0],UNIT[\"Meter\",1.0]]",
+            "proj4": "+proj=laea +lat_0=90 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs"
+        },
+        "southpole": {
+            "xmin": -9009964.76123129,
+            "ymin": -9009964.76123129,
+            "xmax": 9009964.76123129,
+            "ymax": 9009964.76123129,
+            "wkt": "PROJCS[\"WGS_1984_EASE_Grid_South\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Lambert_Azimuthal_Equal_Area\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",0.0],PARAMETER[\"Latitude_Of_Origin\",-90.0],UNIT[\"Meter\",1.0]]",
+            "proj4": "+proj=laea +lat_0=-90 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs"
+        },
+        "equirect": {
+            "xmin": -180,
+            "ymin": -90,
+            "xmax": 180,
+            "ymax": 90,
+            "wkid": 4326,
+            "wkt": "GEOGCS[\"WGS84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.01745329251994328,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4326\"]]",
+            "proj4": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        },
+        "latlong": {
+            "xmin": -180,
+            "ymin": -90,
+            "xmax": 180,
+            "ymax": 90,
+            "wkt": "GEOGCS[\"WGS84\",\"DATUM[\"WGS_1984\",\"SPHEROID[\"WGS84\",6378137,298.257223563,\"AUTHORITY[\"EPSG\",\"7030\"]],\"AUTHORITY[\"EPSG\",\"6326\"]],\"PRIMEM[\"Greenwich\",0,\"AUTHORITY[\"EPSG\",\"8901\"]],\"UNIT[\"degree\",0.01745329251994328,\"AUTHORITY[\"EPSG\",\"9122\"]],\"AUTHORITY[\"EPSG\",\"4326\"]]",
+            "proj4": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+        }
+    },
+    "projections": {
+        "northpole": "EPSG:3973",
+        "southpole": "EPSG:3974",
+        "equirect": "4326",
+        "latlong": "EPSG:4326"
+    },
+    "services": {
+        "proxyEndpoint": "",
+        "terrainEndpoint": "//assets.agi.com/stk-terrain/v1/tilesets/world/tiles",
+        "terrainProxyEndpoint": "",
+        "elevationDEMEndpoints": {
+            "northpole": "",
+            "southpole": "",
+            "equirect": ""
+        },
+        "basemapService": "jpl/config/basemaps.json",
+        "layersService": "jpl/config/layers.json",
+        "searchService": "",
+        "search": {
+            "northpole": "",
+            "southpole": "",
+            "equirect": ""
+        },
+        "exploreService": "",
+        "elevationService": {
+            "northpole": "",
+            "southpole": "",
+            "equirect": ""
+        },
+        "sunAngleService": "",
+        "stlService": "",
+        "distanceService": {
+            "northpole": "",
+            "southpole": "",
+            "equirect": ""
+        },
+        "subpoints": {
+            "sun": "",
+            "earth": ""
+        }
+    },
+    "layerOptions": {
+        "removable": false,
+        "downloadable": true,
+        "metadata": true
+    },
+    "controls": {
+        "search": false,
+        "login": false,
+        "help": false,
+        "layers": false,
+        "explore": false,
+        "mydata": false,
+        "downloads": false,
+        "tools": false,
+        "projection": false,
+        "basemaps": false,
+        "dateselector": false,
+        "mappermalink": false,
+        "shareConfiguration": false,
+        "preferences": false,
+        "threedee": false
+    },
+    "tools": {
+        "pin": false,
+        "box": true,
+        "ellipse": false,
+        "line": false,
+        "polyline": false,
+        "freeline": false
+    },
+    "hitide": {
+        "externalConfigurables": {},
+        "searchFacetMapping": {
+            "DatasetSource-Sensor-LongName-Full": "sensor",
+            "DatasetSource-Source-ShortName-Full": "platform",
+            "DatasetParameter-Variable-Full": "variable",
+            "Dataset-Provider-ShortName": "provider",
+            "Collection-ShortName-Full": "collection",
+            "DatasetCoverage-StartTimeLong": "startTime",
+            "DatasetCoverage-StopTimeLong": "stopTime"
+        },
+        "monthNames": [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "Jul",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ]
+    },
+    "tutorial": null,
+    "ellipsoidRadius": 255000,
+    "elevationPoints": 100
+}

@@ -1,0 +1,32 @@
+<div data-dojo-attach-point="regionDialogModal" class="modal bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-region">
+        <div class="modal-content region-content no-selection">
+            <div class="modal-header region-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" data-dojo-attach-point="regionDialogTitle">Select Region</h4>
+            </div>
+            <div class="modal-body region-body">
+                <div data-dojo-attach-point="drawMapContainer" class="drawMapContainer"></div>
+                <div class="spatialOptionsContainer">
+                    <div class='spatialFacetLabel spatialFacetLabelPresets'>Presets:</div>
+                    <div class='spatialFacetPresets'>
+                        <div data-dojo-attach-point="spatialFacetPresets"></div>
+                    </div>
+                    <div class='spatialFacetLabel'>Bounding Box:</div>
+                    <div class='spatialFacetBbox'>
+                        <div data-dojo-attach-point="spatialFacetBbox"></div>
+                    </div>
+                    <div class='spatialFacetLabel spatialFacetDrawLabel'>Draw</div>
+                    <div data-dojo-attach-point="spatialFacetDrawBtn" class='spatialFacetDrawBtn fa fa-pencil-square-o'></div>
+                    <div class='spatialFacetBboxSublabel' data-dojo-attach-point="spatialFacetBboxSublabel">Format: West, South, East, North</div>
+                    <div class='spatialFacetBboxError' data-dojo-attach-point="spatialFacetBboxError">&nbsp;</div>
+                </div>
+                <div class="spatialFacetBtnContainer">
+                    <span class="button button-borderless button-grey" data-dojo-attach-point="spatialFacetCancel">Cancel</span>
+                    <span class="button button-borderless button-red" data-dojo-attach-point="spatialFacetClear">Reset</span>
+                    <span class="button button-borderless" data-dojo-attach-point="spatialFacetApply">Apply</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

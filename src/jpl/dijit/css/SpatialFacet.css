@@ -1,0 +1,108 @@
+.spatialFacetPresets {
+    position: relative;
+    /*display: inline-block;*/
+    display: none;
+    top: 3px;
+    left: 2px;
+}
+
+.spatialOptionsContainer {
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.spatialFacetLabelPresets {
+    display: none !important;
+}
+
+.spatialFacetLabel {
+    display: inline-block;
+    font-weight: 400;
+    margin-left: 14px;
+    text-transform: uppercase;
+    color: #4B4B4B;
+    border-bottom: 2px solid #00BCD4;
+    cursor: default;
+    letter-spacing: 0.02em;
+}
+
+.spatialFacetBbox {
+    position: relative;
+    display: inline-block;
+    left: 5px;
+    font-size: 1.3em;
+}
+
+.spatialFacetBboxSublabel {
+    margin-left: 113px;
+    font-style: italic;
+    color: #949494;
+    letter-spacing: 0.035em;
+    margin-top: 1px;
+}
+
+.modal-dialog-region {
+    width: 850px;
+    /*height: 620px;*/
+}
+
+.region-content {
+    padding: 0px;
+    /*margin-bottom: 64px;*/
+    /*margin-top: 64px;*/
+}
+
+.region-header {
+    padding: 17px 23px 22px 23px;
+    border-bottom: 1px solid #EAEAEA;
+    background: #FAFAFA;
+    border-radius: 3px;
+}
+
+.region-padding {
+    padding: 17px 23px 22px 23px;
+}
+
+.region-body {
+    height: 522px;
+    overflow: auto;
+}
+
+.drawMapContainer {
+    height: 440px !important;
+    /*width: 440px !important;*/
+    background: #D7D7D7;
+}
+
+.spatialFacetBboxError {
+    color: red;
+    position: absolute;
+    margin-top: 2px;
+    left: 124px;
+    font-size: 1.1em;
+    font-weight: 400;
+}
+
+.spatialFacetDrawLabel {
+    margin-left: 28px;
+    margin-right: -3px;
+}
+
+.spatialFacetDrawBtn {
+    font-size: 2.1em;
+    color: #00BCD4;
+    cursor: pointer;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 13px;
+    width: 22px;
+    height: 22px;
+}
+
+.spatialFacetBtnContainer {
+    text-align: right;
+    color: #2196F3;
+    position: relative;
+    margin-top: -10px;
+    margin-right: 20px;
+}

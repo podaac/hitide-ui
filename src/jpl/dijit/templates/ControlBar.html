@@ -1,0 +1,143 @@
+<div>
+    <ul id="controlBarList" style="display:inline;list-style:none;">
+        <li id="controlItemHelp" data-dojo-attach-point="controlItemHelp">
+            <a class="controls-link" rel="Help" data-content="Help" alt="Help" data-placement="left">
+                <span class="fa fa-question-circle control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemSearch" data-dojo-attach-point="controlItemSearch">
+            <a class="controls-link" rel="Search" data-content="Search" alt="Search" data-placement="left">
+                <span id="searchControlIcon" class="fa fa-search control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemLogin" data-dojo-attach-point="controlItemLogin">
+            <a class="controls-link" rel="User" alt="User" data-placement="left">
+                <span class="fa fa-user control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemLayers" data-dojo-attach-point="controlItemLayers">
+            <a class="controls-link" rel="Layers" data-content="My&nbsp;Data" alt="My&nbsp;Data" data-placement="left">
+                <span id="layersControlIcon" class="icon-layers3 control-action-icon"></span>
+                <span class="badge notification-badge" data-dojo-attach-point="layersBadgeCount">0</span>
+            </a>
+        </li>
+        <li id="controlItemMyData" data-dojo-attach-point="controlItemMyData">
+            <a class="controls-link" rel="MyData" data-content="My&nbsp;Data" alt="My&nbsp;Data" data-placement="left">
+                <span id="layersControlIcon" class="icon-layers3 control-action-icon"></span>
+                <span class="badge notification-badge" data-dojo-attach-point="myDataBadgeCount">0</span>
+            </a>
+        </li>
+        <li id="controlItemDownloads" data-dojo-attach-point="controlItemDownloads">
+            <a class="controls-link" rel="Downloads" data-content="Downloads" alt="Downloads" data-placement="left">
+                <span id="layersControlIcon" class="icon-in control-action-icon"></span>
+                <!-- <span class="badge notification-badge" data-dojo-attach-point="downloadsBadgeCount">0</span> -->
+            </a>
+        </li>
+        <li id="controlItemExplore" data-dojo-attach-point="controlItemExplore">
+            <a class="controls-link" rel="Explore" data-content="Explore" alt="Explore" data-placement="left">
+                <span id="exploreControlIcon" class="fa fa-map-marker control-action-icon"></span>
+                <span class="badge notification-badge" data-dojo-attach-point="exploreBadgeCount">0</span>
+            </a>
+        </li>
+        <li id="controlItemTools" data-dojo-attach-point="controlItemTools">
+            <a class="controls-link" rel="Tools" data-content="Tools" alt="Tools" data-placement="left">
+                <span class="fa fa-wrench control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemProjection" data-dojo-attach-point="controlItemProjection">
+            <a class="controls-link" rel="Projection" data-content="Map&nbsp;Selection" alt="Map&nbsp;Selection" data-placement="left">
+                <span id="controlsProjectionIcon" data-dojo-attach-point="controlsProjectionIcon" class="icon-global-projection control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemBasemaps" data-dojo-attach-point="controlItemBasemaps">
+            <a class="controls-link" rel="Basemaps" data-content="Basemaps" alt="Basemaps">
+                <span class="fa fa-image control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemDateSelector" data-dojo-attach-point="controlItemDateSelector">
+            <a class="controls-link" rel="Date" data-content="Date&nbsp;Selection" alt="Date&nbsp;Selection" data-placement="left">
+                <span class="fa fa-calendar control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemMapPermalink" data-dojo-attach-point="controlItemMapPermalink">
+            <a class="controls-link" rel="MapPermalink" data-content="Map&nbsp;Permalink" alt="MapPermalink" data-placement="left">
+                <span class="fa fa-link control-action-icon"></span>
+            </a>
+        </li>
+        <li id="controlItemPreferences" data-dojo-attach-point="controlItemPreferences">
+            <a class="controls-link" rel="Preferences" data-content="Preferences" alt="Preferences" data-placement="left">
+                <span class="fa fa-cog control-action-icon"></span>
+            </a>
+        </li>
+    </ul>
+    <!-- <div id="layerDetailsContainer" data-dojo-attach-point="layerDetailsContainer">
+    </div> -->
+    <div id="mapDetailsContainer" data-dojo-attach-point="mapDetailsContainer">
+        <!-- <div>
+            <span data-dojo-attach-point="mapResolutionLabel"></span>
+        </div> -->
+        <div id="mapScalebarsContainer" data-dojo-attach-point="mapScalebarsContainer" title="Map Scale" alt="Map Scale">
+            <div id="equiMapScalebar" data-dojo-attach-point="equiMapScalebar"></div>
+            <div id="northPoleMapScalebar" data-dojo-attach-point="northPoleMapScalebar" class="hidden"></div>
+            <div id="southPoleMapScalebar" data-dojo-attach-point="southPoleMapScalebar" class="hidden"></div>
+        </div>
+        <div style="position:absolute;bottom:-1px;" title="Current Mouse Position Coordinates" alt="Current Mouse Position Coordinates">
+            <span style="padding-right:5px;color: #C8C8C8;">Position:</span>
+            <span id="mapMousePosition" data-dojo-attach-point="mapMousePosition"></span>
+        </div>
+        <div class="attributionContainer" title="Attribution" alt="Attribution">
+            <span class="attributionItem">Map Data and Imagery Provided By NASA/JPL</span>
+        </div>
+    </div>
+    <ul id="mapControlsList">
+        <li id="mapZoomOutBtn" data-dojo-attach-point="mapZoomOutBtn">
+            <a class="map-controls-link" rel="Zoom Out" data-toggle="tooltip" title="Zoom Out" data-content="Zoom Out" alt="Zoom Out" data-placement="right">
+                <span class="fa fa-minus" style="font-size: 1.77em;top:7px;"></span>
+            </a>
+        </li>
+        <li id="mapZoomInBtn" data-dojo-attach-point="mapZoomInBtn">
+            <a class="map-controls-link" rel="Zoom In" data-toggle="tooltip" title="Zoom In" data-content="Zoom In" alt="Zoom In" data-placement="right">
+                <span class="fa fa-plus" style="font-size: 1.77em;top:7px;"></span>
+            </a>
+        </li>
+        <li id="overviewBtn" data-dojo-attach-point="overviewBtn">
+            <a class="map-controls-link" rel="Map Overview" data-content="Map Overview" alt="Map Overview" data-placement="right">
+                <span id="overviewBtnIcon" class="icon-earth74" style="font-size: 2.4em;top:6px;"></span>
+            </a>
+        </li>
+        <li id="fullscreenBtn" data-dojo-attach-point="fullscreenBtn">
+            <a class="map-controls-link" rel="Fullscreen" data-content="Fullscreen" data-toggle="tooltip" title="Fullscreen" alt="Fullscreen" data-placement="right">
+                <span class="glyphicon glyphicon-fullscreen" style="font-size: 1.5em;"></span>
+            </a>
+        </li>
+        <li id="view3DContainer" data-dojo-attach-point="view3DContainer">
+            <a data-dojo-attach-point="view3DBtn" class="map-controls-link" rel="3D&nbsp;View" data-content="3D&nbsp;View" alt="3D&nbsp;View" data-placement="top">
+                <span class="icon-3d" style="font-size: 1.9em"></span>
+            </a>
+        </li>
+        <li id="view2DContainer" class="hidden">
+            <a data-dojo-attach-point="view2DBtn" class="map-controls-link" rel="2D Map View" data-content="2D Map View" alt="2D Map View" data-placement="top">
+                <span class="icon-2d" style="font-size: 1.9em"></span>
+            </a>
+        </li>
+        <li id="gameControlsContainer" class="hidden" data-dojo-attach-point="gameControlsContainer">
+            <a id="gameControlsBtn" data-dojo-attach-point="gameControlsBtn" class="map-controls-link" rel="Toggle&nbsp;Game&nbsp;Controls" data-content="Toggle&nbsp;Game&nbsp;Controls" alt="Toggle&nbsp;Game&nbsp;Controls" data-placement="top">
+                <span class="fa fa-gamepad" style="font-size: 2.1em;top:3px;"></span>
+            </a>
+        </li>
+    </ul>
+    <ul id="legendsAndOpacityContainer" data-dojo-attach-point="legendsAndOpacityContainer">
+    </ul>
+    <!-- <ul id="utilityFunctionsList">
+        <li id="itemSaveConfiguration" data-dojo-attach-point="itemSaveConfiguration">
+            <a class="map-controls-link" rel="Save Configuration" data-content="Save Configuration" alt="Save Configuration" data-placement="top">
+                <span class="fa fa-floppy-o" style="font-size: 1.77em;top:7px;"></span>
+            </a>
+        </li>
+        <li id="itemShareConfiguration" data-dojo-attach-point="itemShareConfiguration">
+            <a class="map-controls-link" rel="Share Configuration" data-content="Share Configuration" alt="Share Configuration" data-placement="top">
+                <span class="fa fa-share-alt" style="font-size: 1.77em;top:7px;"></span>
+            </a>
+        </li>
+    </ul> -->
+</div>

@@ -1,0 +1,76 @@
+.scaleBarItem {
+    color: rgba(72, 72, 72, 0.9);
+    display: block;
+}
+
+.scaleBarModal {
+    text-align: left;
+}
+
+.scaleBarUnitName {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.scaleBarList {}
+
+.scaleBarItem.active {
+    color: #00BCD4 !important;
+}
+
+#scaleBarDialogFormTable {
+    color: black;
+    background-color: white;
+}
+
+#scaleBarDialog {
+    border: 1px solid #000000;
+}
+
+#scaleBarDialog div span.dijitDialogTitle {
+    color: #FFFFFF;
+}
+
+#scaleBarDialog div.dijitDialogTitleBar {
+    background-color: #424043;
+    border: 0px;
+    background-image: linear-gradient(#424043 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+#scaleBarDialog div.dijitDialogPaneContent {
+    border-top: 1px solid #000000;
+}
+
+.text-units {
+    font-size: 1.5em;
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+}
+
+.graphic-units {
+    font-size: 2.7em;
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+    top: 0;
+}
+
+.list-group-item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.fa.fa-futbol-o.graphic-units {
+    font-size: 1.6em;
+    padding: 15px 0 0 0;
+    top: -8px;
+    position: relative;
+}
+
+.fa.fa-bus.graphic-units {
+    font-size: 1.7em;
+    padding: 10px 0 0 0;
+    top: -5px;
+    position: relative;
+}

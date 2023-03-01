@@ -1,0 +1,120 @@
+.myLayerContainer {
+    border-bottom: 1px solid rgb(234, 234, 234);
+    background: white;
+    border-left: 2px solid rgba(0, 188, 212, 0.36);
+}
+
+.btnMyLayerCollapsed {
+    left: -1.5px;
+}
+
+.controlCollapseIcon {
+    width: 4px;
+    margin-left: 6px;
+    margin-right: -4px;
+    position: relative;
+}
+
+.myLayerContainer.collapsed {
+    margin-bottom: 0px;
+    background: whitesmoke;
+    border-left: 2px solid rgb(234, 234, 234);
+}
+
+.controlHeader {
+    position: relative;
+    padding: 6px 9px 6px 0px;
+}
+
+.myLayerTitle {
+    margin-left: 5px;
+    font-weight: 400;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+    color: rgb(118, 118, 118);
+}
+
+.myLayerSubtitle {
+    font-weight: 300;
+}
+
+.myLayerControls {
+    padding: 0px 8px 4px 14px;
+    margin-top: -4px;
+    display: none;
+}
+
+.controlCollapseIcon,
+.toggleLayerIcon {
+    cursor: pointer;
+}
+
+.toggleLayerIcon {
+    font-size: 14px;
+    width: 27px;
+    height: 30px;
+    position: relative;
+    top: -7px;
+    left: 9px;
+    padding: 8px 5px;
+}
+
+.toggleLayerIcon.fa-eye {
+    color: #8BC34A;
+}
+
+.mySliderLabelsContainer {
+    width: 48%;
+    margin-left: 45%;
+}
+
+.mySliderLabelsContainer .dijitRuleLabelContainer.dijitRuleLabelContainerH {
+    color: #000;
+    font-size: 10px;
+}
+
+.layer-slider-label {
+    float: left;
+    width: 25%;
+}
+
+.layer-slider-container {
+    float: left;
+    width: 75%;
+    margin-top: 7px;
+}
+
+.layer-colorbar-container {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.layer-colorbar {
+    width: 254px;
+    height: 20px;
+}
+
+.layer-colorbar-label-container {
+    width: 100%;
+    font-size: 11px;
+}
+
+.layer-colorbar-label-min {
+    float: left;
+    width: 33%;
+    text-align: left;
+}
+
+.layer-colorbar-label-mid {
+    float: left;
+    width: 34%;
+    text-align: center;
+}
+
+.layer-colorbar-label-max {
+    float: left;
+    width: 33%;
+    text-align: right;
+}

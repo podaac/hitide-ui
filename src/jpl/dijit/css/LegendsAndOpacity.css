@@ -1,0 +1,79 @@
+.laoContainer {
+    width: 310px;
+    height: auto;
+    background: #F8F8F8;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    color: #666666;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.laoLabelDiv {
+    border-bottom: 1px solid #EAEAEA;
+    border-radius: 2px;
+    /*cursor: pointer;*/
+}
+
+.laoLabel {
+    font-size: 1.1em;
+    margin-top: 7px;
+    display: inline-block;
+    margin-left: 8px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #787878;
+    letter-spacing: 0.01em;
+    padding-bottom: 5px;
+}
+
+.laoCount {
+    font-weight: 300;
+}
+
+.laoNoDatasets {
+    padding: 10px;
+    cursor: default;
+    color: #999999;
+    letter-spacing: 0.03em;
+}
+
+.laoToggle {
+    font-size: 1.3em;
+    /*width: 3px;*/
+    color: #00BCD4;
+    float: right;
+    top: 7px;
+    position: relative;
+    right: 9px;
+}
+
+.laoDatasetsContainer {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.hoverValueDisplay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: none;
+    z-index: 5;
+    background: #fff;
+    padding: 5px;
+    border: none;
+    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.displayColor {
+    height: 30px;
+    width: 30px;
+    float: left;
+}
+
+.displayValue {
+    float: left;
+    padding-top: 10px;
+    margin-left: 5px;
+}

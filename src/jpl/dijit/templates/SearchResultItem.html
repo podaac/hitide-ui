@@ -1,0 +1,22 @@
+<li class="galleryListItem searchResultItem" data-dojo-attach-point="resultItem" style="position:relative;">
+    <a href="#" style="width:90%;display:inline-block;padding-bottom:5px;">
+        <img class="galleryThumbnail" data-dojo-attach-point="resultItemThumbnail" src="">
+        <span class="fa fa-plus-circle add-layer-icon"></span>
+        <span data-dojo-attach-point="layerAddedLabel" class="layer-added-label" style="display:none;">Added</span>
+        <div class="galleryLabelContainer">
+            <h6 data-dojo-attach-point="resultItemTitle"></h6>
+            <p data-dojo-attach-point="resultItemTeaser" style="margin:0;"></p>
+        </div>
+    </a>
+
+    <div data-dojo-attach-point="resultItemActionsContainer" style="display:none;font-size:1.3em;margin: 3px 15px;">
+        <span data-dojo-attach-point="resultItemDownloadBtn" class="fa fa-cloud-download" rel="tooltip" title="Download Data" style="margin-right:10px;cursor:pointer;"></span>
+        <span data-dojo-attach-point="resultItemDownloadQueueBtn" class="fa fa-download" rel="tooltip" title="Add to Download Queue" style="margin-right:10px;cursor:pointer;"></span>
+        <span data-dojo-attach-point="resultItemMetadataBtn" class="fa fa-file-text-o" rel="tooltip" title="View Metadata" style="margin-right:10px;cursor:pointer;"></span>
+        <span data-dojo-attach-point="resultItemFlyToBtn" class="fa fa-plane" rel="tooltip" title="Fly To Layer" style="cursor:pointer;"></span>
+    </div>
+
+    <button data-dojo-attach-point="resultItemActionsBtn" class="search-result-action-btn">
+        <span class="fa fa-caret-down search-result-actions-btn" rel="tooltip" title="View More"></span>
+    </button>
+</li>

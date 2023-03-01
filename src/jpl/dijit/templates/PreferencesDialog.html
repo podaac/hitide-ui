@@ -1,0 +1,30 @@
+<div>
+    <div data-dojo-attach-point="preferencesDialogModal" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="preferencesForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" data-dojo-attach-point="preferencesDialogTitle">Preferences</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-message control-message-medium" data-dojo-attach-point="preferencesDialogMessage">Application preferences will be stored in your browser.</div>
+                        <div class="preferencesDialogOption">
+                            <div class="preferencesDialogQuestion">
+                                Skip welcome page on application load
+                            </div>
+                            <div class="switch">
+                                <input data-dojo-attach-point="pref_showWelcomePage" id="cmn-prefs-toggle-2" class="cmn-toggle cmn-toggle-round" type="checkbox" checked="true">
+                                <label for="cmn-prefs-toggle-2"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button data-dojo-attach-point="cancelButton" type="button" class="hitide-btn hitide-btn-grey">Cancel</button> -->
+                        <button data-dojo-attach-point="saveButton" type="button" class="hitide-btn hitide-btn-blue">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

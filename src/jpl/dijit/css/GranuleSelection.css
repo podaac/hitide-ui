@@ -1,0 +1,13 @@
+.datasetControllerContainer {
+}
+
+.granulesControllerContainer {
+	padding-top: 15px;
+}
+
+.granulesControllerDefaultMessage {
+    text-align: center;
+    margin-top: 25%;
+    color: #A0A0A0;
+    letter-spacing: 0.02em;
+}

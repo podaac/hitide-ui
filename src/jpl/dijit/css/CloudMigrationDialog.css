@@ -1,0 +1,68 @@
+
+@media (min-width: 768px) {
+    .cloud-migration.modal-dialog {
+        width: 600px;
+    }
+}
+
+.cloud-migration-dialog * {
+    margin: 0;
+    padding: 0;
+}
+
+.cloud-migration-dialog h4 {
+    padding: 0 0 0.5rem;
+    font-weight: 500;
+}
+
+.cloud-migration-dialog img {
+    width: 80%;
+    display: block;
+    margin: 2rem auto;
+    box-shadow: 1px 1px 3px 3px lightgray;
+}
+
+.cloud-migration-dialog-title {
+    border-bottom: 1px solid lightgray;
+}
+
+.cloud-migration-dialog-body {
+    font-size: 1.7rem;
+}
+.cloud-migration-dialog-button-link {
+    text-align: center;
+}
+.cloud-migration-dialog-button-link > a {
+    display: inline-block;
+    background-color: rgb(22, 164, 240);
+    color: white;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 3px;
+}
+
+.cloud-migration-dialog-button-link > a:hover {
+    box-shadow: 1px 1px 3px 3px lightgray;
+}
+
+.cloud-migration-dialog-body > * {
+    padding: 0 1rem;
+    margin: 1rem 0;
+}
+
+.cloud-migration-dialog-new-url {
+    background-color: beige;
+    padding: 1rem;
+    border-radius: 3px;
+
+    box-shadow: 1px 1px 3px 3px lightgray;
+}
+
+.cloud-migration-dialog-new-url> p {
+    font-weight: 500;
+}
+
+.cloud-migration-dialog-new-url> div {
+    margin-top: 1rem;
+    text-align: center;
+}

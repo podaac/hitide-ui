@@ -1,0 +1,241 @@
+PRODUCT = "hitide-ui"
+
+pipeline {
+    agent {
+        label "${PRODUCT} && ${ENV}"
+    }
+
+    parameters {
+        string(name: 'VERSION', defaultValue: '4.8.1-alpha.0219355')
+        choice(name: 'ENV', choices: ['feature', 'dev', 'test', 'uat', 'ops'])
+    }
+
+    environment {
+        PROJECT_NAME = "hitide"      
+
+        USER_CREDENTIALS = credentials("cbanh-jpl-ldap")
+        ARTIFACTORY_CRED = credentials("jenkins.cae.artifactory")
+        ARTIFACTORY_REPO = "${ARTIFACTORY_URL}"
+        
+        ENV = "${params.ENV}"                
+        BUILD_VERSION = "${params.VERSION}"
+        SERVER_NAME = ""
+
+        LD_LIBRARY_PATH = "/usr/local/lib"
+        
+        ARTIFACTORY_BASE_PATH_DEV = "general-develop/gov/nasa/podaac"
+        ARTIFACTORY_BASE_PATH_STAGE = "general-stage/gov/nasa/podaac"
+        ARTIFACTORY_BASE_PATH_RELEASE = "general/gov/nasa/podaac"
+
+        ARTIFACTORY_DOCKER_REPO_DEV="${ARTIFACTORY_DOCKER_DEVELOP}"
+        ARTIFACTORY_DOCKER_REPO_STAGE="${ARTIFACTORY_DOCKER_STAGE}"
+        ARTIFACTORY_DOCKER_REPO_RELEASE="${ARTIFACTORY_DOCKER_RELEASE}"
+
+        buildDeployScript = "/usr/local/daac/deploy-service/build-deploy.py"
+
+        installBasePath = "${env.HOME}/l2ss/hitide"
+        installPath = "${installBasePath}/${PRODUCT}-${BUILD_VERSION}"
+
+        dockerComposeExe = '/usr/local/bin/docker-compose'
+        transformExe = '/usr/local/daac/do-service/ct.py'
+        transformExeDev = '/home/podaacdev/do-service/ct.py'
+        transformExeTest = '/home/TEST/do-service/ct.py'
+        transformExeOps = '/home/daacops/do-service/ct.py'
+
+        symlinkName = "latest"
+    }
+    stages {
+        stage("Init") {
+            steps {                
+                Init()                
+                script {
+                    env.SERVER_NAME = "${SERVER_NAME}"
+                    env.INSTALL_PATH = "${installPath}"
+                    env.PRODUCT = "${PRODUCT}"
+                    env.BUILD_VERSION = "${BUILD_VERSION}"
+                    env.ENVIRONMENT = "${ENV}"
+                }
+                sh "echo ${ARTIFACTORY_PATH}/"
+            }
+        }
+        stage ("Getting Resources") {
+            steps {
+                echo "Deploying to $HOST"
+                CleanWorkspace()
+                GetResource()
+                ExtractResource()
+            }
+        }
+        stage ("Transforming configs") {
+            steps {
+                ConfigTransform()
+            }
+        }
+        stage ("Install") {
+            steps {
+                Install()
+            }
+        }        
+    }
+    post {
+        always {
+            emailext mimeType: 'text/html',
+                to: "${L2SS_RECIPIENT}", 
+                recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider'], [$class: 'DevelopersRecipientProvider']],                             
+                body: '${SCRIPT, template="podaac-html.groovy"}',
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+        }
+    }
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+//                              Helpers
+//
+/////////////////////////////////////////////////////////////////////////////
+
+def Init() {
+    SERVER_NAME = env.NODE_NAME
+    SetEnvPaths("${ENV}")
+}
+
+def GetResource() {
+    sh "curl -u ${ARTIFACTORY_CRED_USR}:${ARTIFACTORY_CRED_PSW} ${ARTIFACTORY_PATH}/${PROJECT_NAME}/${PRODUCT}/${PRODUCT}-${BUILD_VERSION}.tar.gz -O"
+}
+
+def ExtractResource() {
+    sh "if [ -d release ]; then rm -rf release; fi"
+    sh "mkdir release" 
+    sh "tar -xzf ${PRODUCT}-${BUILD_VERSION}.tar.gz -C release"
+}
+
+def CleanTarget() {
+    if (fileExists(installPath)) {
+        sh "rm -rf ${installPath}"
+    }
+}
+
+def CleanWorkspace() {
+    dir("${WORKSPACE}") {
+        sh "rm -rf *"
+    }
+}
+
+def ConfigTransform() {
+    dir("release") {
+        sh """
+            source ${env.HOME}/.l2ss_deploy.env
+            chmod 775 ./cmToEnv.sh ./build.sh
+            ./cmToEnv.sh
+        """
+    }
+}
+
+def Install() {
+    echo "The installation path is: ${installPath}"
+
+    sh "if [ ! -d ${installPath} ]; then mkdir -p ${installPath}; fi"
+    sh "cp -pr release/* ${installPath}/"
+    sh "cp ${env.HOME}/.cert/server.crt ${installPath}/."
+    sh "cp ${env.HOME}/.cert/server.key ${installPath}/."
+
+    // uninstall current version
+    dir ("${installBasePath}") {
+        if (fileExists("latest")) {
+            dir ("${installBasePath}/latest") {
+                sh "${dockerComposeExe} down"
+            }
+        }
+    }
+
+    // install new version
+    dir (installPath) {
+        sh "${dockerComposeExe} up -d"
+        CreateSymLink("${installPath}", "${installBasePath}/latest")
+    }
+}
+
+def CreateSymLink (src, target) {
+    sh "if [ -d ${installBasePath}/latest ]; then rm -f ${installBasePath}/latest; fi"
+    sh "ln -s ${src} ${target}"
+}
+
+def UpdateReleaseDb() {
+    sh(returnStdout: true, script: "python3 ${buildDeployScript} add --product ${PROJECT_NAME}-${PRODUCT} --branch ${BRANCH} --version ${BUILD_VERSION} --env ${ENV}").trim()
+}
+
+def SetEnvPaths(String environ) {
+
+    switch(environ) {
+        case ["sit", "test", "uat"]:
+            ARTIFACTORY_PATH = "${ARTIFACTORY_REPO}/${ARTIFACTORY_BASE_PATH_RELEASE}"
+            ARTIFACTORY_DOCKER_REPO = "${ARTIFACTORY_DOCKER_REPO_RELEASE}"            
+            installPath = "${installBasePath}/${PRODUCT}-${BUILD_VERSION}"
+            dockerComposeExe = '/usr/bin/docker-compose'
+
+            delimiter = "rc"
+            sh "echo $ARTIFACTORY_PATH"
+            break;
+        case "feature":
+            ARTIFACTORY_PATH = "${ARTIFACTORY_REPO}/${ARTIFACTORY_BASE_PATH_DEV}"
+            ARTIFACTORY_DOCKER_REPO = "${ARTIFACTORY_DOCKER_REPO_DEV}"            
+            installPath = "${installBasePath}/${PRODUCT}-${BUILD_VERSION}"
+            dockerComposeExe = '/usr/local/bin/docker-compose'
+
+            delimiter = "alpha"
+            sh "echo $ARTIFACTORY_PATH"
+            break;
+        case ["dev"]:
+            ARTIFACTORY_PATH = "${ARTIFACTORY_REPO}/${ARTIFACTORY_BASE_PATH_DEV}"
+            ARTIFACTORY_DOCKER_REPO = "${ARTIFACTORY_DOCKER_REPO_DEV}"            
+            installPath = "${installBasePath}/${PRODUCT}-${BUILD_VERSION}"
+            dockerComposeExe = '/usr/local/bin/docker-compose'
+
+            delimiter = "dev"
+            sh "echo $ARTIFACTORY_PATH"
+            break;
+        case ["ops", "prod"]:
+            ARTIFACTORY_PATH = "${ARTIFACTORY_REPO}/${ARTIFACTORY_BASE_PATH_RELEASE}"
+            ARTIFACTORY_DOCKER_REPO = "${ARTIFACTORY_DOCKER_REPO_RELEASE}"            
+            installPath = "${env.HOME}/hitide/${PRODUCT}-${BUILD_VERSION}"
+            dockerComposeExe = '/usr/bin/docker-compose'
+
+            sh "echo $ARTIFACTORY_PATH"
+            delimiter = ""
+            break;
+        default:
+            sh "echo NO VALID ENVIRONMENT: Defaulting to Dev"
+            ARTIFACTORY_PATH = "${ARTIFACTORY_REPO}/${ARTIFACTORY_BASE_PATH_DEV}"
+            ARTIFACTORY_DOCKER_REPO = "${ARTIFACTORY_DOCKER_REPO_DEV}"            
+            installPath = "${installBasePath}/${PRODUCT}-${BUILD_VERSION}"
+
+            break;
+    }
+}
+
+def SetEnv(String branch) {
+    switch(branch) {
+        case ~/.*release.*/:
+            ENV = "test"
+            sh "echo $ENV"
+            break;
+        case ~/.*develop.*/:
+            ENV = "dev"
+            sh "echo $ENV"
+            break;
+        case ~/.*feature.*/:
+            ENV = "feature"
+            sh "echo $ENV"
+            break;
+        case ~/.*master.*/:
+            ENV = "prod"
+            sh "echo $ENV"
+            break;
+        default:
+            ENV = "dev"
+            echo "default ENV"
+    }
+}

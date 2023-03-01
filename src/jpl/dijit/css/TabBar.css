@@ -1,0 +1,211 @@
+.tabProgress {
+    height: 2px;
+    width: 0px;
+    position: absolute;
+    background: #00BCD4;
+    margin: -1px 0px 0px 9px;
+    -webkit-transition: width 0.3s;
+    -moz-transition: width 0.3s;
+    -ms-transition: width 0.3s;
+    -o-transition: width 0.3s;
+    transition: width 0.3s;
+}
+
+.tabProgressArrow,
+.tabProgressEnd {
+    font-size: 1.5rem;
+    position: relative;
+    color: #00BCD4;
+    font-weight: 900;
+    text-align: right;
+    top: -7px;
+    left: 1px;
+}
+
+.tabProgressEnd {
+    font-size: 0.85rem;
+    top: -3px;
+}
+
+#tab-items {
+    margin: 7px 0px 0px 9px;
+    padding: 0px;
+}
+
+#tab-items li {
+    display: inline-block;
+    padding: 10px 20px 5px 20px;
+    border-bottom: 2px solid rgb(250, 250, 250);
+    cursor: pointer;
+}
+
+.tab-selected > .tab-link {
+    color: #00BCD4;
+}
+
+.tab-link {
+    font-size: 1.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #787878;
+    letter-spacing: 0.01em;
+}
+
+.tabBarContainer {
+    background: #FAFAFA;
+    cursor: default;
+    padding-left: 31px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+/***********  Begin Tools and Login Section  *************/
+
+
+
+#utilityFunctions {
+    right: 14px;
+    top: 14px;
+    position: absolute;
+    cursor: default;
+    /* background-color:gray; */
+}
+
+#utilityFunction-help,
+#utilityFunction-share {
+    margin-right: 2em;
+}
+
+#utilityFunctions>li {
+    display: inline-block;
+}
+
+.utility-link {
+    font-size: 0.9em;
+    cursor: pointer;
+    color: #5B5B5B;
+    padding-right: 3px;
+}
+
+.utility-link:hover {
+    color: #282828;
+}
+
+/***********  End Tools and Login Section  *************/
+
+
+.tab-toggle {
+    font-size: 1.4em;
+    color: #666464;
+    margin-left: -7px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.tab-toggle-open {
+    position: fixed;
+    z-index: 1000;
+    top: -5px;
+    right: 12px;
+    padding: 7px 8px 7px 8px;
+    display: none;
+    color: #666666;
+    background: #F8F8F8;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    -webkit-transition: color 0.1s;
+    -moz-transition: color 0.1s;
+    -ms-transition: color 0.1s;
+    -o-transition: color 0.1s;
+    transition: color 0.1s;
+}
+
+.tab-toggle-open:hover {
+    color: #00BCD4;
+    text-shadow: 0px 0px 1px rgba(0, 188, 212, 0.66);
+}
+
+.tab-title {
+    font-size: 1.5em;
+    margin-left: 19px;
+    font-weight: 400;
+    font-family: Roboto Slab;
+    letter-spacing: 0.05em;
+    color: #5B5B5B;
+}
+/*.tab-logo {
+    background: url('../../assets/images/podaac-logo-300.png');
+}*/
+.tab-badge {
+    display: block;
+    position: absolute;
+    margin-left: 132px;
+    margin-top: -28px;
+    padding-left: 1px;
+    background: #FF346C;
+    border-radius: 81px;
+    width: 18px;
+    text-shadow: 0.8px 0.5px rgba(0, 0, 0, 0.46);
+    height: 18px;
+    color: #FFFFFF;
+    font-weight: 400;
+    line-height: 1.4em;
+    text-align: center;
+    font-size: 1em;
+    transform: scale(0);
+    -webkit-transition: transform 0.5s cubic-bezier(.87, -.41, .19, 1.44), width 0.5s;
+    -moz-transition: transform 0.5s cubic-bezier(.87, -.41, .19, 1.44), width 0.5s;
+    -ms-transition: transform 0.5s cubic-bezier(.87, -.41, .19, 1.44), width 0.5s;
+    transition: transform 0.5s cubic-bezier(.87, -.41, .19, 1.44), width 0.5s;
+}
+
+.download-tab-badge {
+    background: #8BC34A;
+    margin-left: 82px;
+}
+
+.tab-badge-pulse {
+    -webkit-animation: granule-badge-pulse-fade 1.5s 1;
+    -moz-animation: granule-badge-pulse-fade 1.5s 1;
+}
+
+.download-tab-badge.tab-badge-pulse {
+    -webkit-animation: download-badge-pulse-fade 1.5s 1;
+    -moz-animation: download-badge-pulse-fade 1.5s 1;
+}
+
+@-webkit-keyframes granule-badge-pulse-fade {
+    0% {
+        background-color: #FFB734
+    }
+    100% {
+        background-color: #FF346C;
+    }
+}
+
+@-moz-keyframes granule-badge-pulse-fade {
+    0% {
+        background-color: #FFB734
+    }
+    100% {
+        background-color: #FF346C;
+    }
+}
+
+@-webkit-keyframes download-badge-pulse-fade {
+    0% {
+        background-color: #C0F420;
+    }
+    100% {
+        background-color: #8BC34A;
+        ;
+    }
+}
+
+@-moz-keyframes download-badge-pulse-fade {
+    0% {
+        background-color: #FFB734
+    }
+    100% {
+        background-color: #FF346C;
+    }
+}

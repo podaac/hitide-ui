@@ -1,0 +1,23 @@
+<div>
+    <div data-dojo-attach-point="loadDialogModal" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="loadForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" data-dojo-attach-point="loadDialogTitle">Load Configuration</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="control-message control-message-medium" data-dojo-attach-point="loadDialogMessage"></div>
+                        <div class="loadDialogGrid" data-dojo-attach-point="configGridEl"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <button data-dojo-attach-point="cancelButton" type="button" class="hitide-btn hitide-btn-grey" style="cursor:pointer;">Cancel</button> -->
+                        <button data-dojo-attach-point="deleteButton" type="button" class="hitide-btn hitide-btn-red hitide-btn-disabled">Delete</button>
+                        <button data-dojo-attach-point="loadButton" type="button" class="hitide-btn hitide-btn-blue hitide-btn-disabled">Load</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

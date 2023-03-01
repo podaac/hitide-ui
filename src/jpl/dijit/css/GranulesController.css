@@ -1,0 +1,298 @@
+.granulesControllerGrid {
+    min-height: 210px;
+}
+
+.datasetGranuleSectionTitle {
+    font-size: 1.3em;
+    letter-spacing: 0.01em;
+    color: #616161;
+    margin-bottom: 10px;
+    font-family: Roboto Slab;
+    display: block;
+    font-weight: 200;
+    padding-left: 2px;
+    margin-top: -52px;
+    position: static;
+    margin-left: -4px;
+}
+
+.granulesControllerTitleContainer {
+    border-bottom: 1px solid;
+    display: inline-block;
+}
+
+.datasetDot1 {
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    z-index: 1;
+    margin-left: -53px;
+    display: inline-block;
+}
+
+.datasetDot2 {
+    position: static;
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    z-index: -1;
+    margin-left: -52px;
+    transform: scale(1.2);
+    display: inline-block;
+}
+
+.datasetDotPulse {
+    -webkit-animation: datasetDotPulseExpand 0.4s 1;
+    -moz-animation: datasetDotPulseExpand 0.4s 1;
+}
+
+@-webkit-keyframes datasetDotPulseExpand {
+    0% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+@-moz-keyframes datasetDotPulseExpand {
+    0% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+.granulesControllerTitleName {
+    font-weight: 300;
+}
+
+th.field-footprint,
+th.field-preview {
+    border-right: 1px solid #DDDDDD;
+    vertical-align: inherit;
+}
+
+th.field-footprint,
+th.field-Granule-Name,
+th.field-Granule-StartTime,
+th.field-Granule-StopTime,
+th.field-footprint,
+th.field-preview {
+    cursor: default;
+}
+
+.field-selected,
+.field-footprint,
+.field-preview {
+    width: 22px;
+    text-align: center;
+    padding: 0px;
+}
+
+.dgrid-header > .dgrid-row-table > tr > th > .fieldTypeCB {
+    margin: 0px;
+}
+
+.dgrid-input {
+    margin: 8px 0px 0px !important;
+    width: 12px;
+}
+
+.field-Granule-StartTime,
+.field-Granule-StopTime {
+    width: 117px;
+}
+
+.field-footprint,
+.field-preview,
+.field-Granule-Name,
+.field-Granule-StartTime,
+.field-Granule-StopTime {
+    border-right: none;
+    font-size: 1em;
+    /*cursor: default;*/
+    cursor: context-menu;
+    letter-spacing: 0.025em;
+    word-break: break-word;
+    color: #414141;
+}
+
+.highlight {
+    font-weight: 400;
+    color: #FF0496;
+}
+
+.dgrid-selected .dgrid-cell .highlight {
+    color: inherit;
+    font-weight: inherit;
+}
+
+.granulesControllerFilterBoxLabel {
+    margin-right: 4px;
+    color: #777777;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-size: 1em;
+}
+
+.granulesControllerFilterContainer {
+    margin-top: 4px;
+    margin-left: 10px;
+}
+
+.granulesControllerFilterBoxButton {
+    height: 22px;
+    width: 22px;
+    padding: 7px 3px 4px 4px;
+    display: inline-block;
+    margin: 0px -1px;
+    font-size: 1em;
+    color: #7E91FF;
+    border-width: 1px;
+    text-align: center;
+    line-height: 0.5em;
+    position: absolute;
+    border: 1px solid #B5BCC7;
+    background: white;
+    border-radius: 0px;
+}
+
+.granulesControllerDatesContainer {
+    margin-bottom: 12px;
+}
+
+.granulesControllerStartDate {
+    margin-left: 7px;
+}
+
+.granulesControllerEndDate {
+    margin-left: 7px;
+}
+
+.granulesControllerDateLabel {
+    margin-top: 10px;
+    display: inline-block;
+    color: #7E91FF;
+    margin-right: 2px;
+    font-weight: 300;
+    font-family: Roboto Condensed;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    line-height: 0.7em;
+    letter-spacing: 0.03em;
+    vertical-align: sub;
+    top: -2px;
+    position: relative;
+}
+
+.granuleIcon {
+    font-size: 1.7em;
+    line-height: 0.9em;
+    height: 0.9em;
+    cursor: pointer;
+    color: rgba(150, 150, 150, 0.69);
+}
+
+span.ms.granuleIcon {
+    font-size: 1.42em;
+    position: relative;
+    top: 1px;
+}
+
+span.fa.fa-image.granuleIcon {
+    font-size: 1.4em;
+}
+
+span.fa.fa-ban.granuleIcon {
+    font-size: 1.4em;
+}
+
+.granulesControllerNumMatchingSearch {
+    color: #8F8F8F;
+}
+
+.granulesControllerNumMatchingFilter {
+    font-weight: 400;
+    color: rgb(126, 145, 255);
+}
+
+.granulesControllerNumGranulesDisplayed {
+    font-style: italic;
+    color: #8F8F8F;
+}
+
+.granulesControllerLoadingGranulesMessage,
+.granulesControllerNoDataMessage {
+    color: rgb(198, 198, 198);
+    text-align: center;
+    font-weight: 100;
+    height: 101%;
+    padding-top: 68px;
+    font-size: 1.4em;
+    letter-spacing: 0.01em;
+}
+
+.granulesControllerLoadingSpinner {
+    visibility: hidden;
+    margin-left: 3px;
+}
+
+.granulesControllerVariablesContainer {
+    margin-bottom: 30px;
+}
+
+.variablesControllerTitle {
+    font-size: 1.3em;
+    letter-spacing: 0.01em;
+    color: #616161;
+    margin-bottom: 7px;
+    margin-top: 12px;
+    font-family: Roboto Slab;
+    font-weight: 300;
+}
+
+.addMatchingBtn {
+    margin-top: 10px;
+}
+
+.addMatchingBtnDisabled {
+    color: #B7B7B7;
+    background: #EFEFEF;
+}
+
+.addMatchingBtn > .icon-in {
+    margin-top: -13px;
+    position: relative;
+    top: -1px;
+    font-size: 0.9em;
+    margin-left: 7px;
+}
+
+.matchingAddedMessage {
+    display: none;
+    margin-top: 8px;
+    padding: 8px 13px 5px 13px;
+    font-size: 1.5rem;
+    color: #A0A0A0;
+}
+
+.matchingAddedMessage > .fa-check-circle {
+    color: #8BC34A;
+    margin-right: 4px;
+}
+
+.matchingAddedMessageUndo {
+    margin-left: 15px;
+    font-style: italic;
+    color: #00BCD4;
+    font-weight: 400;
+    cursor: pointer;
+}

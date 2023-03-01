@@ -1,0 +1,14 @@
+.download-listing-complete {
+    cursor: pointer;
+}
+
+.field-subjobs {
+    width: 25px;
+}
+
+.subjobsButton {
+    color: rgb(111, 169, 255);
+    font-size: 1.3em !important;
+    cursor: pointer;
+    margin-top: 2px;
+}

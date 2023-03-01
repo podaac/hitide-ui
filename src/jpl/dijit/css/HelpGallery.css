@@ -1,0 +1,98 @@
+.helpList li a {
+    position: relative;
+}
+
+#helpCarousel {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+
+#helpCarousel #helpSpinner {
+    position: absolute;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#helpCarousel .help-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+}
+
+#helpSpinner .one {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+    overflow: auto;
+}
+
+#helpSpinner .two {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+    overflow: auto;
+}
+
+.help-option {
+    cursor: pointer;
+}
+
+.help-option {
+    margin: 17px;
+    padding: 0px 0px 1px 0px;
+    font-size: 1.5em;
+    font-weight: 100;
+    text-transform: lowercase;
+    color: #454545;
+    letter-spacing: 0.01em;
+    line-height: 2.5em;
+}
+
+.help-content-container {
+    padding: 10px;
+}
+
+.help-content-container h5 {
+    text-align: center;
+}
+
+.help-content-container a {
+    text-decoration: underline;
+    color: #87AFE2;
+}
+
+.help-app-title {
+    font-size: 6.8em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #E5E5E5;
+    margin-top: 130px;
+    cursor: default;
+}
+
+.help-app-version {
+    font-size: 1.2em;
+    font-weight: 100;
+    color: #909090;
+    letter-spacing: 0.01em;
+    margin-top: -13px;
+    cursor: default;
+}
+
+.helpList li {
+    /*display: block !important;*/
+    border: none !important;
+}
+
+.helpList li a {
+    display: inline !important;
+}

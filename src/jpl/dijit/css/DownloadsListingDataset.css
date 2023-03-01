@@ -1,0 +1,100 @@
+.datasetListingHeader {
+    padding: 10px 10px 11px 10px;
+    cursor: pointer;
+}
+
+.downloadsListingDatasetTitleText {
+    margin-left: -2px;
+}
+
+.downloadsListingDatasetTitle {
+    display: inline-block;
+    margin-left: -2px;
+    color: #727272;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+}
+
+.downloadsListingDatasetContainer {
+    color: #545454;
+    border-bottom: 1px solid #E6E6E6;
+    margin: 3px 2px 3px 2px;
+    background: white;
+}
+
+.downloadsListingDatasetContainer .facetItemValuesContainer {
+    box-shadow: none;
+    position: initial;
+    width: auto;
+    margin-left: 11px;
+    max-height: none;
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1px solid #ECECEC;
+    margin-top: -8px;
+}
+
+.downloadsListingDatasetContainer .facetLabel {
+    width: auto;
+}
+
+.downloadsListingDatasetContainer .facetItemKey {
+    font-weight: 500 !important;
+    color: #3F3F3F !important;
+    margin-top: -3px;
+}
+
+.downloadsListingInfoContainer {
+    display: none;
+    opacity: 0;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(230, 230, 230);
+    background: white;
+    padding: 10px 22px;
+}
+
+.downloadsListingDatasetContainer .faCaret {
+    width: 4px;
+    margin-right: 3px;
+    color: #00BCD4;
+    position: relative;
+}
+
+.downloadsListingDatasetContainer .fa-angle-down {
+    left: -1.5px;
+}
+
+.downloadsListingDatasetSelected {
+    color: #2196F3;
+}
+
+.removeDownloadsQueryButton {
+    margin-left: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 100;
+    margin-right: 5px;
+    line-height: 0.7em;
+}
+
+.downloadsListingInfoHeader,
+.downloadsListingDatasetContainer .facetItemKey {
+    font-weight: 400;
+    color: #5E5E5E;
+    letter-spacing: 0.01em;
+    line-height: 1.4em;
+    margin-bottom: 3px;
+    display: inline-block;
+    font-size: 1.05em;
+}
+
+.downloadQueryGranuleName {
+    margin-left: 15px;
+    display: none;
+    opacity: 0;
+}
+
+.granuleNamesTitleContainer {
+    cursor: pointer;
+}

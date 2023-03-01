@@ -1,0 +1,91 @@
+.modal-dialog-metadata {
+    width: 750px;
+    height: 100%;
+    margin-bottom: 20%;
+    margin-top: 10%;
+    display: block;
+}
+
+.metadata-content {
+    padding: 0px;
+    margin-bottom: 64px;
+    margin-top: 64px;
+}
+
+.metadata-header {
+    padding: 17px 23px 22px 23px;
+    border-bottom: 1px solid #EAEAEA;
+    background: #FAFAFA;
+    border-radius: 3px;
+}
+
+.metadata-padding {
+    padding: 17px 23px 22px 23px;
+}
+
+.metadata-body {
+    /*height: 440px;*/
+    overflow: auto;
+}
+
+.metadataDatasetImage {
+    width: 100%;
+    background: #EEEEEE;
+    height: 375px;
+}
+
+.metadataDatasetTitle {
+    /*font-size: 2.4em;
+    font-weight: 100;
+    margin-top: 20px;
+    font-family: Roboto Condensed;
+    letter-spacing: 0.01em;*/
+    font-size: 2.4em;
+    font-weight: 300;
+    margin-top: -49px;
+    font-family: Roboto Condensed;
+    letter-spacing: 0.01em;
+    background: rgb(255, 255, 255);
+    z-index: 100;
+    position: absolute;
+    margin-left: -8px;
+    padding: 10px 10px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+}
+
+.metadataDatasetSection {
+    font-weight: 400;
+    font-size: 1.35em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #00BCD4;
+    display: inline-block;
+    margin-bottom: 12px;
+    margin-top: 29px;
+    letter-spacing: 0.05em;
+    color: #4B4B4B;
+}
+
+.metadataTable {
+    width: 100%;
+    font-size: 1.1em;
+    letter-spacing: 0.015em;
+}
+
+.metadataTable > tbody > tr > td {
+    padding-bottom: 8px;
+    line-height: 1.8em;
+    letter-spacing: 0.02em;
+}
+
+.metadataDatasetInfoLabel {
+    font-weight: 400;
+    width: 123px;
+    vertical-align: top;
+}
+
+.metadataDatasetSubheader {
+    font-size: 1.1em;
+    line-height: 1.8em;
+    letter-spacing: 0.02em;
+    display: block;
+}

@@ -1,0 +1,387 @@
+#controlBarContainer {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 75px;
+}
+
+#controlBarList {
+    position: absolute;
+    top: 0;
+    right: 0;
+    list-style: none;
+    background-color: rgb(235, 235, 235);
+    padding: 0;
+    text-align: center;
+    box-shadow: 0px 0px 8px -2px #272323;
+    border-right: 1px solid #DADADA;
+}
+
+#controlBarList li {
+    position: relative;
+    -webkit-transition: border-color 0.1s;
+    -moz-transition: border-color 0.1s;
+    -ms-transition: border-color 0.1s;
+    transition: border-color 0.1s;
+    border-left: 3px solid #EBEBEB;
+}
+
+#controlBarList li:hover {
+    background-color: rgba(255, 255, 255, 0.38);
+}
+
+#controlBarList li a {
+    padding: 12px !important;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#mapMousePosition {
+    padding-right: 10px;
+    width: 125px;
+    display: inline-block;
+    color: #C8C8C8;
+}
+
+#mapDetailsContainer {
+    background: rgba(0, 0, 0, 0.68);
+    filter: none;
+    font-size: 1em;
+    height: 16px;
+    /*width: 380px;*/
+    /*width: 698px;*/
+    width: 657px;
+    padding: 1px 5px;
+    text-align: left;
+    z-index: 100000;
+    position: fixed;
+    left: 0;
+    bottom: 0px;
+}
+
+.attributionContainer {
+    left: 403px;
+    position: relative;
+}
+
+.attributionItem {
+    color: #C8C8C8;
+}
+
+.control-action-icon {
+    /*color: #FFFFFF;
+    text-shadow: 1px 1px 0 #000000;
+    opacity: 0.8;
+    font-size: 2em;
+    vertical-align: middle;*/
+    color: #424972;
+    opacity: 0.8;
+    font-size: 1.8em !important;
+    vertical-align: middle;
+}
+
+.control-selected {
+    border-color: #64698A !important;
+}
+
+.controls-link {
+    border: none !important;
+    padding: 0.7em 0.6em !important;
+    vertical-align: middle;
+}
+
+.controls-link:hover {
+    text-decoration: none;
+}
+
+#controlsProjectionIcon {
+    font-size: 2.6em;
+}
+
+#exploreControlLink {
+    font-size: 1.7em;
+}
+
+#layersControlIcon {
+    font-size: 2.1em;
+}
+
+#exploreControlIcon {
+    font-size: 2.3em;
+}
+
+#searchControlIcon {
+    font-size: 1.8em;
+}
+
+.dropdown-menu > li {
+    width: 100% !important;
+    font-size: 0.9em;
+}
+
+.dropdown-header {
+    border-bottom: solid 1px #666;
+    text-align: center;
+    padding: 0;
+}
+
+.dropup > .arrow,
+.dropup > .arrow:after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.dropup > .arrow {
+    border-width: 11px;
+}
+
+.dropup > .arrow:after {
+    border-width: 10px;
+    content: "";
+}
+
+.dropup > .arrow {
+    left: 50%;
+    margin-left: -13px;
+    border-bottom-width: 0;
+    border-top: none;
+    bottom: 25px;
+    z-index: 9001;
+    position: relative;
+}
+
+.dropup > .arrow:after {
+    content: " ";
+    bottom: 0px;
+    margin-left: -10px;
+    border-bottom-width: 0;
+    border-top-color: #3a3f44;
+}
+
+.dropup .dropdown-menu,
+.navbar-fixed-bottom .dropdown .dropdown-menu {
+    margin-bottom: 7px;
+}
+
+.dropup.open .arrow {
+    display: block;
+}
+
+.dropup .arrow {
+    display: none;
+}
+
+.notification-badge {
+    background-color: #FFC107;
+    border: 1px solid rgb(241, 183, 8);
+    height: 18px;
+    width: 18px;
+    padding: 3px 0px;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: 0.9em;
+    text-align: center;
+    vertical-align: middle;
+    color: black;
+    font-weight: 900;
+    box-shadow: 0px 0px 7px -4px rgba(0, 0, 0, 0.73);
+}
+
+.badge-pulse {
+    -webkit-animation: badge-pulse-fade 1.5s 1;
+    -moz-animation: badge-pulse-fade 1.5s 1;
+}
+
+@-webkit-keyframes badge-pulse-fade {
+    0% {
+        background-color: #FFEB3B;
+        border-color: rgb(255, 230, 9);
+    }
+    100% {
+        background-color: #FFC107;
+        border-color: rgb(241, 183, 8);
+    }
+}
+
+@-moz-keyframes badge-pulse-fade {
+    0% {
+        background-color: #FFEB3B;
+        border-color: rgb(255, 230, 9);
+    }
+    100% {
+        background-color: #FFC107;
+        border-color: rgb(241, 183, 8);
+    }
+}
+
+#mapControlsList,
+#utilityFunctionsList {
+    display: inline;
+    list-style: none;
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+    -webkit-transition: all 0.75s ease-in-out;
+    -moz-transition: all 0.75s ease-in-out;
+    -ms-transition: all 0.75s ease-in-out;
+    transition: all 0.75s ease-in-out;
+}
+
+#mapControlsList {
+    left: 8px;
+    bottom: 23px;
+}
+
+#utilityFunctionsList {
+    right: 250px;
+}
+
+#mapControlsList li,
+#utilityFunctionsList li {
+    list-style: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+#mapControlsList li {
+    margin-left: 4px;
+    margin-bottom: 6px;
+    width: 29px;
+    height: 29px;
+    display: block;
+}
+
+#utilityFunctionsList li {
+    margin-left: 5px;
+    margin-bottom: 6px;
+    width: 42px;
+    height: 42px;
+}
+
+#itemSaveConfiguration a {
+    /*background: #3FAC43;
+    color: white;*/
+    background: #CDDC39;
+}
+
+#itemShareConfiguration a {
+    background: #FF5722;
+}
+
+#mapControlsList li a,
+#utilityFunctionsList li a {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-transition: color 0.1s;
+    -moz-transition: color 0.1s;
+    -ms-transition: color 0.1s;
+    transition: color 0.1s;
+}
+
+#mapControlsList li a {
+    background-color: rgb(235, 235, 235);
+    color: #666666;
+    background: #F8F8F8;
+    /*box-shadow: 1px 4px 9px -2px rgba(0, 0, 0, 0.55);*/
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+}
+
+#utilityFunctionsList li a {
+    border-radius: 30px;
+    /*box-shadow: 1px 4px 9px -2px rgba(0, 0, 0, 0.55);
+    color: #3E3E3E;*/
+    color: #3E3E3E;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+#mapControlsList li > a > span,
+#utilityFunctionsList li > a > span {
+    position: relative;
+}
+
+#mapControlsList li > a > span {
+    line-height: 19px;
+    top: 5px;
+    font-size: 1.2em !important;
+}
+
+#utilityFunctionsList li > a > span {
+    line-height: 29px;
+    top: 4px;
+}
+
+#mapControlsList li a:hover {
+    color: #242424;
+    text-shadow: 0px 0px 1px rgba(77, 77, 77, 0.65);
+}
+
+#legendsAndOpacityContainer {
+    /*left: 78px;
+    bottom: 19px;
+    position: fixed;
+    padding: 0px;*/
+    right: 570px;
+    bottom: 19px;
+    position: fixed;
+    padding: 0px;
+}
+
+#itemShareConfiguration a:hover {
+    color: black;
+    /*background: #DAEB2C;*/
+}
+
+#itemSaveConfiguration a:hover {
+    color: black;
+    /*background: #DAEB2C;*/
+}
+
+#mapControlsList li a.controlSelected,
+#utilityFunctionsList li a.controlSelected {
+    color: #59e894;
+}
+
+body.sidebar-open #mapControlsList {
+    /*    left: 300px;
+    width: 42px;
+    height: auto;*/
+}
+
+#mapScalebarsContainer {
+    left: 177px;
+    cursor: pointer;
+    position: relative;
+    top: -4px;
+}
+
+#layerDetailsContainer {
+    background: none no-repeat scroll 0 0 rgba(0, 0, 0, 0.35);
+    border: medium none;
+    bottom: 50px;
+    right: 0;
+    color: #c8c8c8;
+    filter: none;
+    font-size: 1em;
+    position: absolute;
+    padding: 3px 5px;
+    text-align: right;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    z-index: 50;
+    font-weight: 400;
+}
+
+#layerDetailsContainer .layervalue {
+    font-weight: 600;
+}

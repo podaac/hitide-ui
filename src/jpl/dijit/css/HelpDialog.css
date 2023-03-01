@@ -1,0 +1,146 @@
+.modal-dialog-help {
+    width: 750px;
+    height: 90%;
+}
+
+.modal-header-no-padding {
+    padding-bottom: 0px;
+}
+
+.help-title {
+    padding-left: 14px;
+    cursor: default;
+}
+
+.help-content {
+    padding: 0px;
+    margin-bottom: 64px;
+    margin-top: 64px;
+}
+
+.help-header {
+    padding: 17px 23px 22px 23px;
+    border-bottom: 1px solid #EAEAEA;
+    background: #FAFAFA;
+    border-radius: 3px;
+}
+
+.help-padding {
+    padding: 17px 23px 22px 23px;
+}
+
+.help-body {
+    overflow: auto;
+    padding: 14px;
+    font-size: 1.3em;
+}
+
+.help-list {
+    list-style: none;
+    line-height: 2.5em;
+    font-size: 1.8em;
+    font-weight: 200;
+    letter-spacing: 0.01em;
+}
+
+.help-container {
+    line-height: 1.6em;
+    letter-spacing: 0.005em;
+}
+
+.help-container-hidden {
+    display: none;
+}
+
+.help-brandContainer {
+    margin-top: 30px;
+    margin-left: 10px;
+}
+
+.help-brandTitle {
+    text-align: left;
+}
+
+.help-brandVersion {
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    margin-top: 22px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+}
+
+.help-arrow {
+    font-size: 1.45em;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 1.4em;
+    color: #00BCD4;
+    left: 2px;
+    position: relative;
+}
+
+.helpFaqTitle {
+    font-weight: 500;
+    font-size: 1.4em;
+    margin-bottom: 5px;
+}
+
+.helpFaqContent {
+    padding-bottom: 20px;
+}
+
+.helpReleaseNotesVersionTitle {
+    font-size: 2.3rem;
+    margin-bottom: 1.3rem;
+    letter-spacing: -0.02rem;
+}
+
+#helpReleaseNotesContent > div > ul {
+    margin-left: 2.2rem;
+    margin-bottom: 3rem;
+    padding-left: 0px;
+}
+
+#helpReleaseNotesContent > div > ul > li {
+    color: #7f7f7f;
+    margin-bottom: 1rem;
+}
+
+.releaseNotesTag {
+    font-size: 1rem;
+    padding: 4px 6px;
+    letter-spacing: 0.06rem;
+    border-radius: 3px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding: 0.4em 0.6em;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 400;
+}
+
+.releaseNotesTagNew {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: #5777f9;
+    color: white;
+}
+
+.releaseNotesTagFixed {
+    background-color: #d9d9d9;
+    color: #7d8485;
+}
+
+.faqCloudComparisonTable {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.faqCloudComparisonTable th,
+.faqCloudComparisonTable td {
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.faqCloudComparisonTable th {
+    text-align: center;
+}

@@ -1,0 +1,7 @@
+.permalink-text::selection {
+    background: lightblue;
+}
+
+.permalink-text::-moz-selection {
+    background: lightblue;
+}

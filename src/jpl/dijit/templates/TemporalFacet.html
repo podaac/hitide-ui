@@ -1,0 +1,31 @@
+<div data-dojo-attach-point="dateRangeDialogModal" class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-dateRange">
+        <div class="modal-content dateRange-content">
+            <div class="modal-header dateRange-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" data-dojo-attach-point="dateRangeDialogTitle">Select Date Range</h4>
+            </div>
+            <div class="modal-body dateRange-body">
+                <div class="temporalFacetAddedDatasets"><span class="temporalFacetAddedDatasetsTitle">Added Dataset Coverages</span>
+                    <div class="temporalFacetAddedDatasetsListing" data-dojo-attach-point="addedDatasetsListing"></div>
+                </div>
+                <div class="temporalFacetSelectorsContainer">
+                    <div class="temporalFacetDateContainer">
+                        <span class="temporalFacetLabel">From</span>
+                        <span class="temporalFacetInput" data-dojo-attach-point="temporalFacetStartDate"></span>
+                    </div>
+                    <div class="temporalFacetDateContainer">
+                        <span class="temporalFacetLabel endDateLabel">To</span>
+                        <span class="temporalFacetInput" data-dojo-attach-point="temporalFacetEndDate"></span>
+                    </div>
+                    <span class="temporalFacetErrorMsg" data-dojo-attach-point="errorMsg"></span>
+                </div>
+                <div class="temporalFacetBtnContainer">
+                    <span class="button button-borderless button-grey" data-dojo-attach-point="temporalFacetCancel">Cancel</span>
+                    <span class="button button-borderless button-red" data-dojo-attach-point="temporalFacetClear">Reset</span>
+                    <span class="button button-borderless" data-dojo-attach-point="temporalFacetApply">Apply</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

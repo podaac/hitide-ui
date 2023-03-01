@@ -1,0 +1,33 @@
+.facetValueNode {
+    padding: 5px 6px;
+    display: block;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.facetCheckbox {
+    vertical-align: top;
+    margin-top: 3px;
+    color: #6B6B6B;
+    margin-right: 3px;
+    width: 10px;
+}
+
+.facetLabel {
+    display: inline-block;
+    width: 160px;
+    color: #646464;
+    letter-spacing: 0.015em;
+}
+
+.facetValueNode:hover {
+    background: rgba(206, 206, 206, 0.11);
+}
+
+.activeValueLabel {
+    color: #7E91FE;
+}
+
+.facetCheckbox.fa.fa-check-square {
+    /*margin-right: 2px;*/
+    color: #7E91FE;
+}

@@ -1,0 +1,114 @@
+.downloadsSubmissionContainer,
+.downloadsManagerContainer {
+    padding: 20px 10px 10px 10px;
+    padding-right: 0px;
+    display: inline;
+}
+
+.downloadOptionContainer > .switch {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    margin-left: 2px;
+    top: 1px;
+    position: relative;
+}
+
+.downloadOptionContainer {
+    padding-top: 10px;
+}
+
+.downloadOptionLabel {
+    margin-right: 4px;
+    color: #434343;
+    font-weight: 300;
+    font-size: 1.3em;
+    letter-spacing: 0.01em;
+}
+
+.cutAtScanlineLabel,
+.mergeGranulesLabel {
+    width: 133px;
+    display: inline-block;
+}
+
+.cutAtScanlineCloudWarning {
+    display: inline-flex;
+    width: 4rem;
+    height: 2.5rem;
+    border: 3px solid #ffa700;
+    border-radius: 25%;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #72caff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    user-select: none;
+    margin-left: 1rem;
+    color: #353535;
+}
+
+.cutAtScanlineCloudWarning > .fa-cloud {
+    color: white;
+}
+
+.downloadsSubmissionEmailError {
+    font-weight: 400;
+    display: inline-block;
+    color: red;
+    left: 8px;
+    font-style: italic;
+    position: relative;
+}
+
+.downloadsSubmissionButton:hover {
+    opacity: 0.93;
+}
+
+.downloadsSubmissionButton {
+    cursor: pointer;
+    text-align: center;
+    padding: 13px;
+    background: #2196F3;
+    margin: 11px 0px 10px 0px;
+    font-weight: 400;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    width: 256px;
+    border: 1px solid #5C75FF;
+    border-radius: 2px;
+    display: inline-block;
+    letter-spacing: 0.03em;
+}
+
+.downloadsSubmissionButton.disabled {
+    background: #BFC7CE;
+    border: 1px solid #A3A5B1;
+}
+
+.downloadsSubmissionButton.disabled:hover {
+    opacity: 1;
+}
+
+.downloadsSubmissionButtonNote {
+    display: block;
+    font-size: 1.06em;
+    color: #A0A0A0;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    top: -3px;
+    position: relative;
+}
+
+.download-link-li {
+    padding-bottom: 10px;
+    letter-spacing: 0.03em;
+    word-wrap: break-word;
+}
+
+#loginReminderMessage{
+    padding: 1em;
+    margin: 1em 2em 2em 1em;
+    border: 2px solid orange;
+}

@@ -1,0 +1,121 @@
+.modal-dialog-dateRange {
+    width: 850px;
+    /*height: 620px;*/
+}
+
+.dateRange-content {
+    padding: 0px;
+    /*margin-bottom: 64px;*/
+    /*margin-top: 64px;*/
+}
+
+.dateRange-header {
+    padding: 17px 23px 22px 23px;
+    border-bottom: 1px solid #EAEAEA;
+    background: #FAFAFA;
+    border-radius: 3px;
+}
+
+.dateRange-padding {
+    padding: 17px 23px 22px 23px;
+}
+
+.dateRange-body {
+    height: 350px;
+    overflow: auto;
+    padding: 23px;
+}
+
+.temporalFacetAddedDatasets {
+    display: inline-block;
+    width: 276px;
+    border-right: 1px solid #E4E4E4;
+    height: 292px;
+    overflow: auto;
+    max-height: 302px;
+}
+
+.temporalFacetSelectorsContainer {
+    display: inline-block;
+    padding-left: 30px;
+    vertical-align: top;
+}
+
+.temporalFacetAddedDatasetsTitle {
+    font-weight: 400;
+    font-size: 1.35em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #00BCD4;
+    display: inline-block;
+    letter-spacing: 0.05em;
+    color: #4B4B4B;
+    margin-bottom: 9px;
+}
+
+.temporalFacetAddedDatasetTitle {
+    font-weight: 400;
+    font-size: 1.05em;
+    letter-spacing: 0.03em;
+}
+
+.temporalFacetAddedDatasetDate {
+    letter-spacing: 0.015em;
+}
+
+.temporalFacetAddedDataset {
+    margin-bottom: 6px;
+}
+
+.temporalFacetAddedDatasetTitle {
+    font-weight: 400;
+    font-size: 1.05em;
+    letter-spacing: 0.03em;
+}
+
+.temporalFacetContainer {
+    position: absolute;
+    z-index: 1;
+    background: white;
+    top: 22px;
+    right: 4px;
+    width: 337px;
+    height: 96px;
+    padding: 13px 13px 12px 13px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.247059), 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.endDateLabel {
+    margin-left: 13px;
+}
+
+.temporalFacetErrorMsg {
+    position: absolute;
+    color: red;
+}
+
+.temporalFacetBtnContainer {
+    text-align: right;
+    color: #2196F3;
+    display: inline-block;
+    margin: 0px 13px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.temporalFacetDateContainer {
+    padding-right: 10px;
+    display: inline;
+}
+
+.temporalFacetLabel {
+    font-weight: 400;
+    font-size: 1.35em;
+    text-transform: uppercase;
+    border-bottom: 2px solid #00BCD4;
+    display: inline-block;
+    letter-spacing: 0.05em;
+    color: #4B4B4B;
+    margin-bottom: 9px;
+    margin-right: 7px;
+}

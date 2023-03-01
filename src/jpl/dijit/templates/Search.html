@@ -1,0 +1,32 @@
+<div data-dojo-attach-point="searchDiv">
+    <h3 class="widgetTitle no-selection">Search for Datasets</h3>
+    <p class="gallery-description">
+        Search for datasets by date range, region, and parameter. Datasets selected in the results table will be available for subsetting and previewing in <b><a class="tabSwitchLink tabSwitchLinkStyle" rel="GranuleSelection">Granule Selection</a></b>. <i>Note: Dataset granules in <b><a class="tabSwitchLink tabSwitchLinkStyle" rel="GranuleSelection">Granule Selection</a></b> will be constrained by the date range and region filters you apply below.</i>
+    </p>
+    <div class="textDateRegionContainer">
+        <!-- <input class="searchTextInput" type="text" placeholder="Search by Name" data-dojo-attach-point="textInput" data-dojo-type="dijit/form/TextBox" autofocus></input> -->
+        <span class="button button-blue no-selection dateRangeSelectorBtn" data-dojo-attach-point="dateRangeSelectorBtn" id="dateRangeSelectorBtn">
+            <span class="fa fa-calendar" style="font-size: 1.2em;padding-right: 8px;"></span>
+        <span data-dojo-attach-point="dateRangeLabel">SELECT DATE RANGE</span>
+        </span>
+        <span class="dateRangeSelector" data-dojo-attach-point="dateRangeSelectorNode"></span>
+        <span class="button button-blue no-selection regionSelectorBtn" id="regionSelectorBtn" data-dojo-attach-point="regionSelectorBtn"><span class="fa fa-crop" style="font-size: 1.2em;padding-right: 8px;"></span><span data-dojo-attach-point="regionLabel">SELECT REGION</span></span>
+        <span class="regionSelector" data-dojo-attach-point="regionSelectorNode"></span>
+    </div>
+    <div class="facetSelectorNode" data-dojo-attach-point="facetSelectorNode" id="facetSelectorNode"></div>
+    <div class="activeSearchOptionsContainer" data-dojo-attach-point="activeSearchOptionsContainer">
+        <!--  <span class="dateRangeLabel">
+            <span class="fa fa-calendar" style="font-size: 1.2em;padding-right: 4px;"></span><span data-dojo-attach-point="dateRangeLabel"></span>
+        </span>
+        <span class="regionLabel">
+            <span class="fa fa-crop" style="font-size: 1.2em;padding-right: 4px;"></span><span data-dojo-attach-point="regionLabel"></span>
+        </span> -->
+        <!-- <div data-dojo-attach-point="selectedFacets" class="selectedFacets"></div> -->
+    </div>
+    <div class="searchNumResults" data-dojo-attach-point="searchNumResults">No Datasets Matching Query</div>
+    <div id="datasetGrid" class="no-selection"></div>
+    <div style="text-align: right"><span class="button button-cyan selectAndPreviewButton tabSwitchLink" rel="GranuleSelection" id="selectAndPreviewButton">Select & Preview Granules for Selected Datasets <span class="fa fa-arrow-right granuleSelectionLabelArrow"></span></span>
+    </div>
+    <div class="addedDatasetsDisplayLabel">Selected Datasets</div>
+    <div data-dojo-attach-point="addedDatasetsDisplay" class="addedDatasetsDisplay"></div>
+</div>

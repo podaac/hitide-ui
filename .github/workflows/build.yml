@@ -168,7 +168,10 @@ jobs:
         with:
           aws-region: us-west-2
           role-session-name: GitHubActions
-      - run: aws sts get-caller-identity
+      - run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws sts get-caller-identity
 
       - name: Sync S3
         if: |

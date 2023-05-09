@@ -70,6 +70,5 @@ jobs:
         run: |
           git config --global user.name 'hitide-ui bot'
           git config --global user.email 'hitide-ui@noreply.github.com'
-          git add --all
-          git commit -m ${{ env.UPDATE_GIT_MESSAGE }} 
+          git commit -am "${{ env.UPDATE_GIT_MESSAGE }}"
           git push origin HEAD:feature/github_actions_ummt_sync

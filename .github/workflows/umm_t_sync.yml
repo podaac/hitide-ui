@@ -59,16 +59,18 @@ jobs:
 
           echo "::set-output name=ops_collection::$OPS_COLLECTION"
           echo "::set-output name=uat_collection::$UAT_COLLECTION"
+          echo "::set-output name=update_git_message::$update_git_message"
 
       - name: Set ENV
         env:
           OPS_COLLECTION: ${{ steps.cmr_association_diff.outputs.ops_collection }}
           UAT_COLLECTION: ${{ steps.cmr_association_diff.outputs.uat_collection }}
+          UPDATE_GIT_MESSAGE: ${{ steps.cmr_association_diff.outputs.update_git_message }}
 
       - name: Push Develop
         if: ${{ env.OPS_COLLECTION }} != '' || ${{ env.UAT_COLLECTION }} != ''
         run: |
           git config --global user.name 'hitide-ui bot'
           git config --global user.email 'hitide-ui@noreply.github.com'
-          git commit -am "/version ${{ env.software_version }}"
+          git commit -am ${{ env.UPDATE_GIT_MESSAGE }} 
           git push origin HEAD:feature/github_actions_ummt_sync

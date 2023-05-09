@@ -61,13 +61,11 @@ jobs:
           echo "::set-output name=uat_collection::$UAT_COLLECTION"
           echo "::set-output name=update_git_message::$update_git_message"
 
-      - name: Set ENV
+      - name: Push Develop
         env:
           OPS_COLLECTION: ${{ steps.cmr_association_diff.outputs.ops_collection }}
           UAT_COLLECTION: ${{ steps.cmr_association_diff.outputs.uat_collection }}
           UPDATE_GIT_MESSAGE: ${{ steps.cmr_association_diff.outputs.update_git_message }}
-
-      - name: Push Develop
         if: ${{ env.OPS_COLLECTION }} != '' || ${{ env.UAT_COLLECTION }} != ''
         run: |
           git config --global user.name 'hitide-ui bot'

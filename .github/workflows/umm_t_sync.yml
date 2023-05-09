@@ -36,7 +36,12 @@ jobs:
       - name: Install CMR cmr_association_diff
         run: pip3 install git+https://github.com/podaac/cmr-association-diff.git@6193079a14e36f4c9526aa426015c2b6be41f0e2
 
-      - name: Run cmr_association_diff command
+      - name: Run cmr_association_diff OPS command
         run: |
           OPS_COLLECTION=$(set +x; cmr_association_diff -e ops -t tool -a ${{ github.workspace }}/cmr/ops_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/ops_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_OPS}}; set -x)
-          echo "$OPS_COLLECTION"
+          if [[ ${{ OPS_COLLECTION }} ]]; then
+            python -u ${{ github.workspace }}/Jenkins/read_collection.py -e ops -i ${{ github.workspace }}/ops_output_json.txt -o ${{ github.workspace }}
+            ops_success_collection=$(cat ${{ github.workspace }}/ops_success.txt | tr -d '\n')
+            update_git_message="$update_git_message OPS: $ops_success_collection"
+            cat ${{ github.workspace }}/ops_success.txt >> ${{ github.workspace }}/cmr/ops_associations.txt
+          fi

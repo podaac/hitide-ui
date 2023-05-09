@@ -38,5 +38,5 @@ jobs:
 
       - name: Run cmr_association_diff command
         run: |
-          OPS_COLLECTION=$(set +x; cmr_association_diff -e ops -t tool -a ${{ github.workspace }}/hitide-ui/cmr/ops_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/ops_output_json.txt --token $OPS_TOKEN; set -x)
+          OPS_COLLECTION=$(set +x; cmr_association_diff -e ops -t tool -a ${{ github.workspace }}/hitide-ui/cmr/ops_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/ops_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_OPS}}; set -x)
           echo "$OPS_COLLECTION"

@@ -39,7 +39,7 @@ jobs:
       - name: Run cmr_association_diff OPS command
         run: |
           OPS_COLLECTION=$(set +x; cmr_association_diff -e ops -t tool -a ${{ github.workspace }}/cmr/ops_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/ops_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_OPS}}; set -x)
-          if [[ ${{ OPS_COLLECTION }} ]]; then
+          if [[ ${ OPS_COLLECTION } ]]; then
             python -u ${{ github.workspace }}/Jenkins/read_collection.py -e ops -i ${{ github.workspace }}/ops_output_json.txt -o ${{ github.workspace }}
             ops_success_collection=$(cat ${{ github.workspace }}/ops_success.txt | tr -d '\n')
             update_git_message="$update_git_message OPS: $ops_success_collection"

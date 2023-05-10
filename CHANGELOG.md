@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 ### Fixed
-- PODAAC-3679: Updated About page Released notes to latest v4.14.0
+- PODAAC-3679: Updated Help, Released Notes page to latest v4.14.0
 
 ## [4.13.0]
 ### Added

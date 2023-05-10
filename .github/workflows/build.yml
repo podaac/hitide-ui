@@ -144,7 +144,7 @@ jobs:
           git push origin "${{ env.THE_VERSION }}"
 
       - name: Publish UMM-T with new version
-        uses: podaac/cmr-umm-updater@feature/umm_t_updater
+        uses: podaac/cmr-umm-updater@0.4.0
         if: |
           github.ref == 'refs/heads/main' ||
           startsWith(github.ref, 'refs/heads/release')

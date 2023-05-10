@@ -143,6 +143,24 @@ jobs:
           git tag -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
           git push origin "${{ env.THE_VERSION }}"
 
+      - name: Publish UMM-S with new version
+        uses: podaac/cmr-umm-updater@feature/umm_t_updater
+        if: |
+          github.ref == 'refs/heads/main' ||
+          startsWith(github.ref, 'refs/heads/release')
+        with:
+          umm-s-json: cmr/${{ env.THE_ENV }}_hitide_cmr_umm_t.json
+          provider: 'POCLOUD'
+          env: ${{ env.venue }}
+          version: ${{ env.THE_VERSION }}
+          timeout: 60
+          disable_removal: 'true'
+          umm_type: 'umm-t'
+        env:
+          LAUNCHPAD_TOKEN_SIT: ${{secrets.LAUNCHPAD_TOKEN_SIT}}
+          LAUNCHPAD_TOKEN_UAT: ${{secrets.LAUNCHPAD_TOKEN_UAT}}
+          LAUNCHPAD_TOKEN_OPS: ${{secrets.LAUNCHPAD_TOKEN_OPS}}
+
       # Setup Node to install and test
       - name: Setup Node
         uses: actions/setup-node@v3

@@ -151,7 +151,7 @@ jobs:
         with:
           umm-json: cmr/${{ env.THE_ENV }}_hitide_cmr_umm_t.json
           provider: 'POCLOUD'
-          env: ${{ env.venue }}
+          env: ${{ env.THE_ENV }}
           version: ${{ env.THE_VERSION }}
           timeout: 60
           disable_removal: 'true'

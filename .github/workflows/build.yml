@@ -143,7 +143,7 @@ jobs:
           git tag -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
           git push origin "${{ env.THE_VERSION }}"
 
-      - name: Publish UMM-S with new version
+      - name: Publish UMM-T with new version
         uses: podaac/cmr-umm-updater@feature/umm_t_updater
         if: |
           github.ref == 'refs/heads/main' ||

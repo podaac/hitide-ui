@@ -6,11 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Moved repo to https://github.com/podaac/hitide-ui
 ### Changed
 ### Removed
 ### Fixed
 
+
+## [4.14.0]
+### Added
+- Moved repo to https://github.com/podaac/hitide-ui
+### Changed
+### Removed
+### Fixed
+- PODAAC-3679: Updated About page Released notes to latest v4.14.0
 
 ## [4.13.0]
 ### Added

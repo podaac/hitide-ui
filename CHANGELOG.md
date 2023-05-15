@@ -11,14 +11,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## [4.14.0]
+### Added
+- Moved repo to https://github.com/podaac/hitide-ui
+### Changed
+### Removed
+### Fixed
+- PODAAC-3679: Updated Help, Released Notes page to latest v4.14.0
+
 ## [4.13.0]
 ### Added
 - PODAAC-4886: Add CloudMigrationDialog
+- PODAAC-4880: Add JASON S6 to forge-tig-configuration
+- PODAAC-5124: Added all collections from on-premise to the cloud 
+- PODAAC-5223/5224: Added AMSR2-REMSS-L2P-v8.2 and AMSR2-REMSS-L2P_RT-v8.2
 ### Changed
 - PODAAC-4417: Fix the way hitide searches CMR granule metadata for image URLs
 ### Removed
 ### Fixed
-
+- PODAAC-5264: Fixed compatibility for some SWOT simulated datasets relating to an extra variable.
 
 ## [4.12.0]
 ### Added

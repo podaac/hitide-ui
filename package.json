@@ -2,7 +2,7 @@
   "name": "@gov.nasa.jpl.podaac/hitide-ui",
   "title": "HiTIDE",
   "description": "High Level Tool for Interactive Data Extraction",
-  "version": "4.14.0",
+  "version": "4.14.0-947dc3681cdf549bb623a70d9a25c87cdd2e3dfb",
   "scripts": {
     "build": "grunt --force; npm run copy",
     "copy": "node scripts/copy-files.js",

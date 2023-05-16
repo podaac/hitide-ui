@@ -138,9 +138,12 @@ jobs:
       - name: Commit Version Bump
         # If building develop, a release branch, or main then we commit the version bump back to the repo
         if: |
-          github.ref == 'refs/heads/develop' ||
-          github.ref == 'refs/heads/main'    ||
-          startsWith(github.ref, 'refs/heads/release')
+          ${{ 
+          ((github.ref == 'refs/heads/develop') ||
+          (github.ref == 'refs/heads/main')    ||
+          (startsWith(github.ref, 'refs/heads/release'))) &&
+          (github.event.inputs.allow_same_version != 'true') 
+          }}
         run: |
           git config --global user.name 'hitide-ui bot'
           git config --global user.email 'hitide-ui@noreply.github.com'
@@ -155,8 +158,8 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git tag -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
-          git push origin "${{ env.THE_VERSION }}"
+          git tag -f -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
+          git push origin "${{ env.THE_VERSION }} --force"
 
       - name: Publish UMM-T with new version
         uses: podaac/cmr-umm-updater@0.4.0

@@ -141,7 +141,7 @@ jobs:
           if ${{ github.event.inputs.allow_same_version != 'true' &&
                  (github.ref == 'refs/heads/develop' ||
                   github.ref == 'refs/heads/main'    ||
-                  startsWith(github.ref, 'refs/heads/release') }}; then
+                  startsWith(github.ref, 'refs/heads/release')) }}; then
             git config --global user.name 'hitide-ui bot'
             git config --global user.email 'hitide-ui@noreply.github.com'
             git commit -am "/version ${{ env.THE_VERSION }}"

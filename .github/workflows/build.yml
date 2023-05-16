@@ -159,7 +159,7 @@ jobs:
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git tag -f -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
-          git push origin "${{ env.THE_VERSION }} --force"
+          git push origin "${{ env.THE_VERSION }}" --force
 
       - name: Publish UMM-T with new version
         uses: podaac/cmr-umm-updater@0.4.0

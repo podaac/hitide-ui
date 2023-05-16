@@ -137,18 +137,16 @@ jobs:
 
       - name: Commit Version Bump
         # If building develop, a release branch, or main then we commit the version bump back to the repo
-        if: |
-          ${{ 
-          ((github.ref == 'refs/heads/develop') ||
-          (github.ref == 'refs/heads/main')    ||
-          (startsWith(github.ref, 'refs/heads/release'))) &&
-          (github.event.inputs.allow_same_version != 'true') 
-          }}
         run: |
-          git config --global user.name 'hitide-ui bot'
-          git config --global user.email 'hitide-ui@noreply.github.com'
-          git commit -am "/version ${{ env.THE_VERSION }}"
-          git push
+          if ${{ github.event.inputs.allow_same_version != 'true' &&
+                 (github.ref == 'refs/heads/develop' ||
+                  github.ref == 'refs/heads/main'    ||
+                  startsWith(github.ref, 'refs/heads/release') }}; then
+            git config --global user.name 'hitide-ui bot'
+            git config --global user.email 'hitide-ui@noreply.github.com'
+            git commit -am "/version ${{ env.THE_VERSION }}"
+            git push
+          fi
 
       - name: Push Tag
         if: |

@@ -15,6 +15,11 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      allow_same_version:
+        description: 'Allow the same version to be built'
+        required: false
+        default: 'false'
 
 env:
   REGISTRY: ghcr.io
@@ -87,7 +92,7 @@ jobs:
 
       ## Set Release variables
       - name: Release
-        if: ${{ startsWith(github.ref, 'refs/heads/main') }}
+        if: ${{ (startsWith(github.ref, 'refs/heads/main')) && (github.event.inputs.allow_same_version != 'true') }}
         run: |
             echo "THE_ENV=ops" >> $GITHUB_ENV
             echo "TARGET_ENV_UPPERCASE=OPS" >> $GITHUB_ENV
@@ -95,6 +100,16 @@ jobs:
             THE_VERSION=${{ env.project_version }}
             echo "THE_VERSION=${THE_VERSION//-*}" >> $GITHUB_ENV
             npm --no-git-tag-version version ${THE_VERSION//-*}
+
+      - name: Release - Allow same version
+        if: ${{ (startsWith(github.ref, 'refs/heads/main')) && (github.event.inputs.allow_same_version == 'true') }}
+        run: |
+            echo "THE_ENV=ops" >> $GITHUB_ENV
+            echo "TARGET_ENV_UPPERCASE=OPS" >> $GITHUB_ENV
+            echo "Modifying version number ${{ env.project_version}}"
+            THE_VERSION=${{ env.project_version }}
+            echo "THE_VERSION=${THE_VERSION//-*}" >> $GITHUB_ENV
+            npm --no-git-tag-version version --allow-same-version ${THE_VERSION//-*}
 
       - name: Run Snyk as a blocking step
         uses: snyk/actions/node@master
@@ -122,15 +137,16 @@ jobs:
 
       - name: Commit Version Bump
         # If building develop, a release branch, or main then we commit the version bump back to the repo
-        if: |
-          github.ref == 'refs/heads/develop' ||
-          github.ref == 'refs/heads/main'    ||
-          startsWith(github.ref, 'refs/heads/release')
         run: |
-          git config --global user.name 'hitide-ui bot'
-          git config --global user.email 'hitide-ui@noreply.github.com'
-          git commit -am "/version ${{ env.THE_VERSION }}"
-          git push
+          if ${{ github.event.inputs.allow_same_version != 'true' &&
+                 (github.ref == 'refs/heads/develop' ||
+                  github.ref == 'refs/heads/main'    ||
+                  startsWith(github.ref, 'refs/heads/release')) }}; then
+            git config --global user.name 'hitide-ui bot'
+            git config --global user.email 'hitide-ui@noreply.github.com'
+            git commit -am "/version ${{ env.THE_VERSION }}"
+            git push
+          fi
 
       - name: Push Tag
         if: |
@@ -140,18 +156,18 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git tag -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
-          git push origin "${{ env.THE_VERSION }}"
+          git tag -f -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
+          git push origin "${{ env.THE_VERSION }}" --force
 
       - name: Publish UMM-T with new version
-        uses: podaac/cmr-umm-updater@feature/umm_t_updater
+        uses: podaac/cmr-umm-updater@0.4.0
         if: |
           github.ref == 'refs/heads/main' ||
           startsWith(github.ref, 'refs/heads/release')
         with:
           umm-json: cmr/${{ env.THE_ENV }}_hitide_cmr_umm_t.json
           provider: 'POCLOUD'
-          env: ${{ env.venue }}
+          env: ${{ env.THE_ENV }}
           version: ${{ env.THE_VERSION }}
           timeout: 60
           disable_removal: 'true'

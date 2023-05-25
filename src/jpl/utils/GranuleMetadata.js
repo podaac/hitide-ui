@@ -45,10 +45,34 @@ define([
             var footprint_data_array, pairs, polygonString;
             var polygonArray = []
             for(var i=0; i< footprint_data.length; i++){
+
+                exclusivePolygonString = null;
+                if('ExclusiveZone' in footprint_data[i]){
+                    exclusiveZone = footprint_data[i]['ExclusiveZone'];
+                    exclusiveZoneArray = [];
+
+                    for(var j=0; j<exclusiveZone['Boundaries'].length; j++){
+                        exclusiveZonePoints = footprint_data[i]['ExclusiveZone']['Boundaries'][j]['Points'];
+                        exclusivePairs = this.getPairs(exclusiveZonePoints);
+                        exclusivePolygonString = sprintf("(%s)", exclusivePairs.join(", "));
+                        exclusiveZoneArray.push(exclusivePolygonString);
+                    }
+                }
+
                 footprint_data_array = footprint_data[i]['Boundary']['Points'];
                 pairs = this.getPairs(footprint_data_array);
-                polygonString = sprintf("((%s))", pairs.join(", "));
-                polygonArray.push(polygonString);
+
+                if(exclusivePolygonString != null){
+                    outerPolygon = sprintf("(%s)", pairs.join(", "));
+                    innerHoles = sprintf("%s", exclusiveZoneArray.join(", "));
+                    polygonString = sprintf("(%s,%s)", outerPolygon, innerHoles);
+                    polygonArray.push(polygonString);
+                }
+                else{
+                    polygonString = sprintf("((%s))", pairs.join(", "));
+                    polygonArray.push(polygonString);
+                }
+
             }
             var multiPolygonString = sprintf("MULTIPOLYGON (%s)", polygonArray.join(", "));
             return multiPolygonString;

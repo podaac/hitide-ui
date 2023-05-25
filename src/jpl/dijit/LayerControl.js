@@ -402,7 +402,7 @@ define([
 });
 
 function calculateImageFilename(granuleName, variableName) {
-    var variableNameWithDots = variableName.replaceAll('/', '.');
+    var variableNameWithDots = variableName.replaceAll('/', '.').replaceAll(' ', '_');
     if (variableNameWithDots[0] !== '.') {
         variableNameWithDots = '.' + variableNameWithDots;
     }

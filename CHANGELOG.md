@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## [4.15.0]
+### Added
+### Changed
+### Removed
+### Fixed
+- PODAAC-5547: Replace spaces " " in group names to use "_" to work with tig with png names with "_" (replacing spaces)
+- Update footprint to allow drawing of polygons with holes
+
 ## [4.14.0]
 ### Added
 - Moved repo to https://github.com/podaac/hitide-ui

@@ -202,15 +202,7 @@ jobs:
           aws-access-key-id: ${{ secrets[format('AWS_ACCESS_KEY_ID_SERVICES_{0}', env.TARGET_ENV_UPPERCASE)] }}
           aws-secret-access-key: ${{ secrets[format('AWS_SECRET_ACCESS_KEY_SERVICES_{0}', env.TARGET_ENV_UPPERCASE)] }}
 
-      - name: Sync S3
-        if: |
-          github.ref == 'refs/heads/develop' ||
-          github.ref == 'refs/heads/main'    ||
-          startsWith(github.ref, 'refs/heads/release')
-        run:
-          aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV }}-hitide --exclude dataset-configs/* --exclude palettes/* --delete
-
-      - name: Override Deploy Sync S3
+      - name: Deploy Env Override
         if: |
           github.event.head_commit.message == '/deploy sit' ||
           github.event.head_commit.message == '/deploy uat' ||
@@ -219,4 +211,17 @@ jobs:
           message="${{ github.event.head_commit.message }}"
           trimmed_message=${message:1}  # Remove leading slash
           override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
-          aws s3 sync ./dist s3://podaac-services-${override_env}-hitide --exclude dataset-configs/* --exclude palettes/* --delete
+          override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
+          echo "THE_ENV=${override_env}" >> $GITHUB_ENV
+          echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
+
+      - name: Sync S3
+        if: |
+          github.ref == 'refs/heads/develop' ||
+          github.ref == 'refs/heads/main'    ||
+          startsWith(github.ref, 'refs/heads/release') ||
+          github.event.head_commit.message == '/deploy sit' ||
+          github.event.head_commit.message == '/deploy uat' ||
+          github.event.head_commit.message == '/deploy ops'
+        run:
+          aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV }}-hitide --exclude dataset-configs/* --exclude palettes/* --delete

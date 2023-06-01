@@ -125,8 +125,8 @@ define([
                 };
                 topic.publish(GranuleSelectionEvent.prototype.VARIABLES_FETCHED, message);
             });
-
-            // set up button listener
+            
+            // // set up button listener
             on(this.addMatchingBtn, "click", lang.hitch(this, this.handleDownloadMatching));
             on(this.matchingAddedMessageUndo, "click", lang.hitch(this, this.removeMatchingDownload));
 
@@ -1037,6 +1037,15 @@ define([
                         "matching granules is less than the specified limit."
                 }).startup();
             } else {
+                // 
+                var _context = this
+                var granuleNameIds = _context.granuleGrid.observers[0].rows.map(function(granuleRow){
+                    return granuleRow.getElementsByClassName('field-Granule-Name')[0].innerHTML
+                })
+
+                // eslint-disable-next-line no-console
+                console.log(granuleNameIds)
+
                 var startDate = moment.utc(this.startDateWidget.getValue());
                 var endDate = moment.utc(this.endDateWidget.getValue());
                 var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;
@@ -1049,10 +1058,12 @@ define([
                     bbox: this.bbox.toString(),
                     notifyOnRemove: true,
                     variables: this.datasetVariables,
-                    granuleNames: [],
+                    granuleNames: granuleNameIds,
                     granuleNamesFilter: this.nameFilterBox.value,
                     queryId: queryId
                 };
+                // eslint-disable-next-line no-console
+                console.log(downloadQuery)
                 /* add source: 'cmr' if appropriate */
                 if(this.source === 'cmr')
                     downloadQuery.source = 'cmr';

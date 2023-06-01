@@ -208,7 +208,7 @@ jobs:
           github.ref == 'refs/heads/main'    ||
           startsWith(github.ref, 'refs/heads/release')
         run:
-          aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV}}-hitide --exclude dataset-configs/* --exclude palettes/* --delete
+          aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV }}-hitide --exclude dataset-configs/* --exclude palettes/* --delete
 
       - name: Override Deploy Sync S3
         if: |

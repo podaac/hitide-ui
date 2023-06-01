@@ -209,14 +209,3 @@ jobs:
           startsWith(github.ref, 'refs/heads/release')
         run:
           aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV }}-hitide --exclude dataset-configs/* --exclude palettes/* --delete
-
-      - name: Override Deploy Sync S3
-        if: |
-          github.event.head_commit.message == '/deploy sit' ||
-          github.event.head_commit.message == '/deploy uat' ||
-          github.event.head_commit.message == '/deploy ops'
-        run:
-          message="${{ github.event.head_commit.message }}"
-          trimmed_message=${message:1}  # Remove leading slash
-          override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
-          aws s3 sync ./dist s3://podaac-services-${override_env}-hitide --exclude dataset-configs/* --exclude palettes/* --delete

@@ -193,6 +193,17 @@ jobs:
           cat ./configs/hitideConfig-${{ env.THE_ENV }}.js > ./dist/hitideConfig.js
       
       ## Deployment
+      - name: Deploy Env Override
+        if: |
+          github.event.head_commit.message == '/deploy sit' ||
+          github.event.head_commit.message == '/deploy uat'
+        run: |
+          message="${{ github.event.head_commit.message }}"
+          trimmed_message=${message:1}  # Remove leading slash
+          override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
+          override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
+          echo "THE_ENV=${override_env}" >> $GITHUB_ENV
+          echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
 
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v2
@@ -206,6 +217,8 @@ jobs:
         if: |
           github.ref == 'refs/heads/develop' ||
           github.ref == 'refs/heads/main'    ||
-          startsWith(github.ref, 'refs/heads/release')
+          startsWith(github.ref, 'refs/heads/release') ||
+          github.event.head_commit.message == '/deploy sit' ||
+          github.event.head_commit.message == '/deploy uat'
         run:
-          aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV}}-hitide --exclude dataset-configs/* --exclude palettes/* --delete
+          aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV }}-hitide --exclude dataset-configs/* --exclude palettes/* --delete

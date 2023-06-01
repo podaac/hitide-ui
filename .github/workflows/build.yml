@@ -205,8 +205,7 @@ jobs:
       - name: Deploy Env Override
         if: |
           github.event.head_commit.message == '/deploy sit' ||
-          github.event.head_commit.message == '/deploy uat' ||
-          github.event.head_commit.message == '/deploy ops'
+          github.event.head_commit.message == '/deploy uat'
         run: |
           message="${{ github.event.head_commit.message }}"
           trimmed_message=${message:1}  # Remove leading slash
@@ -221,7 +220,6 @@ jobs:
           github.ref == 'refs/heads/main'    ||
           startsWith(github.ref, 'refs/heads/release') ||
           github.event.head_commit.message == '/deploy sit' ||
-          github.event.head_commit.message == '/deploy uat' ||
-          github.event.head_commit.message == '/deploy ops'
+          github.event.head_commit.message == '/deploy uat'
         run:
           aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV }}-hitide --exclude dataset-configs/* --exclude palettes/* --delete

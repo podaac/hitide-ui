@@ -218,5 +218,6 @@ jobs:
           github.event.head_commit.message == '/deploy ops'
         run:
           message="${{ github.event.head_commit.message }}"
-          override_env=$(echo "$message" | grep -oE '[^[:space:]]+$')
+          trimmed_message=${message:1}  # Remove leading slash
+          override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
           aws s3 sync ./dist s3://podaac-services-${override_env}-hitide --exclude dataset-configs/* --exclude palettes/* --delete

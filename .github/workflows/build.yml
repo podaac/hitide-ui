@@ -207,6 +207,6 @@ jobs:
           github.ref == 'refs/heads/develop' ||
           github.ref == 'refs/heads/main'    ||
           startsWith(github.ref, 'refs/heads/release') ||
-          github.event.head_commit.message == '/deploy sit'
+          github.event.head_commit.message == '/deploy github actions'
         run:
           aws s3 sync ./dist s3://podaac-services-${{ env.THE_ENV}}-hitide --exclude dataset-configs/* --exclude palettes/* --delete

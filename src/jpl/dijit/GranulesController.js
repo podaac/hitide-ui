@@ -1043,9 +1043,6 @@ define([
                     return granuleRow.getElementsByClassName('field-Granule-Name')[0].innerHTML
                 })
 
-                // eslint-disable-next-line no-console
-                console.log(granuleNameIds)
-
                 var startDate = moment.utc(this.startDateWidget.getValue());
                 var endDate = moment.utc(this.endDateWidget.getValue());
                 var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;
@@ -1062,8 +1059,6 @@ define([
                     granuleNamesFilter: this.nameFilterBox.value,
                     queryId: queryId
                 };
-                // eslint-disable-next-line no-console
-                console.log(downloadQuery)
                 /* add source: 'cmr' if appropriate */
                 if(this.source === 'cmr')
                     downloadQuery.source = 'cmr';

@@ -1143,6 +1143,7 @@ define([
             } else {
                 // 
                 var _context = this
+                // get the granule names and add download query
                 _context.fetchGranulesNames()
             }
         },

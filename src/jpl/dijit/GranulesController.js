@@ -652,6 +652,7 @@ define([
                 url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
                 url += "collection_concept_id=" + this.datasetId;
                 url += "&bounding_box[]=" + (this.bbox || "");
+                // limit is ~2000 for page size
                 url += "&page_size=" + this.availableGranules;
                 url += "&offset=" + this.currentSolrIdx;
                 url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
@@ -694,9 +695,16 @@ define([
                 topicHandler.remove();
                 // Update accordingly
                 if (_context.domNode) {
-                    var granuleNamesToReturn = response.response.docs.map(function(granuleObj) {
-                        return granuleObj['Granule-Name']
-                    })
+                    var granuleNamesToReturn
+                    if (_context.source === 'cmr') {
+                        granuleNamesToReturn = response.items.map(function(granuleObj) {
+                            return granuleObj["meta"]["native-id"];
+                        });
+                    } else {
+                        granuleNamesToReturn = response.response.docs.map(function(granuleObj) {
+                            return granuleObj['Granule-Name']
+                        })
+                    }
                     var startDate = moment.utc(_context.startDateWidget.getValue());
                     var endDate = moment.utc(_context.endDateWidget.getValue());
                     var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;

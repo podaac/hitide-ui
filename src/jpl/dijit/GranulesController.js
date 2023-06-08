@@ -630,9 +630,7 @@ define([
         fetchGranulesNames: function() {
             // Set searching flag to true
             this._granuleSearchInProgress = true;
-            // Show spinner 
-            this.displayLoadingSpinner(true);
-
+        
             var withCredentials = false;
 
             var url;

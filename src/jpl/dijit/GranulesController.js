@@ -736,11 +736,6 @@ define([
 
                 // Show spinner 
                 _context.displayLoadingSpinner(false);
-
-                // new AlertDialog({
-                //     alertTitle: "Server Error",
-                //     alertMessage: "Unable to fetch dataset variables for <b>" + this.datasetShortName + "</b>. Please try again later."
-                // }).startup();
             });
         },
 

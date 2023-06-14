@@ -46,4 +46,3 @@ function calculateCmrGraphqlUrl(cmrBase, hitideProfileBase) {
         "https://graphql.earthdata.nasa.gov/api"
     );
 }
-

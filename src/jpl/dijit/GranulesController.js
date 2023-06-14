@@ -73,6 +73,7 @@ define([
         itemsPerPage: 25,
         currentSolrIdx: 0,
         availableGranules: 0,
+        granuleNames: [],
         granulesInGrid: 0,
         _granuleSearchInProgress: false,
         loadingGranulesMessage: '<div class="granulesControllerLoadingGranulesMessage">Loading Granules...</div>',
@@ -125,8 +126,8 @@ define([
                 };
                 topic.publish(GranuleSelectionEvent.prototype.VARIABLES_FETCHED, message);
             });
-
-            // set up button listener
+            
+            // // set up button listener
             on(this.addMatchingBtn, "click", lang.hitch(this, this.handleDownloadMatching));
             on(this.matchingAddedMessageUndo, "click", lang.hitch(this, this.removeMatchingDownload));
 
@@ -620,17 +621,127 @@ define([
             this._eventListeners.push(topic.subscribe(DownloadsEvent.prototype.JOB_SUBMITTED, lang.hitch(this, this.resetHandleDownloadMatchingBtn)))
             this._eventListeners.push(topic.subscribe(MyDataEvent.prototype.REMOVE_DOWNLOAD_QUERY_NOTIFY, lang.hitch(this, this.handleRemoveDownloadQueryNotify)))
             this._eventListeners.push(topic.subscribe(MapEvent.prototype.MAP_INITIALIZED, lang.hitch(this, this.mapInitialized)));
-
         },
 
         displayLoadingSpinner: function(display) {
             domStyle.set(this.granulesControllerLoadingSpinner, "visibility", (display ? "visible" : "hidden"));
         },
 
+        fetchGranulesNames: function() {
+            // Set searching flag to true
+            this._granuleSearchInProgress = true;
+        
+            var withCredentials = false;
+
+            var url;
+            if(this.source === "cmr"){
+
+                var sort 
+                if(this.granuleGrid._sort[0].attribute == "Granule-StartTime"){
+                    sort = "start_date";
+                }
+                else if(this.granuleGrid._sort[0].attribute == "Granule-StopTime"){
+                    sort = "end_date";
+                }
+                else if(this.granuleGrid._sort[0].attribute ==  "Granule-Name"){
+                    sort = "readable_granule_name";
+                }
+
+                url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
+                url += "collection_concept_id=" + this.datasetId;
+                url += "&bounding_box[]=" + (this.bbox || "");
+                // limit is ~2000 for page size
+                url += "&page_size=" + this.availableGranules;
+                url += "&offset=" + this.currentSolrIdx;
+                url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
+                url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
+                
+                if(this.nameFilterBox.get("value")){
+                    url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
+                }
+
+                withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
+            }
+            else{
+                url = this.config.hitide.externalConfigurables.granuleSearchService + "?";
+                url += "datasetId=" + this.datasetId;
+                url += "&startTime=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value"));
+                url += "&endTime=" + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
+                url += "&name=" + this.nameFilterBox.get("value");
+                url += "&bbox=" + (this.bbox || "");
+                url += "&itemsPerPage=" + this.availableGranules;
+                url += "&startIndex=" + this.currentSolrIdx;
+                url += "&sort=" + this.granuleGrid._sort[0].attribute + (this.granuleGrid._sort[0].descending ? " desc" : " asc");
+            }
+
+            var _context = this;
+            var r;
+            var topicHandler = topic.subscribe(SearchEvent.prototype.CANCEL_REQUESTS, function(message) {
+                if (message.target === "*" || message.target === this.datasetId) {
+                    r.cancel();
+                }
+            });
+            r = xhr.get(url, {
+                headers: {
+                    "X-Requested-With": null
+                },
+                handleAs: "json",
+                method: "get",
+                withCredentials: withCredentials
+            }).then(function(response) {
+                // Unsubscribe from cancel requests
+                topicHandler.remove();
+                // Update accordingly
+                if (_context.domNode) {
+                    var granuleNamesToReturn
+                    if (_context.source === 'cmr') {
+                        granuleNamesToReturn = response.items.map(function(granuleObj) {
+                            return granuleObj["meta"]["native-id"];
+                        });
+                    } else {
+                        granuleNamesToReturn = response.response.docs.map(function(granuleObj) {
+                            return granuleObj['Granule-Name']
+                        })
+                    }
+                    var startDate = moment.utc(_context.startDateWidget.getValue());
+                    var endDate = moment.utc(_context.endDateWidget.getValue());
+                    var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;
+                    var downloadQuery = {
+                        datasetId: _context.datasetId,
+                        datasetShortName: _context.datasetShortName,
+                        startDate: startDate.format("YYYY/MM/DD"),
+                        endDate: endDate.format("YYYY/MM/DD"),
+                        numSelected: _context.availableGranules,
+                        bbox: _context.bbox.toString(),
+                        notifyOnRemove: true,
+                        variables: _context.datasetVariables,
+                        granuleNames: granuleNamesToReturn,
+                        granuleNamesFilter: _context.nameFilterBox.value,
+                        queryId: queryId
+                    };
+                    /* add source: 'cmr' if appropriate */
+                    if(_context.source === 'cmr')
+                        downloadQuery.source = 'cmr';
+                    topic.publish(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, downloadQuery);
+                    _context.queryId = queryId;
+                    domStyle.set(_context.addMatchingBtn, "display", "none");
+                    domStyle.set(_context.matchingAddedMessage, "display", "block");
+                }
+            }, function(err) {
+                // Unsubscribe from cancel requests
+                topicHandler.remove();
+                console.log("ERROR", err);
+                // Set searching flag to false
+                _context._granuleSearchInProgress = false;
+
+                // Show spinner 
+                _context.displayLoadingSpinner(false);
+            });
+        },
+
         fetchGranules: function() {
             // Set searching flag to true
             this._granuleSearchInProgress = true;
-
             // Show spinner 
             this.displayLoadingSpinner(true);
 
@@ -658,7 +769,6 @@ define([
                 url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
                 url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
                 
-                console.log(url);
                 if(this.nameFilterBox.get("value")){
                     url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
                 }
@@ -719,16 +829,13 @@ define([
                 // }).startup();
             });
         },
-
         
         postGranulesFetch: function(response) {
             if(this.source === "cmr"){
                 this.availableGranules = response.hits;
                 var _context = this;
                 response.items.map(function(x) {
-
                     GranuleMetadata.convertFootprintAndImageFromCMR(x);
-
                     var granule_id = x["meta"]["concept-id"];
                     var fpState = _context.stateStore.get(granule_id);
                     var previewState = _context.stateStore.get(granule_id);
@@ -751,11 +858,9 @@ define([
                 this.availableGranules = response.response.numFound;
                 var _context = this;
                 response.response.docs.map(function(x) {
-
                     // MapUtil and Terraformer don't properly handle granule footprints or extents
                     // when they are ENVELOPE type. So, convert all ENVELOPE strings to POLYGON strings.
                     GranuleMetadata.convertFootprintsAndExtentsFromEnvelopeToPolygon(x);
-
                     // Add extra fields to response docs
                     // Check for state in stateStore
                     var fpState = _context.stateStore.get(x["Granule-Id"]);
@@ -1037,30 +1142,10 @@ define([
                         "matching granules is less than the specified limit."
                 }).startup();
             } else {
-                var startDate = moment.utc(this.startDateWidget.getValue());
-                var endDate = moment.utc(this.endDateWidget.getValue());
-                var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;
-                var downloadQuery = {
-                    datasetId: this.datasetId,
-                    datasetShortName: this.datasetShortName,
-                    startDate: startDate.format("YYYY/MM/DD"),
-                    endDate: endDate.format("YYYY/MM/DD"),
-                    numSelected: this.availableGranules,
-                    bbox: this.bbox.toString(),
-                    notifyOnRemove: true,
-                    variables: this.datasetVariables,
-                    granuleNames: [],
-                    granuleNamesFilter: this.nameFilterBox.value,
-                    queryId: queryId
-                };
-                /* add source: 'cmr' if appropriate */
-                if(this.source === 'cmr')
-                    downloadQuery.source = 'cmr';
-
-                topic.publish(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, downloadQuery);
-                this.queryId = queryId;
-                domStyle.set(this.addMatchingBtn, "display", "none");
-                domStyle.set(this.matchingAddedMessage, "display", "block");
+                // 
+                var _context = this
+                // get the granule names and add download query
+                _context.fetchGranulesNames()
             }
         },
 
@@ -1095,7 +1180,6 @@ define([
                     latestTime = stopTime;
                 }
             });
-
 
             // Alert user if > max granule downloads and block
             if (granuleNameIds.length > this.config.hitide.externalConfigurables.maxGranulesPerDownload) {

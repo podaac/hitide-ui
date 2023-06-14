@@ -6,7 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Add in commit message triggers
 ### Changed
 ### Removed
 ### Fixed
@@ -14,11 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.15.0]
 ### Added
+- Add in commit message triggers
 ### Changed
 ### Removed
 ### Fixed
 - PODAAC-5547: Replace spaces " " in group names to use "_" to work with tig with png names with "_" (replacing spaces)
 - Update footprint to allow drawing of polygons with holes
+- PODAAC-5326: Fixed 'Add matching granules to download' button
 
 ## [4.14.0]
 ### Added

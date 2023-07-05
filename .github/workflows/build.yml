@@ -163,6 +163,7 @@ jobs:
         uses: podaac/cmr-umm-updater@feature/optional_association
         if: |
           github.event.head_commit.message == '/deploy sit' ||
+          github.event.head_commit.message == '/deploy uat' ||          
           github.ref == 'refs/heads/main' ||
           startsWith(github.ref, 'refs/heads/release')
         with:

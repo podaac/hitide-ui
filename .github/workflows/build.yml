@@ -45,6 +45,10 @@ jobs:
           filename: 'package.json'
           prefix: project
 
+      - name: Get short commit SHA
+        id: short_sha
+        run: echo "::set-output name=sha_short::${{ github.sha }}" | cut -c 1-7
+
       ## Set environment variables
       - name: Configure Initial YAML file and environment variables
         run: |
@@ -62,7 +66,7 @@ jobs:
         run: |
             echo "THE_ENV=sit" >> $GITHUB_ENV
             echo "TARGET_ENV_UPPERCASE=SIT" >> $GITHUB_ENV
-            echo "THE_VERSION=$(npm --no-git-tag-version --allow-same-version version ${{ env.THE_VERSION }}-${GITHUB_SHA})" >> $GITHUB_ENV
+            echo "THE_VERSION=$(npm --no-git-tag-version --allow-same-version version ${{ env.THE_VERSION }}-${{ steps.short_sha.outputs.sha_short }})" >> $GITHUB_ENV
 
       ## Set Alpha variables
       - name: Alpha

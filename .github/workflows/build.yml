@@ -159,6 +159,19 @@ jobs:
           git tag -f -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
           git push origin "${{ env.THE_VERSION }}" --force
 
+      ## Deployment
+      - name: Deploy Env Override
+        if: |
+          github.event.head_commit.message == '/deploy sit' ||
+          github.event.head_commit.message == '/deploy uat'
+        run: |
+          message="${{ github.event.head_commit.message }}"
+          trimmed_message=${message:1}  # Remove leading slash
+          override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
+          override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
+          echo "THE_ENV=${override_env}" >> $GITHUB_ENV
+          echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
+
       - name: Publish UMM-T with new version
         uses: podaac/cmr-umm-updater@feature/optional_association
         if: |
@@ -195,19 +208,6 @@ jobs:
         run: |
           cat ./configs/hitideConfig-${{ env.THE_ENV }}.js > ./dist/hitideConfig.js
       
-      ## Deployment
-      - name: Deploy Env Override
-        if: |
-          github.event.head_commit.message == '/deploy sit' ||
-          github.event.head_commit.message == '/deploy uat'
-        run: |
-          message="${{ github.event.head_commit.message }}"
-          trimmed_message=${message:1}  # Remove leading slash
-          override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
-          override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
-          echo "THE_ENV=${override_env}" >> $GITHUB_ENV
-          echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
-
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v2
         with:

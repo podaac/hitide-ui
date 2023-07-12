@@ -177,7 +177,7 @@ jobs:
           echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
 
       - name: Publish UMM-T with new version
-        uses: podaac/cmr-umm-updater@feature/optional_association
+        uses: podaac/cmr-umm-updater@0.5.0
         if: |
           github.event.head_commit.message == '/deploy sit' ||
           github.event.head_commit.message == '/deploy uat' ||          

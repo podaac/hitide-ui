@@ -159,8 +159,27 @@ define([
             this.open = false;
         },
         handleVariablesFetched: function(message) {
-            if (this.datasets[message.datasetId]) {
-                this.datasets[message.datasetId].updateVariables(message.imgVariables);
+
+            // code to modify imgVariables when there are mutli groups
+            if('multi_lon_lat' in message){
+                var new_variables = [];
+                for(var i = 0; i < message.multi_groups.length; i++){
+                    var group_name = message.multi_groups[i];
+                    for(var j = 0; j < message.imgVariables.length; j++){
+                        var image_variable = { ...message.imgVariables[j] }; 
+                        image_variable['id'] = group_name + '/' + image_variable['id'];
+                        new_variables.push(image_variable);
+                    }
+                }
+                if (this.datasets[message.datasetId]) {
+                    this.datasets[message.datasetId].updateVariables(new_variables);
+                }
+            }
+
+            else{
+                if (this.datasets[message.datasetId]) {
+                    this.datasets[message.datasetId].updateVariables(message.imgVariables);
+                }
             }
         },
         handleAddGranuleFootprint: function(message) {

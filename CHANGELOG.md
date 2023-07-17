@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add in commit message triggers
 - PODAAC-5326: Fixed 'Add matching granules to download' button.
+- issue-17: Add way to read config files to allow for multiple lat lon for variables images.
 ### Changed
 ### Removed
 ### Fixed

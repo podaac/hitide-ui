@@ -161,6 +161,10 @@ define([
         handleVariablesFetched: function(message) {
 
             // code to modify imgVariables when there are mutlti groups
+              if (this.datasets[message.datasetId]) {
+                this.datasets[message.datasetId].updateVariables(message.imgVariables);
+              }
+            /*
             if ('multi_lon_lat' in message) {
               const newVariables = [];
               for (const groupName of message.multi_groups) {
@@ -177,7 +181,7 @@ define([
               if (this.datasets[message.datasetId]) {
                 this.datasets[message.datasetId].updateVariables(message.imgVariables);
               }
-            }
+            }*/
         },
         handleAddGranuleFootprint: function(message) {
             var laoDataset = this.datasets[message.granuleObj["Granule-DatasetId"]];

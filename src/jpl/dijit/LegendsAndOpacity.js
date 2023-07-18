@@ -159,15 +159,11 @@ define([
             this.open = false;
         },
         handleVariablesFetched: function(message) {
-
-            // code to modify imgVariables when there are mutlti groups
             if('multi_lon_lat' in message){
-                
                 var new_variables = [];
                 for(var i = 0; i < message.multi_groups.length; i++){
                     var group_name = message.multi_groups[i];
                     for(var j = 0; j < message.imgVariables.length; j++){
-                        //var image_variable = { ...message.imgVariables[j] };
                         var image_variable = Object.assign({}, message.imgVariables[j]); 
                         image_variable['id'] = group_name + '/' + image_variable['id'];
                         new_variables.push(image_variable);

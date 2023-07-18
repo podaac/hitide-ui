@@ -162,6 +162,7 @@ define([
 
             // code to modify imgVariables when there are mutli groups
             if('multi_lon_lat' in message){
+                
                 var new_variables = [];
                 for(var i = 0; i < message.multi_groups.length; i++){
                     var group_name = message.multi_groups[i];

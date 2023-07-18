@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.15.0]
 ### Added
+- issue-17: Add way to read config files to allow for multiple lat lon for variables images.
 - Add in commit message triggers
 ### Changed
 ### Removed

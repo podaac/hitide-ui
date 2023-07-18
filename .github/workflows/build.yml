@@ -160,7 +160,7 @@ jobs:
           git push origin "${{ env.THE_VERSION }}" --force
 
       - name: Publish UMM-T with new version
-        uses: podaac/cmr-umm-updater@0.4.0
+        uses: podaac/cmr-umm-updater@0.5.0
         if: |
           github.ref == 'refs/heads/main' ||
           startsWith(github.ref, 'refs/heads/release')
@@ -172,6 +172,7 @@ jobs:
           timeout: 60
           disable_removal: 'true'
           umm_type: 'umm-t'
+          use_associations: 'false'
         env:
           LAUNCHPAD_TOKEN_SIT: ${{secrets.LAUNCHPAD_TOKEN_SIT}}
           LAUNCHPAD_TOKEN_UAT: ${{secrets.LAUNCHPAD_TOKEN_UAT}}

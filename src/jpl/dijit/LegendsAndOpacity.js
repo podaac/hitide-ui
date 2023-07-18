@@ -160,27 +160,23 @@ define([
         },
         handleVariablesFetched: function(message) {
 
-            // code to modify imgVariables when there are mutli groups
-            if('multi_lon_lat' in message){
-                
-                var new_variables = [];
-                for(var i = 0; i < message.multi_groups.length; i++){
-                    var group_name = message.multi_groups[i];
-                    for(var j = 0; j < message.imgVariables.length; j++){
-                        var image_variable = { ...message.imgVariables[j] }; 
-                        image_variable['id'] = group_name + '/' + image_variable['id'];
-                        new_variables.push(image_variable);
-                    }
+            // code to modify imgVariables when there are mutlti groups
+            if ('multi_lon_lat' in message) {
+              const newVariables = [];
+              for (const groupName of message.multi_groups) {
+                for (const imageVariable of message.imgVariables) {
+                  const updatedVariable = { ...imageVariable };
+                  updatedVariable.id = `${groupName}/${updatedVariable.id}`;
+                  newVariables.push(updatedVariable);
                 }
-                if (this.datasets[message.datasetId]) {
-                    this.datasets[message.datasetId].updateVariables(new_variables);
-                }
-            }
-
-            else{
-                if (this.datasets[message.datasetId]) {
-                    this.datasets[message.datasetId].updateVariables(message.imgVariables);
-                }
+              }
+              if (this.datasets[message.datasetId]) {
+                this.datasets[message.datasetId].updateVariables(newVariables);
+              }
+            } else {
+              if (this.datasets[message.datasetId]) {
+                this.datasets[message.datasetId].updateVariables(message.imgVariables);
+              }
             }
         },
         handleAddGranuleFootprint: function(message) {

@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## [4.15.0]
+### Added
+- issue-17: Add way to read config files to allow for multiple lat lon for variables images.
+- Add in commit message triggers
+### Changed
+### Removed
+### Fixed
+- PODAAC-5547: Replace spaces " " in group names to use "_" to work with tig with png names with "_" (replacing spaces)
+- Update footprint to allow drawing of polygons with holes
+- PODAAC-5326: Fixed 'Add matching granules to download' button
+
 ## [4.14.0]
 ### Added
 - Moved repo to https://github.com/podaac/hitide-ui

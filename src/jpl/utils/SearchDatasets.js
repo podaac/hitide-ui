@@ -34,11 +34,17 @@ define([
         }
 
         return all(promises).then(function(resultsArray) {
+            var additionalDataPromises = []
+            additionalDataPromises.push(getAdditionalCmrMetadata(resultsArray[1].response.docs))
+            return all(additionalDataPromises).then(function() {
+                return resultsArray
+            })
+        }).then(function(resultsArray) {
             if(promises.length === 1) {
                 return resultsArray[0];
             }
             return combineResults(resultsArray[0], resultsArray[1]);
-        });
+        })
     }
 
     function combineResults(first, second) {
@@ -72,7 +78,7 @@ define([
     /////////////////////////////////////////////////////////////////////
     function searchCmr(options) {
         var url = constructCmrUrl(options);
-
+        // console.log(url)
         return request(url, {
             handleAs: 'json',
             headers: {
@@ -90,7 +96,7 @@ define([
                     facet_fields: facets
                 }
             };
-        });
+        })
     }
 
     function constructCmrUrl(options) {
@@ -148,6 +154,38 @@ define([
         return datasets;
     }
 
+    function getCmrSpatialExtent(datasetObject){
+        var conceptId = datasetObject["Dataset-PersistentId"]
+        var url = config.hitide.externalConfigurables.cmrVariableService;
+        var customQuery = "{\n collection (conceptId: \"" + conceptId + "\") {\n spatialExtent \n} \n}"
+
+        return request.post(url, {
+            handleAs: 'json',
+            withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies,
+            headers: { "X-Requested-With": null, "Content-Type": "application/json" },
+            data: JSON.stringify({ query: customQuery })
+        }).then(function(response) {
+            var resolutionAndCoordinateSystemObject = response.data.collection.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
+            if (resolutionAndCoordinateSystemObject) {
+                var resolutionObject = resolutionAndCoordinateSystemObject.horizontalDataResolution.genericResolutions[0]
+                if (resolutionObject) {
+                    datasetObject["Dataset-AcrossTrackResolution"] = resolutionObject.xDimension
+                    datasetObject["Dataset-AlongTrackResolution"] = resolutionObject.yDimension
+                }
+            }
+            return datasetObject
+        })
+    }
+
+    function getAdditionalCmrMetadata(collectionObjectArray) {
+        var promises = collectionObjectArray.map(function(collectionObject) {
+            return getCmrSpatialExtent(collectionObject)
+        })
+        return all(promises).then(function(resolvedPromises) {
+            return resolvedPromises
+        })
+    }
+
     function extractCmrFacets(response) {
         var preFacets = response.feed.facets;
 
@@ -185,6 +223,7 @@ define([
                 "X-Requested-With": null
             }
         }).then(function(response) {
+            // console.log(response)
             return processL2ssResponse(response);
         });
             
@@ -196,7 +235,7 @@ define([
                 facet[i] += PODAAC_LABEL;
             }
         });
-
+        // console.log(response)
         return response;
     }
 

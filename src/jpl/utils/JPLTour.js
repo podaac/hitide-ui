@@ -350,7 +350,7 @@ define([
             }, {
                 title: "Submit Download Job",
                 element: "#downloadsSubmissionButton",
-                content: 'Once you are logged in, downloads will be enabled. HiTIDE will fill in an email address for you to receive notifications of job completion. You can also enter an alternate email address. Then click <b>Download Selected Granules</b> to start the download.<br><br><i>Note: to learn more about the "cut scanline" and "merge granules" options, visit the FAQs in the Help section.</i>',
+                content: 'Once you are logged in, downloads will be enabled. HiTIDE will fill in an email address for you to receive notifications of job completion. You can also enter an alternate email address. Then click <b>Download Selected Granules</b> to start the download.<br><br><i>Note: to learn more about the "merge granules" options, visit the FAQs in the Help section.</i>',
                 placement: "left",
                 onShow: function(tour) {
                     // Go to Granule Selection

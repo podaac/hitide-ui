@@ -78,11 +78,11 @@ define([
                 this.submitDownloadQueries();
             }));
 
-            // Check that the visibility of cutScanlineWarning is correctly set. Update whenever a new download query is added/removed.
-            this.updateCutScanlineWarningVisibility();
-            topic.subscribe(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
-            topic.subscribe(MyDataEvent.prototype.REMOVE_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
-            topic.subscribe(DownloadsEvent.prototype.JOB_SUBMITTED, lang.hitch(this, this.updateCutScanlineWarningVisibility));
+            // // Check that the visibility of cutScanlineWarning is correctly set. Update whenever a new download query is added/removed.
+            // this.updateCutScanlineWarningVisibility();
+            // topic.subscribe(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
+            // topic.subscribe(MyDataEvent.prototype.REMOVE_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
+            // topic.subscribe(DownloadsEvent.prototype.JOB_SUBMITTED, lang.hitch(this, this.updateCutScanlineWarningVisibility));
         },
 
         handleLoginStatusChange: function(loginStatus){
@@ -184,14 +184,14 @@ define([
             }).startup();
         },
 
-        updateCutScanlineWarningVisibility: function () {
-            if(this.cloudDatasetQueryExists()) {
-                domClass.remove(this.cutAtScanlineCloudWarning, "hidden");
-            }
-            else {
-                domClass.add(this.cutAtScanlineCloudWarning, "hidden");
-            }
-        },
+        // updateCutScanlineWarningVisibility: function () {
+        //     if(this.cloudDatasetQueryExists()) {
+        //         domClass.remove(this.cutAtScanlineCloudWarning, "hidden");
+        //     }
+        //     else {
+        //         domClass.add(this.cutAtScanlineCloudWarning, "hidden");
+        //     }
+        // },
 
         cloudDatasetQueryExists: function() {
             var downloadQueryArray = Object.values(DownloadQueriesTracker.getCurrentQueries());

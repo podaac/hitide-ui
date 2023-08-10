@@ -2,6 +2,7 @@ var hitideProfileOrigin = "https://hitide.profile.podaac.earthdatacloud.nasa.gov
 
 window.hitideConfig = {
     paletteService: "https://hitide.podaac.earthdatacloud.nasa.gov/palettes",
+    // paletteService: hitideProfileOrigin + "/palettes",
 
     cmrDatasetSearchService: hitideProfileOrigin + "/cmr/search/collections.json?tool_name=HiTIDE",
     cmrGranuleSearchService: hitideProfileOrigin + "/cmr/search/granules.umm_json",

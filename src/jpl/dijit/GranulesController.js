@@ -138,14 +138,13 @@ define([
                 "source": _context.source,
                 "Dataset-PersistentId": _context.datasetId
             }
-            if(_context.source === "cmr"){
-                SearchVariables.search(temp_dataset).then(function(variableNames) {
-                    var variables = variableNames.map(function(variableName) {
-                        return { id: variableName }
-                    });
-                    _context.cmr_variables = variables;
+            
+            SearchVariables.search(temp_dataset).then(function(variableNames) {
+                var variables = variableNames.map(function(variableName) {
+                    return { id: variableName }
                 });
-            }
+                _context.cmr_variables = variables;
+            });
 
         },
 
@@ -234,50 +233,30 @@ define([
                     var cellContent = domConstruct.create("div", {});
                     var btn;
                     if (obj.footprint) {
-                        if(obj.source == "cmr"){
-                            if(obj["Granule-Footprint"]){
-                                btn = domConstruct.toDom("<span class='ms ms-hatch-fill granuleIcon' style='color:" + _context.datasetColor + "'></span>");
-                            }
-                            else{
-                                btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
-                            }
+                        if(obj["Granule-Footprint"]){
+                            btn = domConstruct.toDom("<span class='ms ms-hatch-fill granuleIcon' style='color:" + _context.datasetColor + "'></span>");
                         }
                         else{
-                            btn = domConstruct.toDom("<span class='ms ms-hatch-fill granuleIcon' style='color:" + _context.datasetColor + "'></span>");
-                        } 
+                            btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
+                        }
                     }
                     else {
-                        if(obj.source == "cmr"){
-                            if(obj["Granule-Footprint"]){
-                                btn = domConstruct.toDom("<span class='ms ms-stroke granuleIcon'></span>");
-                            }
-                            else{
-                                btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
-                            }
+                        if(obj["Granule-Footprint"]){
+                            btn = domConstruct.toDom("<span class='ms ms-stroke granuleIcon'></span>");
                         }
                         else{
-                            btn = domConstruct.toDom("<span class='ms ms-stroke granuleIcon'></span>");
-                        } 
+                            btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
+                        }
                     }
                     domConstruct.place(btn, cellContent);
 
-                    if(obj.source == "cmr"){
-                        if(obj["Granule-Footprint"]){
-                            on(btn, "click", function(evt) {
-                                obj.footprint = !obj.footprint;
-                                _context.gridStore.put(obj)
-                                _context.updateStateStoreObj(obj);
-                                _context.toggleFootprintDisplay(obj);
-                            });
-                        }
-                    }
-                    else{
+                    if(obj["Granule-Footprint"]){
                         on(btn, "click", function(evt) {
                             obj.footprint = !obj.footprint;
                             _context.gridStore.put(obj)
                             _context.updateStateStoreObj(obj);
                             _context.toggleFootprintDisplay(obj);
-                        });                
+                        });
                     }
 
                     return cellContent;
@@ -292,44 +271,24 @@ define([
                     var cellContent = domConstruct.create("div", {});
                     var btn;
                     if (obj.preview) {
-                        if(obj.source == "cmr"){
-                            if(obj.has_image){
-                                btn = domConstruct.toDom("<span class='fa fa-image granuleIcon' style='color:" + _context.datasetColor + "'></span>");
-                            }
-                            else{
-                                btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
-                            }
+                        if(obj.has_image){
+                            btn = domConstruct.toDom("<span class='fa fa-image granuleIcon' style='color:" + _context.datasetColor + "'></span>");
                         }
                         else{
-                            btn = domConstruct.toDom("<span class='fa fa-image granuleIcon' style='color:" + _context.datasetColor + "'></span>");
-                        } 
+                            btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
+                        }
 
                     } else {
-                        if(obj.source === "cmr"){
-                            if(obj.has_image){
-                                btn = domConstruct.toDom("<span class='fa fa-image granuleIcon'></span>");
-                            }
-                            else{
-                                btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
-                            }
+                        if(obj.has_image){
+                            btn = domConstruct.toDom("<span class='fa fa-image granuleIcon'></span>");
                         }
                         else{
-                            btn = domConstruct.toDom("<span class='fa fa-image granuleIcon'></span>");
-                        } 
+                            btn = domConstruct.toDom("<span class='fa fa-ban granuleIcon'></span>");
+                        }
                     }
                     domConstruct.place(btn, cellContent);
 
-                    if(obj.source === "cmr"){
-                        if(obj.has_image){
-                            on(btn, "click", function(evt) {
-                                obj.preview = !obj.preview;
-                                _context.gridStore.put(obj)
-                                _context.updateStateStoreObj(obj);
-                                _context.togglePreviewDisplay(obj);
-                            });
-                        }
-                    }
-                    else{
+                    if(obj.has_image){
                         on(btn, "click", function(evt) {
                             obj.preview = !obj.preview;
                             _context.gridStore.put(obj)
@@ -565,19 +524,17 @@ define([
         fetchVariables: function(datasetId, datasetShortName) {
             var deferred = new Deferred();
 
-            if(this.source === "cmr"){
-                var configPath = "dataset-configs/" + this.datasetShortName + '.cfg';
+            var configPath = "dataset-configs/" + this.datasetShortName + '.cfg';
 
-                xhr(configPath, {
-                    handleAs: "json"
-                }).then(function(obj){
-                    deferred.resolve(obj);
-                }, function(error) {
-                    deferred.reject(error);
-                });                
-                
-                return deferred.promise;
-            }
+            xhr(configPath, {
+                handleAs: "json"
+            }).then(function(obj){
+                deferred.resolve(obj);
+            }, function(error) {
+                deferred.reject(error);
+            });                
+            
+            return deferred.promise;
         },
 
         initializeVariablesGrid: function() {
@@ -616,34 +573,32 @@ define([
             var withCredentials = false;
 
             var url;
-            if(this.source === "cmr"){
 
-                var sort 
-                if(this.granuleGrid._sort[0].attribute == "Granule-StartTime"){
-                    sort = "start_date";
-                }
-                else if(this.granuleGrid._sort[0].attribute == "Granule-StopTime"){
-                    sort = "end_date";
-                }
-                else if(this.granuleGrid._sort[0].attribute ==  "Granule-Name"){
-                    sort = "readable_granule_name";
-                }
-
-                url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
-                url += "collection_concept_id=" + this.datasetId;
-                url += "&bounding_box[]=" + (this.bbox || "");
-                // limit is ~2000 for page size
-                url += "&page_size=" + this.availableGranules;
-                url += "&offset=" + this.currentSolrIdx;
-                url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
-                url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
-                
-                if(this.nameFilterBox.get("value")){
-                    url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
-                }
-
-                withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
+            var sort 
+            if(this.granuleGrid._sort[0].attribute == "Granule-StartTime"){
+                sort = "start_date";
             }
+            else if(this.granuleGrid._sort[0].attribute == "Granule-StopTime"){
+                sort = "end_date";
+            }
+            else if(this.granuleGrid._sort[0].attribute ==  "Granule-Name"){
+                sort = "readable_granule_name";
+            }
+
+            url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
+            url += "collection_concept_id=" + this.datasetId;
+            url += "&bounding_box[]=" + (this.bbox || "");
+            // limit is ~2000 for page size
+            url += "&page_size=" + this.availableGranules;
+            url += "&offset=" + this.currentSolrIdx;
+            url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
+            url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
+            
+            if(this.nameFilterBox.get("value")){
+                url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
+            }
+
+            withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
 
             var _context = this;
             var r;
@@ -719,33 +674,31 @@ define([
             var withCredentials = false;
 
             var url;
-            if(this.source === "cmr"){
 
-                var sort 
-                if(this.granuleGrid._sort[0].attribute == "Granule-StartTime"){
-                    sort = "start_date";
-                }
-                else if(this.granuleGrid._sort[0].attribute == "Granule-StopTime"){
-                    sort = "end_date";
-                }
-                else if(this.granuleGrid._sort[0].attribute ==  "Granule-Name"){
-                    sort = "readable_granule_name";
-                }
-
-                url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
-                url += "collection_concept_id=" + this.datasetId;
-                url += "&bounding_box[]=" + (this.bbox || "");
-                url += "&page_size=" + this.itemsPerPage;
-                url += "&offset=" + this.currentSolrIdx;
-                url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
-                url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
-                
-                if(this.nameFilterBox.get("value")){
-                    url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
-                }
-
-                withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
+            var sort 
+            if(this.granuleGrid._sort[0].attribute == "Granule-StartTime"){
+                sort = "start_date";
             }
+            else if(this.granuleGrid._sort[0].attribute == "Granule-StopTime"){
+                sort = "end_date";
+            }
+            else if(this.granuleGrid._sort[0].attribute ==  "Granule-Name"){
+                sort = "readable_granule_name";
+            }
+
+            url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
+            url += "collection_concept_id=" + this.datasetId;
+            url += "&bounding_box[]=" + (this.bbox || "");
+            url += "&page_size=" + this.itemsPerPage;
+            url += "&offset=" + this.currentSolrIdx;
+            url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
+            url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
+            
+            if(this.nameFilterBox.get("value")){
+                url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
+            }
+
+            withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
 
             var _context = this;
             var r;
@@ -791,51 +744,28 @@ define([
         },
         
         postGranulesFetch: function(response) {
-            if(this.source === "cmr"){
-                this.availableGranules = response.hits;
-                var _context = this;
-                response.items.map(function(x) {
-                    GranuleMetadata.convertFootprintAndImageFromCMR(x);
-                    var granule_id = x["meta"]["concept-id"];
-                    var fpState = _context.stateStore.get(granule_id);
-                    var previewState = _context.stateStore.get(granule_id);
+            this.availableGranules = response.hits;
+            var _context = this;
+            response.items.map(function(x) {
+                GranuleMetadata.convertFootprintAndImageFromCMR(x);
+                var granule_id = x["meta"]["concept-id"];
+                var fpState = _context.stateStore.get(granule_id);
+                var previewState = _context.stateStore.get(granule_id);
 
-                    x["Granule-DatasetId"] = _context.datasetId;
-                    x["Granule-Name"] = x["meta"]["native-id"];
+                x["Granule-DatasetId"] = _context.datasetId;
+                x["Granule-Name"] = x["meta"]["native-id"];
 
-                    x.footprint = fpState ? fpState.footprint : false;
-                    x.preview = previewState ? previewState.preview : false;
-                                     
-                    x["Granule-StartTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]);
-                    x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
-                    
-                    x["source"] = "cmr";
+                x.footprint = fpState ? fpState.footprint : false;
+                x.preview = previewState ? previewState.preview : false;
+                                    
+                x["Granule-StartTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]);
+                x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
+                
+                x["source"] = "cmr";
 
-                    _context.gridStore.add(x)
-                });
-            }
-            else{
-                this.availableGranules = response.response.numFound;
-                var _context = this;
-                response.response.docs.map(function(x) {
-                    // MapUtil and Terraformer don't properly handle granule footprints or extents
-                    // when they are ENVELOPE type. So, convert all ENVELOPE strings to POLYGON strings.
-                    GranuleMetadata.convertFootprintsAndExtentsFromEnvelopeToPolygon(x);
-                    // Add extra fields to response docs
-                    // Check for state in stateStore
-                    var fpState = _context.stateStore.get(x["Granule-Id"]);
-                    var previewState = _context.stateStore.get(x["Granule-Id"]);
+                _context.gridStore.add(x)
+            });
 
-                    x.footprint = fpState ? fpState.footprint : false;
-                    x.preview = previewState ? previewState.preview : false;
-                    x["Granule-StartTime"] = moment.utc(x["Granule-StartTime"]);
-                    x["Granule-StopTime"] = moment.utc(x["Granule-StopTime"]);
-
-
-                    // Add to gridStore
-                    _context.gridStore.add(x);
-                });
-            }
             this.granulesInGrid = this.gridStore.query().length;
 
             // Set no data message accordingly
@@ -982,18 +912,7 @@ define([
                 var obj = granuleObjs[i];
 
                 if (obj.footprint != active) {
-
-                    if(obj.source === "cmr"){
-                        if(obj["Granule-Footprint"]){
-                            obj.footprint = active;
-                            this.gridStore.put(obj);
-                            this.updateStateStoreObj(obj);
-
-                            // Update fp
-                            this.toggleFootprintDisplay(obj);
-                        }
-                    }
-                    else{
+                    if(obj["Granule-Footprint"]){
                         obj.footprint = active;
                         this.gridStore.put(obj);
                         this.updateStateStoreObj(obj);
@@ -1011,18 +930,7 @@ define([
                 // Update store
                 var obj = granuleObjs[i];
                 if (obj.preview != active) {
-
-                    if(obj.source === "cmr"){
-                        if(obj.has_image){
-                            obj.preview = active;
-                            this.gridStore.put(obj);
-                            this.updateStateStoreObj(obj);
-
-                            // Update preview
-                            this.togglePreviewDisplay(obj);
-                        }
-                    }
-                    else{
+                    if(obj.has_image){
                         obj.preview = active;
                         this.gridStore.put(obj);
                         this.updateStateStoreObj(obj);

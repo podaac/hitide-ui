@@ -126,25 +126,43 @@ define([
 
     function getCmrSpatialExtent(datasetObject){
         var conceptId = datasetObject["Dataset-PersistentId"]
-        var url = config.hitide.externalConfigurables.cmrVariableService;
-        var customQuery = "{\n collection (conceptId: \"" + conceptId + "\") {\n spatialExtent \n} \n}"
-
-        return request.post(url, {
+        // var url = config.hitide.externalConfigurables.cmrVariableService;
+        // var customQuery = "{\n collection (conceptId: \"" + conceptId + "\") {\n spatialExtent \n} \n}"
+        var secondURL = config.hitide.externalConfigurables.cmrCollectionSearchService + "/" + conceptId + ".umm_json"
+        return request(secondURL, {
             handleAs: 'json',
-            withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies,
-            headers: { "X-Requested-With": null, "Content-Type": "application/json" },
-            data: JSON.stringify({ query: customQuery })
+            headers: {
+                "X-Requested-With": null
+            },
+            withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies
         }).then(function(response) {
-            var resolutionAndCoordinateSystemObject = response.data.collection.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
+            var resolutionAndCoordinateSystemObject = response.SpatialExtent.HorizontalSpatialDomain.ResolutionAndCoordinateSystem
             if (resolutionAndCoordinateSystemObject) {
-                var resolutionObject = resolutionAndCoordinateSystemObject.horizontalDataResolution.genericResolutions[0]
+                var resolutionObject = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions[0]
                 if (resolutionObject) {
-                    datasetObject["Dataset-AcrossTrackResolution"] = resolutionObject.xDimension
-                    datasetObject["Dataset-AlongTrackResolution"] = resolutionObject.yDimension
+                    datasetObject["Dataset-AcrossTrackResolution"] = resolutionObject.XDimension
+                    datasetObject["Dataset-AlongTrackResolution"] = resolutionObject.YDimension
                 }
             }
             return datasetObject
         })
+        // NOTE: Example of Graphql implementation of above query
+        // return request.post(url, {
+        //     handleAs: 'json',
+        //     withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies,
+        //     headers: { "X-Requested-With": null, "Content-Type": "application/json" },
+        //     data: JSON.stringify({ query: customQuery })
+        // }).then(function(response) {
+        //     var resolutionAndCoordinateSystemObject = response.data.collection.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
+        //     if (resolutionAndCoordinateSystemObject) {
+        //         var resolutionObject = resolutionAndCoordinateSystemObject.horizontalDataResolution.genericResolutions[0]
+        //         if (resolutionObject) {
+        //             datasetObject["Dataset-AcrossTrackResolution"] = resolutionObject.xDimension
+        //             datasetObject["Dataset-AlongTrackResolution"] = resolutionObject.yDimension
+        //         }
+        //     }
+        //     return datasetObject
+        // })
     }
 
     function getAdditionalCmrMetadata(collectionObjectArray) {

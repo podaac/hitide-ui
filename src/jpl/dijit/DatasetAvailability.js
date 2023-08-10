@@ -79,10 +79,8 @@ define([
         },
 
         initializeAvailabilityApi: function() {
-            var l2ssAvailabilityApi = new L2ssAvailabilityApi(this.config.hitide.externalConfigurables.granuleAvailabilityService);
             var cmrAvailabilityApi = new CmrAvailabilityApi(this.config.hitide.externalConfigurables.cmrGranuleAvailabilityService);
             this.availability = new CombinedAvailabilityApi({
-                l2ssAvailabilityApi: l2ssAvailabilityApi,
                 cmrAvailabilityApi: cmrAvailabilityApi
             });
         },

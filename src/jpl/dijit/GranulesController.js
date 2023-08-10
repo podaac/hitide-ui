@@ -578,24 +578,6 @@ define([
                 
                 return deferred.promise;
             }
-
-            // console.warn("Warning, dataset variables hardcoded to a single variable");
-            var url = this.config.hitide.externalConfigurables.variableService + "?datasetId=" + datasetId;
-
-            var _context = this;
-            xhr.get(url, {
-                headers: {
-                    "X-Requested-With": null
-                },
-                handleAs: "json",
-                method: "get"
-            }).then(function(response) {
-                deferred.resolve(response);
-            }, function(err) {
-                console.log("GranulesController – Variable request error");
-                deferred.reject(err);
-            });
-            return deferred.promise;
         },
 
         initializeVariablesGrid: function() {
@@ -661,17 +643,6 @@ define([
                 }
 
                 withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
-            }
-            else{
-                url = this.config.hitide.externalConfigurables.granuleSearchService + "?";
-                url += "datasetId=" + this.datasetId;
-                url += "&startTime=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value"));
-                url += "&endTime=" + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
-                url += "&name=" + this.nameFilterBox.get("value");
-                url += "&bbox=" + (this.bbox || "");
-                url += "&itemsPerPage=" + this.availableGranules;
-                url += "&startIndex=" + this.currentSolrIdx;
-                url += "&sort=" + this.granuleGrid._sort[0].attribute + (this.granuleGrid._sort[0].descending ? " desc" : " asc");
             }
 
             var _context = this;
@@ -774,17 +745,6 @@ define([
                 }
 
                 withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
-            }
-            else{
-                url = this.config.hitide.externalConfigurables.granuleSearchService + "?";
-                url += "datasetId=" + this.datasetId;
-                url += "&startTime=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value"));
-                url += "&endTime=" + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
-                url += "&name=" + this.nameFilterBox.get("value");
-                url += "&bbox=" + (this.bbox || "");
-                url += "&itemsPerPage=" + this.itemsPerPage;
-                url += "&startIndex=" + this.currentSolrIdx;
-                url += "&sort=" + this.granuleGrid._sort[0].attribute + (this.granuleGrid._sort[0].descending ? " desc" : " asc");
             }
 
             var _context = this;

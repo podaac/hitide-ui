@@ -121,13 +121,6 @@ define([
                     mergeGranules: this.mergeGranulesSelection.checked
                 };
                 
-                // Submit one job for ALL l2ss subjobs...
-                // And one job for EACH cloud subjob
-                var l2ssJob = {
-                    email: this.downloadsSubmissionEmail.value,
-                    subjobs: []
-                }
-                
                 for (var subjobId in subjobs) {
                     if (subjobs.hasOwnProperty(subjobId)) {
                         var subjob = subjobs[subjobId];
@@ -140,14 +133,8 @@ define([
                             cloudJob.subjobs.push(subjob.getFullDownloadQuery(downloadOptions));
                             this.downloadsManager.submitJob(cloudJob);
                         }
-                        else{
-                            l2ssJob.subjobs.push(subjob.getFullDownloadQuery(downloadOptions));
-                        }
                     }
                 }
-
-                if(l2ssJob.subjobs.length > 0)
-                    this.downloadsManager.submitJob(l2ssJob);
             }
         },
 

@@ -3,14 +3,8 @@
 var hitideProfileOrigin = "$PROFILE_API";
 
 window.hitideConfig = {
-    
-    datasetSearchService: "$MIDDLEWARE_SERVICE/l2ss/dataset/search",
-    datasetMetadataService: "$MIDDLEWARE_SERVICE/l2ss/dataset/search",
-
-    granuleSearchService: "$MIDDLEWARE_SERVICE/l2ss/granule/search",
-    granuleAvailabilityService: "$MIDDLEWARE_SERVICE/l2ss/granule/availability",
-    variableService: "$MIDDLEWARE_SERVICE/l2ss/dataset/variable",
     paletteService: "$MIDDLEWARE_SERVICE/l2ss/palettes",
+
 
     authCodeUrl: "https://urs.earthdata.nasa.gov/oauth/authorize",
     loginUrl: hitideProfileOrigin + "/hitide/api/session/login",

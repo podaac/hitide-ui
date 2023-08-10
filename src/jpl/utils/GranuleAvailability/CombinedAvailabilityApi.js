@@ -7,7 +7,6 @@ define([
   return declare(null, {
     constructor: function (options) {
       this.cmr = options.cmrAvailabilityApi;
-      this.l2ss = options.l2ssAvailabilityApi;
     },
 
     fetchAvailability: function (startTime, endTime, gap, datasets) {
@@ -19,8 +18,6 @@ define([
         var id = dataset["Dataset-PersistentId"];
         if (dataset.source === "cmr") {
           return _context.cmr.fetchOne(startTimeString, endTimeString, gap, id);
-        } else {
-          return _context.l2ss.fetchOne(startTimeString, endTimeString, gap, id);
         }
       });
       return all(requestPromises);

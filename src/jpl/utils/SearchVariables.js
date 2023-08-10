@@ -8,7 +8,7 @@ define([
     /**
      * 
      * @param {Object} dataset 
-     * @param {string} dataset.source (optional) l2ss or cmr
+     * @param {string} dataset.source (optional) cmr
      * @param {string} dataset [\"Dataset-PersistentId\"]
      * 
      * @returns dojo promise containing response or error
@@ -21,22 +21,6 @@ define([
         if(dataset.source === 'cmr') {
             return searchCmr(dataset);
         }
-        else {
-            return searchL2ss(dataset);
-        }
-    }
-
-    function searchL2ss(dataset) {
-        var url = config.hitide.externalConfigurables.variableService + "?datasetId=" + dataset["Dataset-PersistentId"];
-        return request(url, {
-            handleAs: 'json',
-            headers: { "X-Requested-With": null }
-        }).then(function(response) {
-            response.variables.sort(function (a, b) {
-                return a.toLowerCase().localeCompare(b.toLowerCase());
-            });
-            return response.variables;
-        });
     }
 
     function searchCmr(dataset, customQuery) {

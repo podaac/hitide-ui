@@ -276,14 +276,6 @@ define([
                 url += "&page_size=0"
                 withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
             }
-            else{
-                url = this.config.hitide.externalConfigurables.granuleSearchService + "?";
-                url += "datasetId=" + datasetId;
-                url += "&startTime=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(startTime);
-                url += "&endTime=" + DOMUtil.prototype.dateFormatISOEndOfDay(endTime);
-                url += "&bbox=" + (bbox ? bbox : "");
-                url += "&itemsPerPage=0";
-            }
 
             var _context = this;
 

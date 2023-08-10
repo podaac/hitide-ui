@@ -4,12 +4,11 @@ define([
     "jpl/config/Config"
 ], function(request, all, Config){
 
-    var PODAAC_LABEL = " - PODAAC";
     var POCLOUD_LABEL = " - POCLOUD";
     var config = Config.getInstance();
 
     /**
-     * Search L2SS and CMR datasets - returning datasets and facets
+     * Search CMR datasets - returning datasets and facets
      * 
      * @param {Object} options 
      * @param {string} options.startTime
@@ -23,52 +22,24 @@ define([
         if(typeof options !== "object")
             throw new Error('Options object must be passed to SearchDatasets.search(options)');
 
-        var l2ssSearchUrl = config.hitide.externalConfigurables.datasetSearchService;
         var cmrSearchUrl = config.hitide.externalConfigurables.cmrDatasetSearchService;
 
         var promises = [];
-        if(typeof l2ssSearchUrl === 'string') promises.push(searchL2ss(options));
         if(typeof cmrSearchUrl === 'string') promises.push(searchCmr(options));
         if(promises.length === 0) {
-            console.log('Did not enable l2ss or cmr datasets');
+            console.log('Did not enable cmr datasets');
         }
 
         return all(promises).then(function(resultsArray) {
+            // get additional resolution info metadata for datasets
             var additionalDataPromises = []
-            additionalDataPromises.push(getAdditionalCmrMetadata(resultsArray[1].response.docs))
+            additionalDataPromises.push(getAdditionalCmrMetadata(resultsArray[0].response.docs))
             return all(additionalDataPromises).then(function() {
                 return resultsArray
             })
         }).then(function(resultsArray) {
-            if(promises.length === 1) {
-                return resultsArray[0];
-            }
-            return combineResults(resultsArray[0], resultsArray[1]);
+            return resultsArray[0];
         })
-    }
-
-    function combineResults(first, second) {
-        var combined = {
-            response: {
-                docs: first.response.docs.concat(second.response.docs)
-            },
-            facet_counts: {
-                facet_fields: {
-                    "DatasetParameter-Variable-Full": 
-                        first.facet_counts.facet_fields["DatasetParameter-Variable-Full"]
-                        .concat(second.facet_counts.facet_fields["DatasetParameter-Variable-Full"]),
-                    "DatasetSource-Sensor-LongName-Full":
-                        first.facet_counts.facet_fields["DatasetSource-Sensor-LongName-Full"]
-                        .concat(second.facet_counts.facet_fields["DatasetSource-Sensor-LongName-Full"]),
-                    "Dataset-Provider-ShortName": 
-                        first.facet_counts.facet_fields["Dataset-Provider-ShortName"]
-                        .concat(second.facet_counts.facet_fields["Dataset-Provider-ShortName"])
-                    
-                }
-            }
-        };
-
-        return combined;
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -78,7 +49,6 @@ define([
     /////////////////////////////////////////////////////////////////////
     function searchCmr(options) {
         var url = constructCmrUrl(options);
-        // console.log(url)
         return request(url, {
             handleAs: 'json',
             headers: {
@@ -207,56 +177,6 @@ define([
             "Dataset-Provider-ShortName": providers
         };
     }
-
-
-    /////////////////////////////////////////////////////////////////////
-    //
-    //          L2SS Functions
-    //
-    /////////////////////////////////////////////////////////////////////
-    function searchL2ss(options) {
-        var url = constructL2ssUrl(options);
-
-        return request(url, {
-            handleAs: 'json',
-            headers: {
-                "X-Requested-With": null
-            }
-        }).then(function(response) {
-            // console.log(response)
-            return processL2ssResponse(response);
-        });
-            
-    }
-
-    function processL2ssResponse(response) {
-        Object.values(response.facet_counts.facet_fields).forEach(function(facet) {
-            for(var i = 0; i < facet.length; i+= 2) {
-                facet[i] += PODAAC_LABEL;
-            }
-        });
-        // console.log(response)
-        return response;
-    }
-
-    function constructL2ssUrl(options) {
-        var url = config.hitide.externalConfigurables.datasetSearchService;
-        var itemsPerPage = config.hitide.externalConfigurables.datasetSearchServiceItemsPerPage;
-        url += "?itemsPerPage=" + (itemsPerPage || 200);
-        if(options.startTime) url += "&startTime=" + options.startTime;
-        if(options.endTime) url += "&endTime=" + options.endTime;
-        if(options.bbox) url += "&bbox=" + options.bbox;
-        if(options.facets) {
-            Object.keys(options.facets).forEach(function(facetName) {
-                var facetArray = options.facets[facetName];
-                facetArray.forEach(function(facetValue) {
-                    url += '&' + facetName + '=' + facetValue.replace(PODAAC_LABEL, '');
-                })
-            })
-        }
-        return url;
-    }
-
     
     return {
         search: search

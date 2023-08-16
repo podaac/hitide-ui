@@ -6,6 +6,7 @@ window.hitideConfig = {
 
     cmrDatasetSearchService: hitideProfileOrigin + "/cmr/search/collections.json?tool_name=HiTIDE",
     cmrGranuleSearchService: hitideProfileOrigin + "/cmr/search/granules.umm_json",
+    cmrCollectionSearchService: hitideProfileOrigin + "/cmr/search/concepts",
     cmrGranuleAvailabilityService: hitideProfileOrigin + "/cmr",
     cmrVariableService: hitideProfileOrigin + "/cmr/graphql",
     crossOriginCmrCookies: true,

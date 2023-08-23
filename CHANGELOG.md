@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: removed cloud icons from datasets
 - issue-15: removed cut scanline option in download options tab
 ### Fixed
-- issue-15: fixed color palette error in legend when selecting datasets
+- issue-15: fixed the color palette error in legend when selecting datasets
 
 ## [4.15.0]
 ### Added

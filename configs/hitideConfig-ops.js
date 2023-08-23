@@ -1,15 +1,12 @@
 var hitideProfileOrigin = "https://hitide.profile.podaac.earthdatacloud.nasa.gov/hitide/api";
 
 window.hitideConfig = {
-    datasetSearchService: "https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/dataset/search",
-    datasetMetadataService: "https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/dataset/search",
-    granuleSearchService: "https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/granule/search",
-    granuleAvailabilityService: "https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/granule/availability",
-    variableService: "https://podaac-tools.jpl.nasa.gov/l2ss-services/l2ss/dataset/variable",
     paletteService: "https://hitide.podaac.earthdatacloud.nasa.gov/palettes",
+    // paletteService: hitideProfileOrigin + "/palettes",
 
     cmrDatasetSearchService: hitideProfileOrigin + "/cmr/search/collections.json?tool_name=HiTIDE",
     cmrGranuleSearchService: hitideProfileOrigin + "/cmr/search/granules.umm_json",
+    cmrCollectionSearchService: hitideProfileOrigin + "/cmr/search/concepts",
     cmrGranuleAvailabilityService: hitideProfileOrigin + "/cmr",
     cmrVariableService: hitideProfileOrigin + "/cmr/graphql",
     crossOriginCmrCookies: true,

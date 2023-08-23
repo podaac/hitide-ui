@@ -23,12 +23,10 @@ define([
     "jpl/config/Config",
     "jpl/utils/DOMUtil",
     "jpl/dijit/ui/AlertDialog",
-    "jpl/utils/GranuleAvailability/L2ssAvailabilityApi",
     "jpl/utils/GranuleAvailability/CmrAvailabilityApi",
     "jpl/utils/GranuleAvailability/CombinedAvailabilityApi"
 ], function(declare, lang, on, domConstruct, domClass, domAttr, domStyle, topic, query, mouse, Deferred, all, xhr, coreFx, registry,
-    _WidgetBase, _TemplatedMixin, DateTextBox, template, css, highcharts, Config, DOMUtil, AlertDialog, 
-    L2ssAvailabilityApi, CmrAvailabilityApi, CombinedAvailabilityApi) {
+    _WidgetBase, _TemplatedMixin, DateTextBox, template, css, highcharts, Config, DOMUtil, AlertDialog, CmrAvailabilityApi, CombinedAvailabilityApi) {
     return declare([_WidgetBase, _TemplatedMixin], {
         templateString: template,
         widgetsInTemplate: true,
@@ -79,10 +77,8 @@ define([
         },
 
         initializeAvailabilityApi: function() {
-            var l2ssAvailabilityApi = new L2ssAvailabilityApi(this.config.hitide.externalConfigurables.granuleAvailabilityService);
             var cmrAvailabilityApi = new CmrAvailabilityApi(this.config.hitide.externalConfigurables.cmrGranuleAvailabilityService);
             this.availability = new CombinedAvailabilityApi({
-                l2ssAvailabilityApi: l2ssAvailabilityApi,
                 cmrAvailabilityApi: cmrAvailabilityApi
             });
         },

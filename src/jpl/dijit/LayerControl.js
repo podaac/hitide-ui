@@ -133,7 +133,12 @@ define([
                 var _context = this;
                 var url = this.config.hitide.externalConfigurables.paletteService + "/" + this.palette + ".json";
                 xhr.get(url, {
-                    handleAs: "json"
+                    handleAs: "json",     
+                    headers: {
+                        "X-Requested-With": null
+                    },
+                    method: "get",
+                    withCredentials: false
                 }).then(function(success) {
                         _context.paletteArr = success.Palette.values.value;
                         _context.drawColorbar(_context.paletteArr);

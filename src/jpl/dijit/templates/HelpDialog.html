@@ -39,14 +39,14 @@
                         </div>
                         <div class="help-container help-container-hidden" id="helpFaqContent">
 
-                            <div class="helpFaqTitle">Why are there cloud icons (<span class='fa fa-cloud cloudIcon'></span>) next to certain datasets?</div>
+                            <!-- <div class="helpFaqTitle">Why are there cloud icons (<span class='fa fa-cloud cloudIcon'></span>) next to certain datasets?</div>
                             <div class="helpFaqContent">
                                 HiTIDE is migrating to the cloud and is also shifting to cloud based services for retrieving metadata
                                 and performing subsets on datasets.<br /><br />
 
                                 This migration is taking a phased approach where datasets will be transitioned in groups. Therefore, during the transition, you will be able to see both pre-transition (classic) datasets
                                 and post-transition (cloud) datasets in the dataset list. Cloud datasets can be identified by the presence of the <span class='fa fa-cloud cloudIcon'></span> icon.
-                            </div>
+                            </div> -->
 
                             <div class="helpFaqTitle">As a HiTIDE user, does it make any difference if a dataset has transitioned to the cloud services or not?</div>
                             <div class="helpFaqContent">
@@ -95,7 +95,7 @@
                                     The information provided by users when they register for Earthdata Login helps NASA better understand how our data are being used and the diverse needs of multiple user communities. This helps us prioritize improvements in data discovery, access, and usability. Registration also allows us to inform users with pertinent information such as the availability of new or updated data products, or data quality issues. In the future, it will allow for new value-added features and customized services resulting in a better user experience. For questions regarding Earthdata Login, see <a href="https://urs.earthdata.nasa.gov/documentation">https://urs.earthdata.nasa.gov/documentation</a>.
                             </div>
 
-                            <div class="helpFaqTitle">What does the "Cut Scanline" download option mean?</div>
+                            <!-- <div class="helpFaqTitle">What does the "Cut Scanline" download option mean?</div>
                             <div class="helpFaqContent">Swath data are often captured in scanlines. Because HiTIDE allows users to specify custom regions of interest, this presents a dilemma when subsetting the data. Some users want only the data within their region of interest, and nothing else. Other users want the entire scanline, regardless of if it all falls within their region of interest. To this end, HiTIDE allows the option to “cut scanlines” at the granule download screen.
                                 <br>
                                 <br>
@@ -113,7 +113,11 @@
                                     <br>
                                     <br>The red box is the bounding box used to subset, and the blue boxes are shortened scanlines that intersect with the red box. The data in the blue boxes within the red box will be including in the subsetted result. The data in the blue boxes outside of the red box will be changed to No Value and included in the subsetted result. The original scanline width has been shortened to reduce the data size.
                                 </span>
-                            </div>
+                            </div> -->
+
+                            <div class="helpFaqTitle">Where did the "Cut Scanline" download option go?</div>
+                            <div class="helpFaqContent">The Cut Scanline feature is now always applied when subsetting datasets in HiTIDE. The download option has been depreciated since classic datasets have been phased out and replaced by cloud datasets. We automatically cut the scanline for you meaning that you download only your region of interest after it is subsetted.</div>
+
                             <div class="helpFaqTitle">What does the "Merge Granules" download option mean?</div>
                             <div class="helpFaqContent">
                                 By enabling the "Merge Granules" download option in the "Downloads" tab, all of the subsetted granules for a given job will be merged into a single NetCDF4 granule. This granule will have an additional index called "subset_index" added to the variables. This index maps the file from which the subsetter portion of the data comes. For example, if you have 50 files in your subset region, merging them will give you a single file back with an "subset_index" (50) for each variable found in the original files. This file is meant to be easier to work with instead of multiple individual files.

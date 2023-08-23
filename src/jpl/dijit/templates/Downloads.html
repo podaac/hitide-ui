@@ -22,23 +22,6 @@
             <input type="text" id="download-email-input" name="email" value="" data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="downloadsSubmissionEmail" />
             <span data-dojo-attach-point="downloadsSubmissionEmailError" class="downloadsSubmissionEmailError">Invalid email address</span>
             <div class="downloadOptionContainer">
-                <span class="downloadOptionLabel cutAtScanlineLabel">Cut Scanline</span>
-                <div class="switch">
-                    <input data-dojo-attach-point="cutAtScanlineSelection" id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox">
-                    <label for="cmn-toggle-1"></label>
-                </div>
-                <span 
-                    data-dojo-attach-point="cutAtScanlineCloudWarning" 
-                    class="cutAtScanlineCloudWarning"
-                    data-toggle="tooltip" 
-                    title="Note: Cut Scanline is ALWAYS applied to subsets of cloud datasets, regardless of the position of this toggle."
-                    data-placement="right"
-                >
-                    <span class="fa fa-cloud"></span>
-                    <span class="">!</span>
-                </span>
-            </div>
-            <div class="downloadOptionContainer">
                 <span class="downloadOptionLabel mergeGranulesLabel">Merge Granules</span>
                 <div class="switch">
                     <input data-dojo-attach-point="mergeGranulesSelection" id="cmn-toggle-2" class="cmn-toggle cmn-toggle-round" type="checkbox">

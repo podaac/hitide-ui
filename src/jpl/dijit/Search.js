@@ -244,18 +244,6 @@ define([
                 label: "Name",
                 renderCell: function(obj) {
                     var element = domConstruct.toDom("<span>" + obj["Dataset-ShortName"] + "</span>");
-                    if(obj.source === "cmr") {
-                        var cloudInfo = document.createElement('span');
-                        cloudInfo.className = 'fa fa-cloud cloudIcon cloudButton';
-                        cloudInfo.title = 'This dataset is hosted in the cloud. Click this cloud for more info.';
-                        cloudInfo.onclick = function(){
-                            var helpDialog = new HelpDialog();
-                            helpDialog.startup();
-                            helpDialog.setContentPage("helpFaq");
-                            return false;
-                        }
-                        element.appendChild(cloudInfo);
-                    }
                     return element;
                 }
             }, {

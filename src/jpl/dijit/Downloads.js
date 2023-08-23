@@ -78,11 +78,11 @@ define([
                 this.submitDownloadQueries();
             }));
 
-            // Check that the visibility of cutScanlineWarning is correctly set. Update whenever a new download query is added/removed.
-            this.updateCutScanlineWarningVisibility();
-            topic.subscribe(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
-            topic.subscribe(MyDataEvent.prototype.REMOVE_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
-            topic.subscribe(DownloadsEvent.prototype.JOB_SUBMITTED, lang.hitch(this, this.updateCutScanlineWarningVisibility));
+            // // Check that the visibility of cutScanlineWarning is correctly set. Update whenever a new download query is added/removed.
+            // this.updateCutScanlineWarningVisibility();
+            // topic.subscribe(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
+            // topic.subscribe(MyDataEvent.prototype.REMOVE_DOWNLOAD_QUERY, lang.hitch(this, this.updateCutScanlineWarningVisibility));
+            // topic.subscribe(DownloadsEvent.prototype.JOB_SUBMITTED, lang.hitch(this, this.updateCutScanlineWarningVisibility));
         },
 
         handleLoginStatusChange: function(loginStatus){
@@ -121,13 +121,6 @@ define([
                     mergeGranules: this.mergeGranulesSelection.checked
                 };
                 
-                // Submit one job for ALL l2ss subjobs...
-                // And one job for EACH cloud subjob
-                var l2ssJob = {
-                    email: this.downloadsSubmissionEmail.value,
-                    subjobs: []
-                }
-                
                 for (var subjobId in subjobs) {
                     if (subjobs.hasOwnProperty(subjobId)) {
                         var subjob = subjobs[subjobId];
@@ -140,14 +133,8 @@ define([
                             cloudJob.subjobs.push(subjob.getFullDownloadQuery(downloadOptions));
                             this.downloadsManager.submitJob(cloudJob);
                         }
-                        else{
-                            l2ssJob.subjobs.push(subjob.getFullDownloadQuery(downloadOptions));
-                        }
                     }
                 }
-
-                if(l2ssJob.subjobs.length > 0)
-                    this.downloadsManager.submitJob(l2ssJob);
             }
         },
 
@@ -197,14 +184,14 @@ define([
             }).startup();
         },
 
-        updateCutScanlineWarningVisibility: function () {
-            if(this.cloudDatasetQueryExists()) {
-                domClass.remove(this.cutAtScanlineCloudWarning, "hidden");
-            }
-            else {
-                domClass.add(this.cutAtScanlineCloudWarning, "hidden");
-            }
-        },
+        // updateCutScanlineWarningVisibility: function () {
+        //     if(this.cloudDatasetQueryExists()) {
+        //         domClass.remove(this.cutAtScanlineCloudWarning, "hidden");
+        //     }
+        //     else {
+        //         domClass.add(this.cutAtScanlineCloudWarning, "hidden");
+        //     }
+        // },
 
         cloudDatasetQueryExists: function() {
             var downloadQueryArray = Object.values(DownloadQueriesTracker.getCurrentQueries());

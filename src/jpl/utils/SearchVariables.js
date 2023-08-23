@@ -8,7 +8,7 @@ define([
     /**
      * 
      * @param {Object} dataset 
-     * @param {string} dataset.source (optional) l2ss or cmr
+     * @param {string} dataset.source (optional) cmr
      * @param {string} dataset [\"Dataset-PersistentId\"]
      * 
      * @returns dojo promise containing response or error
@@ -21,31 +21,19 @@ define([
         if(dataset.source === 'cmr') {
             return searchCmr(dataset);
         }
-        else {
-            return searchL2ss(dataset);
-        }
     }
 
-    function searchL2ss(dataset) {
-        var url = config.hitide.externalConfigurables.variableService + "?datasetId=" + dataset["Dataset-PersistentId"];
-        return request(url, {
-            handleAs: 'json',
-            headers: { "X-Requested-With": null }
-        }).then(function(response) {
-            response.variables.sort(function (a, b) {
-                return a.toLowerCase().localeCompare(b.toLowerCase());
-            });
-            return response.variables;
-        });
-    }
-
-    function searchCmr(dataset) {
+    function searchCmr(dataset, customQuery) {
         // This function uses the cmr graphql api, since this allows getting
         // all the variable names for a collection in one request
         var url = config.hitide.externalConfigurables.cmrVariableService;
 
         var templateQuery = "{\n  collection (conceptId:\"{COLLECTION_ID}\") {\n    shortName\n    variables {\n      items {\n        name\n      }\n    }\n  }\n}"
+          
         var query = templateQuery.replace("{COLLECTION_ID}", dataset['Dataset-PersistentId']);
+        if (customQuery) {
+            query = customQuery
+        }
         
         return request.post(url, {
             handleAs: 'json',
@@ -68,7 +56,6 @@ define([
         });
     }
 
-    
     return {
         search: search
     };

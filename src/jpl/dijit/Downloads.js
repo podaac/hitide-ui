@@ -117,10 +117,10 @@ define([
                 // Assemble job
                 var subjobs = this.downloadsListing.getDownloadQueryObjs();
                 var downloadOptions = {
-                    cutAtScanline: this.cutAtScanlineSelection.checked,
+                    // cutAtScanline: this.cutAtScanlineSelection.checked,
                     mergeGranules: this.mergeGranulesSelection.checked
                 };
-                
+                console.log(subjobs)
                 for (var subjobId in subjobs) {
                     if (subjobs.hasOwnProperty(subjobId)) {
                         var subjob = subjobs[subjobId];

@@ -14,8 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: Removed cloud icons from datasets
 - issue-15: Removed cut scanline option in download options tab
 ### Fixed
-- issue-15: Fixed color palette error in legend when selecting datasets
-
+- issue-15: Fixed color palette error in the legend when selecting datasets
+gi
 ## [4.15.0]
 ### Added
 - issue-17: Add way to read config files to allow for multiple lat lon for variables images.

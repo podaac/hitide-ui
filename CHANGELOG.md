@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: Getting cloud resolution metedata using normal get instead of graphql because it is faster
 - issue-15: Changed FAQ references to cloud icon and cut scanline
 ### Removed
-- issue-15: Removed references to l2ss
+- issue-15: Removed references to on-prem l2ss
 - issue-15: Removed cloud icons from datasets
 - issue-15: Removed cut scanline option in download options tab
 ### Fixed

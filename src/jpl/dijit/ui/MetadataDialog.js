@@ -88,7 +88,6 @@ define([
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
 
             /* Set date range */
-            console.log(metadata)
             var startDate = metadata["DatasetCoverage-StartTimeLong"];
             var formattedStart = "Unknown";
             if (startDate) {

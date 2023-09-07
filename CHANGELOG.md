@@ -7,15 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 ### Changed
+### Removed
+### Fixed
+
+
+## [4.16.0]
+### Added
+### Changed
 - issue-15: Getting cloud resolution metedata using normal get instead of graphql because it is faster
 - issue-15: Changed FAQ references to cloud icon and cut scanline
 ### Removed
-- issue-15: Removed references to l2ss
+- issue-15: Removed references to on-prem l2ss
 - issue-15: Removed cloud icons from datasets
 - issue-15: Removed cut scanline option in download options tab
 ### Fixed
 - issue-15: Fixed color palette error in the legend when selecting datasets
-gi
+
+
 ## [4.15.0]
 ### Added
 - issue-17: Add way to read config files to allow for multiple lat lon for variables images.

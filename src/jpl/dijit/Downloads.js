@@ -119,7 +119,6 @@ define([
                 var downloadOptions = {
                     mergeGranules: this.mergeGranulesSelection.checked
                 };
-                console.log(subjobs)
                 for (var subjobId in subjobs) {
                     if (subjobs.hasOwnProperty(subjobId)) {
                         var subjob = subjobs[subjobId];

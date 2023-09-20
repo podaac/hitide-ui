@@ -129,17 +129,7 @@ define([
                 var facets = results.facets;
                 _context.facetSelector.addFacetItems(facets);
                 _context.searchFacetTagContainer.addFacetItems(facets);
-
-                // Populate search results with initial results from date range and region
-                var datasets = results.datasets;
-                var obj = {};
-                datasets.forEach(function(val) {
-                    obj[val["Dataset-PersistentId"]] = val;
-                });
-                _context.initialSearch = obj;
-                topic.publish(SearchEvent.prototype.SEARCH_LOADED, {
-                    success: true
-                });
+                _context.setInitialSearch(results.datasets)
             }, function(error) {
                 new AlertDialog({
                     alertTitle: "Server Error",
@@ -297,6 +287,17 @@ define([
             }));
         },
 
+        setInitialSearch: function(data) {
+            var obj = {};
+            data.forEach(function(val) {
+                obj[val["Dataset-PersistentId"]] = val;
+            });
+            this.initialSearch = obj;
+            topic.publish(SearchEvent.prototype.SEARCH_LOADED, {
+                success: true
+            });
+        },
+
         windowResized: function(message) {
             // Resize table
             domStyle.set(this.datasetGrid.domNode, "height", (document.body.clientHeight - 700) + 210 + "px");
@@ -383,6 +384,19 @@ define([
             this.fetchDatasets().then(lang.hitch(this, function(response) {
                 // Format results
                 var data = _context.formatDatasetResponse(response.response.docs);
+                if (resetDatasets) {
+                    // set _context.initialSearch again
+                    this.setInitialSearch(data)
+                    var datasets = data;
+                    var obj = {};
+                    datasets.forEach(function(val) {
+                        obj[val["Dataset-PersistentId"]] = val;
+                    });
+                    _context.initialSearch = obj;
+                    topic.publish(SearchEvent.prototype.SEARCH_LOADED, {
+                        success: true
+                    });
+                }
                 this.updateDatasetGrid(response, data);
                 this.updateFacetSelector(response);
                 if (resetDatasets) {

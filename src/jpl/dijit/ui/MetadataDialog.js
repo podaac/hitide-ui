@@ -13,7 +13,7 @@ define([
     "dojo/_base/window",
     "jpl/config/Config",
     "moment/moment",
-    "jpl/utils/SearchVariables",
+    "jpl/utils/SearchVariables"
 ], function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, template, css,
     VariableListing, DatasetAvailability, domAttr, domConstruct, query, win, Config, 
     moment, SearchVariables) {

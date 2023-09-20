@@ -100,29 +100,19 @@ define([
             // Add dataset to datasetController widget
             this.datasetController.addDataset(message);
 
-            // Search granules for this dataset
+            // Search granules foIr this dataset
             var _context = this;
             topic.publish(SearchEvent.prototype.CANCEL_REQUESTS, {
                 target: message.datasetId
             });
             this.searchGranules(message.datasetId, message.startTime, message.endTime, message.bbox, message.source).then(
                 function(response) {
-                    if(message.source === "cmr"){
-                        //var numFound = response.getHeader('cmr-hits');
-                        var numFound = response.hits
-                        var d = _context.datasetController.updateNumMatchingGranules(message.datasetId, numFound);
-                        _context.datasetController.publishGranulesSearchComplete();
+                    var numFound = response.hits
+                    var d = _context.datasetController.updateNumMatchingGranules(message.datasetId, numFound);
+                    _context.datasetController.publishGranulesSearchComplete();
 
-                        // Construct new GranulesController for this dataset
-                        _context.createNewGranulesController(message, numFound, message.datasetColor);
-                    }
-                    else{
-                        var d = _context.datasetController.updateNumMatchingGranules(message.datasetId, response.response.numFound);
-                        _context.datasetController.publishGranulesSearchComplete();
-
-                        // Construct new GranulesController for this dataset
-                        _context.createNewGranulesController(message, response.response.numFound, message.datasetColor);
-                    }
+                    // Construct new GranulesController for this dataset
+                    _context.createNewGranulesController(message, numFound, message.datasetColor);
                 },
                 function(error) {
                     if (error === "Request canceled") {
@@ -268,14 +258,12 @@ define([
 
             var url;
             var withCredentials = false;
-            if(source == "cmr"){
-                url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
-                url += "concept_id=" + datasetId;
-                url += "&bounding_box[]=" + (bbox ? bbox : "");
-                url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(startTime) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(endTime);
-                url += "&page_size=0"
-                withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
-            }
+            url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
+            url += "concept_id=" + datasetId;
+            url += "&bounding_box[]=" + (bbox ? bbox : "");
+            url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(startTime) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(endTime);
+            url += "&page_size=0"
+            withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
 
             var _context = this;
 

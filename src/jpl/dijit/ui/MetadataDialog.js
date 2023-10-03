@@ -78,12 +78,31 @@ define([
 
             /* Set long name */
             domAttr.set(this.metadataDatasetLongName, "innerHTML", metadata["Dataset-LongName"]);
-
             /* Set along/across-track resolution */
-            var alongTrackResolution = metadata["Dataset-AlongTrackResolution"];
-            var acrossTrackResolution = metadata["Dataset-AcrossTrackResolution"];
-            if(alongTrackResolution && acrossTrackResolution)
-                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", parseInt(metadata["Dataset-AlongTrackResolution"]) / 1000 + "km x " + parseInt(metadata["Dataset-AcrossTrackResolution"]) / 1000 + "km");
+            var datasetResolution = metadata["Dataset-Resolution"]
+            if(datasetResolution) {
+                // Set the resolution to display. Allow for multiple resolutions of one collection.
+                var unit = "km"
+                var multiplier = 0.001
+                var resolutionString = ""
+                var datasetResolutionToUse = datasetResolution[0]
+                
+                // if Dataset-ShortName starts with SWOT_L2_NALT, then use the second value instead of the first
+                if (metadata["Dataset-ShortName"].includes("SWOT_L2_NALT")) {
+                    datasetResolutionToUse = datasetResolution[1]
+                }
+                
+                // if meters, convert to km unless less than 1000
+                // if kilometers, keep as km
+                if (datasetResolutionToUse["Unit"] === "Meters" && datasetResolutionToUse["Dataset-AlongTrackResolution"] < 1000) {
+                    unit = "m"
+                    multiplier = 1                  
+                } else if (datasetResolutionToUse["Unit"] === "Kilometers") {
+                    multiplier = 1
+                }
+                resolutionString += parseInt(datasetResolutionToUse["Dataset-AlongTrackResolution"]) * multiplier + unit + " x " + parseInt(datasetResolutionToUse["Dataset-AcrossTrackResolution"]) * multiplier + unit
+                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
+            }
             else
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
 

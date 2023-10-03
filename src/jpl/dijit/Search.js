@@ -521,6 +521,8 @@ define([
                     if (keys[i] === "DatasetCoverage-StartTimeLong" ||
                         keys[i] === "DatasetCoverage-StopTimeLong") {
                         value = value ? moment.utc(parseInt(value)) : moment.utc();
+                    } else if (keys[i] === "Dataset-Resolution") {
+                        value = valueArr
                     }
                     formattedObjs[keys[i]] = value;
                 }

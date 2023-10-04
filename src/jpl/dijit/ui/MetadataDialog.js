@@ -85,22 +85,25 @@ define([
                 var unit = "km"
                 var multiplier = 0.001
                 var resolutionString = ""
-                var datasetResolutionToUse = datasetResolution[0]
-                
-                // if Dataset-ShortName starts with SWOT_L2_NALT, then use the second value instead of the first
-                if (metadata["Dataset-ShortName"].includes("SWOT_L2_NALT")) {
-                    datasetResolutionToUse = datasetResolution[1]
-                }
-                
+                var connectingSting = " and "
+
                 // if meters, convert to km unless less than 1000
                 // if kilometers, keep as km
-                if (datasetResolutionToUse["Unit"] === "Meters" && datasetResolutionToUse["Dataset-AlongTrackResolution"] < 1000) {
-                    unit = "m"
-                    multiplier = 1                  
-                } else if (datasetResolutionToUse["Unit"] === "Kilometers") {
-                    multiplier = 1
+                for(var i=0; i<datasetResolution.length; i++) {
+                    if (datasetResolution[i]["Unit"] === "Meters" && datasetResolution[i]["Dataset-AlongTrackResolution"] < 1000) {
+                        unit = "m"
+                        multiplier = 1                  
+                    } else if (datasetResolution[i]["Unit"] === "Kilometers") {
+                        multiplier = 1
+                    }
+
+                    // if on the last dataset resolution object
+                    if (i === datasetResolution.length - 1) {
+                        connectingSting = ""
+                    }
+                    resolutionString += parseInt(datasetResolution[i]["Dataset-AlongTrackResolution"]) * multiplier + unit + " x " + parseInt(datasetResolution[i]["Dataset-AcrossTrackResolution"]) * multiplier + unit + connectingSting
                 }
-                resolutionString += parseInt(datasetResolutionToUse["Dataset-AlongTrackResolution"]) * multiplier + unit + " x " + parseInt(datasetResolutionToUse["Dataset-AcrossTrackResolution"]) * multiplier + unit
+
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
             }
             else

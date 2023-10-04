@@ -80,6 +80,7 @@ define([
             domAttr.set(this.metadataDatasetLongName, "innerHTML", metadata["Dataset-LongName"]);
             /* Set along/across-track resolution */
             var datasetResolution = metadata["Dataset-Resolution"]
+
             if(datasetResolution) {
                 // Set the resolution to display. Allow for multiple resolutions of one collection.
                 var unit = "km"
@@ -101,7 +102,18 @@ define([
                     if (i === datasetResolution.length - 1) {
                         connectingSting = ""
                     }
-                    resolutionString += parseInt(datasetResolution[i]["Dataset-AlongTrackResolution"]) * multiplier + unit + " x " + parseInt(datasetResolution[i]["Dataset-AcrossTrackResolution"]) * multiplier + unit + connectingSting
+
+                    var alongTrackString = (parseFloat(datasetResolution[i]["Dataset-AlongTrackResolution"]) * multiplier).toString()
+                    var acrossTrackString = (parseFloat(datasetResolution[i]["Dataset-AcrossTrackResolution"]) * multiplier).toString()
+                    // round resolution strings to precision of 2 without trailing zeros if too long                    
+                    if (alongTrackString.split(".")[1] && alongTrackString.split(".")[1].length > 2) {
+                        alongTrackString = parseFloat(parseFloat(alongTrackString).toFixed(2)).toString()
+                    }
+                    if (acrossTrackString.split(".")[1] && acrossTrackString.split("."[1]).length > 2) {
+                        acrossTrackString = parseFloat(parseFloat(acrossTrackString).toFixed(2)).toString()
+                    }
+                    
+                    resolutionString += alongTrackString + unit + " x " + acrossTrackString + unit + connectingSting
                 }
 
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);

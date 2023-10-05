@@ -100,7 +100,7 @@ define([
             // Add dataset to datasetController widget
             this.datasetController.addDataset(message);
 
-            // Search granules foIr this dataset
+            // Search granules for this dataset
             var _context = this;
             topic.publish(SearchEvent.prototype.CANCEL_REQUESTS, {
                 target: message.datasetId

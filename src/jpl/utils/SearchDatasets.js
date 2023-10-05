@@ -126,8 +126,6 @@ define([
 
     function getCmrSpatialExtent(datasetObject){
         var conceptId = datasetObject["Dataset-PersistentId"]
-        // var url = config.hitide.externalConfigurables.cmrVariableService;
-        // var customQuery = "{\n collection (conceptId: \"" + conceptId + "\") {\n spatialExtent \n} \n}"
         var secondURL = config.hitide.externalConfigurables.cmrCollectionSearchService + "/" + conceptId + ".umm_json"
         return request(secondURL, {
             handleAs: 'json',
@@ -138,31 +136,19 @@ define([
         }).then(function(response) {
             var resolutionAndCoordinateSystemObject = response.SpatialExtent.HorizontalSpatialDomain.ResolutionAndCoordinateSystem
             if (resolutionAndCoordinateSystemObject) {
-                var resolutionObject = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions[0]
-                if (resolutionObject) {
-                    datasetObject["Dataset-AcrossTrackResolution"] = resolutionObject.XDimension
-                    datasetObject["Dataset-AlongTrackResolution"] = resolutionObject.YDimension
+                var resolutionObjects = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions
+                if (resolutionObjects) {
+                    datasetObject["Dataset-Resolution"] = []
+                    resolutionObjects.forEach(function(resolutionObject) {
+                        var acrossTrack = resolutionObject.XDimension
+                        var alongTrack = resolutionObject.YDimension
+                        var unit = resolutionObject.Unit
+                        datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
+                    });
                 }
             }
             return datasetObject
         })
-        // NOTE: Example of Graphql implementation of above query
-        // return request.post(url, {
-        //     handleAs: 'json',
-        //     withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies,
-        //     headers: { "X-Requested-With": null, "Content-Type": "application/json" },
-        //     data: JSON.stringify({ query: customQuery })
-        // }).then(function(response) {
-        //     var resolutionAndCoordinateSystemObject = response.data.collection.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
-        //     if (resolutionAndCoordinateSystemObject) {
-        //         var resolutionObject = resolutionAndCoordinateSystemObject.horizontalDataResolution.genericResolutions[0]
-        //         if (resolutionObject) {
-        //             datasetObject["Dataset-AcrossTrackResolution"] = resolutionObject.xDimension
-        //             datasetObject["Dataset-AlongTrackResolution"] = resolutionObject.yDimension
-        //         }
-        //     }
-        //     return datasetObject
-        // })
     }
 
     function getAdditionalCmrMetadata(collectionObjectArray) {

@@ -6,7 +6,7 @@
     "URL": {
         "URLContentType": "DistributionURL",
         "Type": "GOTO WEB TOOL",
-        "URLValue": "podaac-tools.jpl.nasa.gov/hitide/"
+        "URLValue": "https://hitide.podaac.earthdatacloud.nasa.gov"
     },
     "Type": "Web User Interface",
     "Description": "HiTIDE, the High-level Tool for Interactive Data Extraction, allows users to subset and download popular level 2 (swath) datasets. Users can search across a wide variety of parameters, such as variables, sensors and platforms, and filter the resulting data based on spatial and temporal boundaries of interest to the user. HiTIDE goes even further, offering instant previews of variable imagery, allowing users to rapidly find data of interest for download and further, rigorous scientific analysis.",

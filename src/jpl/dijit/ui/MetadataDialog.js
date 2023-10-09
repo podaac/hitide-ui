@@ -78,17 +78,50 @@ define([
 
             /* Set long name */
             domAttr.set(this.metadataDatasetLongName, "innerHTML", metadata["Dataset-LongName"]);
-
             /* Set along/across-track resolution */
-            var alongTrackResolution = metadata["Dataset-AlongTrackResolution"];
-            var acrossTrackResolution = metadata["Dataset-AcrossTrackResolution"];
-            if(alongTrackResolution && acrossTrackResolution)
-                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", parseInt(metadata["Dataset-AlongTrackResolution"]) / 1000 + "km x " + parseInt(metadata["Dataset-AcrossTrackResolution"]) / 1000 + "km");
+            var datasetResolution = metadata["Dataset-Resolution"]
+
+            if(datasetResolution) {
+                // Set the resolution to display. Allow for multiple resolutions of one collection.
+                var unit = "km"
+                var multiplier = 0.001
+                var resolutionString = ""
+                var connectingSting = " and "
+
+                // if meters, convert to km unless less than 1000
+                // if kilometers, keep as km
+                for(var i=0; i<datasetResolution.length; i++) {
+                    if (datasetResolution[i]["Unit"] === "Meters" && datasetResolution[i]["Dataset-AlongTrackResolution"] < 1000) {
+                        unit = "m"
+                        multiplier = 1                  
+                    } else if (datasetResolution[i]["Unit"] === "Kilometers") {
+                        multiplier = 1
+                    }
+
+                    // if on the last dataset resolution object
+                    if (i === datasetResolution.length - 1) {
+                        connectingSting = ""
+                    }
+
+                    var alongTrackString = (parseFloat(datasetResolution[i]["Dataset-AlongTrackResolution"]) * multiplier).toString()
+                    var acrossTrackString = (parseFloat(datasetResolution[i]["Dataset-AcrossTrackResolution"]) * multiplier).toString()
+                    // round resolution strings to precision of 2 without trailing zeros if too long                    
+                    if (alongTrackString.split(".")[1] && alongTrackString.split(".")[1].length > 2) {
+                        alongTrackString = parseFloat(parseFloat(alongTrackString).toFixed(2)).toString()
+                    }
+                    if (acrossTrackString.split(".")[1] && acrossTrackString.split("."[1]).length > 2) {
+                        acrossTrackString = parseFloat(parseFloat(acrossTrackString).toFixed(2)).toString()
+                    }
+                    
+                    resolutionString += alongTrackString + unit + " x " + acrossTrackString + unit + connectingSting
+                }
+
+                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
+            }
             else
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
 
             /* Set date range */
-            console.log(metadata)
             var startDate = metadata["DatasetCoverage-StartTimeLong"];
             var formattedStart = "Unknown";
             if (startDate) {

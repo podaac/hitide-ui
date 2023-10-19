@@ -7,9 +7,6 @@ pipeline {
             args '-v $HOME/.netrc:/home/dockeruser/.netrc -v /home/cm/certs/:/home/dockeruser/certs'
         }
     }
-    environment{
-        GHE_CREDENTIALS_ID = "github.jpl.nasa.gov_devops_pw"
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -20,14 +17,9 @@ pipeline {
 
                 checkout([
                     $class: 'GitSCM',
-                    branches: scm.branches,
-                    extensions: scm.extensions + [
-                        [$class: 'CleanBeforeCheckout'],
-                        [$class: 'LocalBranch', localBranch: '**'],
-                        [$class: 'PruneStaleBranch'],
-                        [$class: 'RelativeTargetDirectory', relativeTargetDir: 'hitide-ui']
-                    ],
-                    userRemoteConfigs: scm.userRemoteConfigs
+                    branches: [[name: 'refs/heads/develop']], 
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'hitide-ui']],
+                    userRemoteConfigs: [[url: 'git@github.com:podaac/hitide-ui.git', credentialsId:'github.com_devops']]
                 ])
 
                 sh('ls -la hitide-ui')
@@ -47,12 +39,12 @@ pipeline {
                     if(OPS_COLLECTION || UAT_COLLECTION){
                         dir("temp"){
 
-                                withCredentials([usernamePassword(credentialsId: env.GHE_CREDENTIALS_ID, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                                
+                            withCredentials([sshUserPrivateKey(credentialsId: "github.com_devops", keyFileVariable: "SSH_KEY")]){
+
                                 checkout([
                                     $class: 'GitSCM',
                                     branches: [[name: 'develop']], 
-                                    userRemoteConfigs: scm.userRemoteConfigs
+                                    userRemoteConfigs: [[url: 'git@github.com:podaac/hitide-ui.git', credentialsId:'github.com_devops']]
                                 ])
 
                                 update_git_message = "Adding collections"
@@ -79,7 +71,7 @@ pipeline {
                                     git commit -a -m \'$update_git_message\'
                                     git push origin HEAD:develop
                                 """)
-                            }    
+                            }
                             deleteDir()
                         }
                     }

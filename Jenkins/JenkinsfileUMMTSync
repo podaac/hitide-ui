@@ -65,9 +65,12 @@ pipeline {
                                 }
                                 
                                 sh("""
+                                    mkdir ~/.ssh
+                                    touch ~/.ssh/known_hosts
+                                    ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                                    export GIT_SSH_COMMAND="ssh -i $SSH_KEY"
                                     git config --local user.name "podaac"
                                     git config --local user.email podaac-tva@jpl.nasa.gov
-                                    git config --local credential.helper "!f() { echo username=\$GIT_USERNAME; echo password=\$GIT_PASSWORD; }; f"
                                     git commit -a -m \'$update_git_message\'
                                     git push origin HEAD:develop
                                 """)

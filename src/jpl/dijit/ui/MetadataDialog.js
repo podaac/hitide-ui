@@ -119,7 +119,8 @@ define([
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
             }
             else
-                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
+                // domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
+                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Applicable");
 
             /* Set date range */
             var startDate = metadata["DatasetCoverage-StartTimeLong"];

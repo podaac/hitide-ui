@@ -28,7 +28,7 @@ define([
         // all the variable names for a collection in one request
         var url = config.hitide.externalConfigurables.cmrVariableService;
 
-        var templateQuery = "{\n  collection (conceptId:\"{COLLECTION_ID}\") {\n    shortName\n    variables {\n      items {\n        name\n      }\n    }\n  }\n}"
+        var templateQuery = "{\n  collection (conceptId:\"{COLLECTION_ID}\") {\n    variables {\n      items {\n        name\n      }\n    }\n  }\n}"
           
         var query = templateQuery.replace("{COLLECTION_ID}", dataset['Dataset-PersistentId']);
         if (customQuery) {

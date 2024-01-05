@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## [4.16.2]
+### Added
+### Changed
+### Removed
+### Fixed
+- issue-38: Removed shortName retrieval operation from variable graphql query
+
+
 ## [4.16.1]
 ### Added
 ### Changed

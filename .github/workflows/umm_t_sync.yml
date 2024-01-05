@@ -28,7 +28,7 @@ jobs:
           python-version: 3.9
 
       - name: Install CMR cmr_association_diff
-        run: pip3 install git+https://github.com/podaac/cmr-association-diff.git@6193079a14e36f4c9526aa426015c2b6be41f0e2
+        run: pip3 install git+https://github.com/podaac/cmr-association-diff.git@develop
 
       - name: Run cmr_association_diff command
         id: cmr_association_diff

@@ -107,8 +107,16 @@ define([
         return url;
     }
 
+    function extractThumbnailUrl(linksArray) {
+        var relevantLink = linksArray.find(function (linkObject) {
+            return linkObject.rel === "http://esipfed.org/ns/fedsearch/1.1/browse#";
+          }).href
+          return relevantLink
+    }
+
     function extractCmrDatasets(response) {
         var datasets = response.feed.entry.map(function(doc) {
+            var docThumbnailUrl = extractThumbnailUrl(doc.links)
             return {
                 "source": 'cmr',
                 "Dataset-ShortName": doc.short_name,
@@ -116,7 +124,7 @@ define([
                 "Dataset-PersistentId": doc.id,
                 "DatasetCoverage-StartTimeLong": new Date(doc.time_start).getTime(),
                 "DatasetCoverage-StopTimeLong": new Date(doc.time_end).getTime(),
-                "Dataset-ImageUrl": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/" + doc.short_name + ".jpg",
+                "Dataset-ImageUrl": docThumbnailUrl,
                 "Dataset-Description": doc.summary
             }
         });

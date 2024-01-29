@@ -70,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PODAAC-4417: Fix the way hitide searches CMR granule metadata for image URLs
 ### Removed
 ### Fixed
-- PODAAC-5264: Fixed compatibility for some SWOT simulated datasets relating to an extra variable.
+- PODAAC-5264: Fixed compatibility for some SWOT simulated datasets relating to an extra variable
 
 ## [4.12.0]
 ### Added

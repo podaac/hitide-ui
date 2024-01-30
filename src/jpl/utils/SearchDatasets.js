@@ -108,10 +108,13 @@ define([
     }
 
     function extractThumbnailUrl(linksArray) {
-        var relevantLink = linksArray.find(function (linkObject) {
-            return linkObject.rel === "http://esipfed.org/ns/fedsearch/1.1/browse#";
-          }).href
-          return relevantLink
+        var thumbnailUrl = ''
+        for(var i=0; i < linksArray.length; i++) {
+            if (linksArray[i].rel === "http://esipfed.org/ns/fedsearch/1.1/browse#") {
+                thumbnailUrl = linksArray[i].href
+            }
+        }
+        return thumbnailUrl
     }
 
     function extractCmrDatasets(response) {

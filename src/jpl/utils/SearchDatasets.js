@@ -31,6 +31,7 @@ define([
         }
 
         return all(promises).then(function(resultsArray) {
+            console.log(resultsArray)
             // get additional resolution info metadata for datasets
             var additionalDataPromises = []
             additionalDataPromises.push(getAdditionalCmrMetadata(resultsArray[0].response.docs))
@@ -49,6 +50,7 @@ define([
     /////////////////////////////////////////////////////////////////////
     function searchCmr(options) {
         var url = constructCmrUrl(options);
+        console.log('cmr call #1: ',url)
         return request(url, {
             handleAs: 'json',
             headers: {
@@ -107,19 +109,8 @@ define([
         return url;
     }
 
-    function extractThumbnailUrl(linksArray) {
-        var thumbnailUrl = ''
-        for(var i=0; i < linksArray.length; i++) {
-            if (linksArray[i].rel === "http://esipfed.org/ns/fedsearch/1.1/browse#") {
-                thumbnailUrl = linksArray[i].href
-            }
-        }
-        return thumbnailUrl
-    }
-
     function extractCmrDatasets(response) {
         var datasets = response.feed.entry.map(function(doc) {
-            var docThumbnailUrl = extractThumbnailUrl(doc.links)
             return {
                 "source": 'cmr',
                 "Dataset-ShortName": doc.short_name,
@@ -127,7 +118,6 @@ define([
                 "Dataset-PersistentId": doc.id,
                 "DatasetCoverage-StartTimeLong": new Date(doc.time_start).getTime(),
                 "DatasetCoverage-StopTimeLong": new Date(doc.time_end).getTime(),
-                "Dataset-ImageUrl": docThumbnailUrl,
                 "Dataset-Description": doc.summary
             }
         });
@@ -146,6 +136,7 @@ define([
             withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies
         }).then(function(response) {
             var resolutionAndCoordinateSystemObject = response.SpatialExtent.HorizontalSpatialDomain.ResolutionAndCoordinateSystem
+            var relatedUrlsArray = response.RelatedUrls
             if (resolutionAndCoordinateSystemObject) {
                 var resolutionObjects = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions
                 if (resolutionObjects) {
@@ -156,6 +147,14 @@ define([
                         var unit = resolutionObject.Unit
                         datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
                     });
+                }
+            }
+            if (relatedUrlsArray) {
+                for(var i=0; i < relatedUrlsArray.length; i++) {
+                    var currentRelatedUrlObject = relatedUrlsArray[i]
+                    if (currentRelatedUrlObject['Description'] === 'Thumbnail') {
+                        datasetObject["Dataset-ImageUrl"] = currentRelatedUrlObject['URL']
+                    }
                 }
             }
             return datasetObject

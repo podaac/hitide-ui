@@ -257,6 +257,8 @@ define([
                 var variableName = this.variableId;
                 var imageFilename = calculateImageFilename(granuleName, variableName);
                 var relatedUrls = obj.granuleObj.umm.RelatedUrls;
+
+                
                 var objectURL
                 for(var i=0; i < relatedUrls.length; i++){
                     objectURL = relatedUrls[i]['URL'];

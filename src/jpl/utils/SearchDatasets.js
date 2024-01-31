@@ -31,7 +31,6 @@ define([
         }
 
         return all(promises).then(function(resultsArray) {
-            console.log(resultsArray)
             // get additional resolution info metadata for datasets
             var additionalDataPromises = []
             additionalDataPromises.push(getAdditionalCmrMetadata(resultsArray[0].response.docs))
@@ -50,7 +49,6 @@ define([
     /////////////////////////////////////////////////////////////////////
     function searchCmr(options) {
         var url = constructCmrUrl(options);
-        console.log('cmr call #1: ',url)
         return request(url, {
             handleAs: 'json',
             headers: {

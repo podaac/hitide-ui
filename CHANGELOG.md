@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 ### Fixed
+- issue-42: Fixed collection thumbnails not loading for certain collections
 
 
 ## [4.16.2]

@@ -116,7 +116,6 @@ define([
                 "Dataset-PersistentId": doc.id,
                 "DatasetCoverage-StartTimeLong": new Date(doc.time_start).getTime(),
                 "DatasetCoverage-StopTimeLong": new Date(doc.time_end).getTime(),
-                "Dataset-ImageUrl": "https://podaac.jpl.nasa.gov/Podaac/thumbnails/" + doc.short_name + ".jpg",
                 "Dataset-Description": doc.summary
             }
         });
@@ -135,6 +134,7 @@ define([
             withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies
         }).then(function(response) {
             var resolutionAndCoordinateSystemObject = response.SpatialExtent.HorizontalSpatialDomain.ResolutionAndCoordinateSystem
+            var relatedUrlsArray = response.RelatedUrls
             if (resolutionAndCoordinateSystemObject) {
                 var resolutionObjects = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions
                 if (resolutionObjects) {
@@ -145,6 +145,14 @@ define([
                         var unit = resolutionObject.Unit
                         datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
                     });
+                }
+            }
+            if (relatedUrlsArray) {
+                for(var i=0; i < relatedUrlsArray.length; i++) {
+                    var currentRelatedUrlObject = relatedUrlsArray[i]
+                    if (currentRelatedUrlObject['Description'] === 'Thumbnail') {
+                        datasetObject["Dataset-ImageUrl"] = currentRelatedUrlObject['URL']
+                    }
                 }
             }
             return datasetObject

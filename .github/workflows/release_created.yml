@@ -17,7 +17,7 @@ jobs:
     steps:
 
       # Checks-out the develop branch
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: 'refs/heads/develop'
       - name: Bump minor version

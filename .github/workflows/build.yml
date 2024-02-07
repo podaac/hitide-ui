@@ -36,7 +36,7 @@ jobs:
     steps:
       # Checkout
       - name: Checkout project to build and deploy
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       ## Read the json file into the environment variables
       - name: JSON to variables
@@ -180,7 +180,7 @@ jobs:
 
       # Setup Node to install and test
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 14
 
@@ -207,7 +207,7 @@ jobs:
           echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
 
       - name: Configure AWS credentials 
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-west-2
           role-session-name: GitHubActions

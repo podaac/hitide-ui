@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 - issue-42: Fixed collection thumbnails not loading for certain collections
+- issue-48: Fixed collection resolution error handling
+- issue-49: Removed docker references in HiTIDE-UI
 
 
 ## [4.16.2]

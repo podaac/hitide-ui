@@ -4,7 +4,7 @@ name: Hourly Build Sync CMR Association Text Files
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 9 * * *'
   push:
     branches:
       - develop

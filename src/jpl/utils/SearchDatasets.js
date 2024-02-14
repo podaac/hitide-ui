@@ -149,7 +149,7 @@ define([
                     });
                 } else {
                     // resolution not applicable
-                    datasetObject["Dataset-Resolution"].push({"error": "Issue Loading Resolution"})
+                    datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
                 }
             } else {
                 // probably an error and not (not applicable)

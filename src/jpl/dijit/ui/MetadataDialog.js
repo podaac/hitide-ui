@@ -73,7 +73,7 @@ define([
             var metadata = this.dataset;
 
             /* Set image url */
-            var metadataImgSrc = metadata["Dataset-ImageUrl"] !== "https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg" ? metadata["Dataset-ImageUrl"] : "jpl/assets/images/earth.jpg";
+            var metadataImgSrc = metadata["Dataset-ImageUrl"]
             domAttr.set(this.metadataDatasetImage, "src", metadataImgSrc);
 
             /* Set long name */

@@ -120,7 +120,6 @@ define([
                 "Dataset-Description": doc.summary
             }
         });
-
         return datasets;
     }
 
@@ -155,13 +154,15 @@ define([
                 datasetObject["Dataset-Resolution"].push({"error": "Not Applicable"})
             }
             if (relatedUrlsArray) {
+                var urlDatasetImageUrl = 'https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg'
                 for(var i=0; i < relatedUrlsArray.length; i++) {
                     var currentRelatedUrlObject = relatedUrlsArray[i]
                     if (currentRelatedUrlObject['Description'] === 'Thumbnail') {
-                        datasetObject["Dataset-ImageUrl"] = currentRelatedUrlObject['URL']
+                        urlDatasetImageUrl = currentRelatedUrlObject['URL']
                     }
                 }
-            }
+                datasetObject["Dataset-ImageUrl"] = urlDatasetImageUrl
+            } 
             return datasetObject
         })
     }

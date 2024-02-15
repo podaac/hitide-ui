@@ -123,7 +123,7 @@ define([
 
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
             } else {
-                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Issue Loading Resolution");
+                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
             }
                 
             /* Set date range */

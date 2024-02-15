@@ -140,12 +140,11 @@ define([
             if (resolutionAndCoordinateSystemObject) {
                 var resolutionObjects = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions
                 if (resolutionObjects) {
-                    // datasetObject["Dataset-Resolution"] = []
                     resolutionObjects.forEach(function(resolutionObject) {
                         var acrossTrack = resolutionObject.XDimension
                         var alongTrack = resolutionObject.YDimension
                         var unit = resolutionObject.Unit
-                        datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit, "error": "No Error"})
+                        datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
                     });
                 } else {
                     // Resolution not available by error

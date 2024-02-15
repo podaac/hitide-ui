@@ -92,7 +92,7 @@ define([
                 // if kilometers, keep as km
                 for(var i=0; i<datasetResolution.length; i++) {
                     var datasetResolutionError = datasetResolution[i]["error"]
-                    if (datasetResolutionError === "No Error") {
+                    if (!datasetResolutionError) {
                         if (datasetResolution[i]["Unit"] === "Meters" && datasetResolution[i]["Dataset-AlongTrackResolution"] < 1000) {
                             unit = "m"
                             multiplier = 1                  
@@ -116,7 +116,6 @@ define([
                         }
                         
                         resolutionString += alongTrackString + unit + " x " + acrossTrackString + unit + connectingSting
-                        // domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
                     } else {
                         resolutionString = datasetResolutionError
                     }

@@ -148,11 +148,11 @@ define([
                         datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit, "error": "No Error"})
                     });
                 } else {
-                    // resolution not applicable
+                    // Resolution not available by error
                     datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
                 }
             } else {
-                // probably an error and not (not applicable)
+                // Key [Collection]/SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem does not exist. This likely was intentional to indicate resolution is not applicable to this collection.
                 datasetObject["Dataset-Resolution"].push({"error": "Not Applicable"})
             }
             if (relatedUrlsArray) {

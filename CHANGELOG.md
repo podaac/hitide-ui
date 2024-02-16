@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - issue-42: Fixed collection thumbnails not loading for certain collections
 - issue-48: Fixed collection resolution error handling
-- issue-49: Removed docker references in HiTIDE-UI
+- issue-49: Removed unused Docker and Jenkins folders/files from HiTIDE-UI
 - issue-52: Fixed missing thumbnail placeholder
 
 

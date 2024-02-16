@@ -37,7 +37,7 @@ jobs:
 
           OPS_COLLECTION=$(set +x; cmr_association_diff -e ops -t tool -a ${{ github.workspace }}/cmr/ops_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/ops_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_OPS}}; set -x)
           if [[ ${OPS_COLLECTION} ]]; then
-            python -u ${{ github.workspace }}/Jenkins/read_collection.py -e ops -i ${{ github.workspace }}/ops_output_json.txt -o ${{ github.workspace }}
+            python -u ${{ github.workspace }}/.github/workflows/read_collection.py -e ops -i ${{ github.workspace }}/ops_output_json.txt -o ${{ github.workspace }}
             ops_success_collection=$(cat ${{ github.workspace }}/ops_success.txt | tr -d '\n')
             update_git_message+=" OPS: $ops_success_collection"
             cat ${{ github.workspace }}/ops_success.txt >> ${{ github.workspace }}/cmr/ops_associations.txt
@@ -45,7 +45,7 @@ jobs:
 
           UAT_COLLECTION=$(set +x; cmr_association_diff -e uat -t tool -a ${{ github.workspace }}/cmr/uat_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/uat_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_UAT}}; set -x)
           if [[ ${UAT_COLLECTION} ]]; then
-            python -u ${{ github.workspace }}/Jenkins/read_collection.py -e uat -i ${{ github.workspace }}/uat_output_json.txt -o ${{ github.workspace }}
+            python -u ${{ github.workspace }}/.github/workflows/read_collection.py -e uat -i ${{ github.workspace }}/uat_output_json.txt -o ${{ github.workspace }}
             uat_success_collection=$(cat ${{ github.workspace }}/uat_success.txt | tr -d '\n')
             update_git_message+=" UAT: $uat_success_collection"
             cat ${{ github.workspace }}/uat_success.txt >> ${{ github.workspace }}/cmr/uat_associations.txt

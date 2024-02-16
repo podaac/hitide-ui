@@ -27,6 +27,7 @@ define([
         var promises = [];
         if(typeof cmrSearchUrl === 'string') promises.push(searchCmr(options));
         if(promises.length === 0) {
+            // eslint-disable-next-line no-console
             console.log('Did not enable cmr datasets');
         }
 
@@ -119,7 +120,6 @@ define([
                 "Dataset-Description": doc.summary
             }
         });
-
         return datasets;
     }
 
@@ -133,28 +133,36 @@ define([
             },
             withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies
         }).then(function(response) {
+            datasetObject["Dataset-Resolution"] = []
             var resolutionAndCoordinateSystemObject = response.SpatialExtent.HorizontalSpatialDomain.ResolutionAndCoordinateSystem
             var relatedUrlsArray = response.RelatedUrls
             if (resolutionAndCoordinateSystemObject) {
                 var resolutionObjects = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions
                 if (resolutionObjects) {
-                    datasetObject["Dataset-Resolution"] = []
                     resolutionObjects.forEach(function(resolutionObject) {
                         var acrossTrack = resolutionObject.XDimension
                         var alongTrack = resolutionObject.YDimension
                         var unit = resolutionObject.Unit
                         datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
                     });
+                } else {
+                    // Resolution not available by error
+                    datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
                 }
+            } else {
+                // Key [Collection]/SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem does not exist. This likely was intentional to indicate resolution is not applicable to this collection.
+                datasetObject["Dataset-Resolution"].push({"error": "Not Applicable"})
             }
             if (relatedUrlsArray) {
+                var urlDatasetImageUrl = 'https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg'
                 for(var i=0; i < relatedUrlsArray.length; i++) {
                     var currentRelatedUrlObject = relatedUrlsArray[i]
                     if (currentRelatedUrlObject['Description'] === 'Thumbnail') {
-                        datasetObject["Dataset-ImageUrl"] = currentRelatedUrlObject['URL']
+                        urlDatasetImageUrl = currentRelatedUrlObject['URL']
                     }
                 }
-            }
+                datasetObject["Dataset-ImageUrl"] = urlDatasetImageUrl
+            } 
             return datasetObject
         })
     }

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added global_grid configuration check to make a global extent for images.
 ### Changed
 ### Removed
 ### Fixed

@@ -160,7 +160,7 @@ jobs:
           git push origin "${{ env.THE_VERSION }}" --force
 
       - name: Publish UMM-T with new version
-        uses: podaac/cmr-umm-updater@0.5.0
+        uses: podaac/cmr-umm-updater@0.6.0
         if: |
           github.ref == 'refs/heads/main' ||
           startsWith(github.ref, 'refs/heads/release')

@@ -29,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - issue-38: Removed shortName retrieval operation from variable graphql query
 
-
 ## [4.16.1]
 ### Added
 ### Changed
@@ -37,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: Removed last references to on-prem l2ss and podaac-tools
 ### Fixed
 - issue-33: Fixed collection resolution displaying multiple resolutions and scaling
-
 
 ## [4.16.0]
 ### Added
@@ -50,7 +48,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: Removed cut scanline option in download options tab
 ### Fixed
 - issue-15: Fixed color palette error in the legend when selecting datasets
-
 
 ## [4.15.0]
 ### Added

@@ -73,7 +73,7 @@ define([
             var metadata = this.dataset;
 
             /* Set image url */
-            var metadataImgSrc = metadata["Dataset-ImageUrl"] !== "https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg" ? metadata["Dataset-ImageUrl"] : "jpl/assets/images/earth.jpg";
+            var metadataImgSrc = metadata["Dataset-ImageUrl"]
             domAttr.set(this.metadataDatasetImage, "src", metadataImgSrc);
 
             /* Set long name */
@@ -81,7 +81,7 @@ define([
             /* Set along/across-track resolution */
             var datasetResolution = metadata["Dataset-Resolution"]
 
-            if(datasetResolution) {
+            if (datasetResolution) {
                 // Set the resolution to display. Allow for multiple resolutions of one collection.
                 var unit = "km"
                 var multiplier = 0.001
@@ -91,37 +91,41 @@ define([
                 // if meters, convert to km unless less than 1000
                 // if kilometers, keep as km
                 for(var i=0; i<datasetResolution.length; i++) {
-                    if (datasetResolution[i]["Unit"] === "Meters" && datasetResolution[i]["Dataset-AlongTrackResolution"] < 1000) {
-                        unit = "m"
-                        multiplier = 1                  
-                    } else if (datasetResolution[i]["Unit"] === "Kilometers") {
-                        multiplier = 1
+                    var datasetResolutionError = datasetResolution[i]["error"]
+                    if (!datasetResolutionError) {
+                        if (datasetResolution[i]["Unit"] === "Meters" && datasetResolution[i]["Dataset-AlongTrackResolution"] < 1000) {
+                            unit = "m"
+                            multiplier = 1                  
+                        } else if (datasetResolution[i]["Unit"] === "Kilometers") {
+                            multiplier = 1
+                        }
+    
+                        // if on the last dataset resolution object
+                        if (i === datasetResolution.length - 1) {
+                            connectingSting = ""
+                        }
+    
+                        var alongTrackString = (parseFloat(datasetResolution[i]["Dataset-AlongTrackResolution"]) * multiplier).toString()
+                        var acrossTrackString = (parseFloat(datasetResolution[i]["Dataset-AcrossTrackResolution"]) * multiplier).toString()
+                        // round resolution strings to precision of 2 without trailing zeros if too long                    
+                        if (alongTrackString.split(".")[1] && alongTrackString.split(".")[1].length > 2) {
+                            alongTrackString = parseFloat(parseFloat(alongTrackString).toFixed(2)).toString()
+                        }
+                        if (acrossTrackString.split(".")[1] && acrossTrackString.split("."[1]).length > 2) {
+                            acrossTrackString = parseFloat(parseFloat(acrossTrackString).toFixed(2)).toString()
+                        }
+                        
+                        resolutionString += alongTrackString + unit + " x " + acrossTrackString + unit + connectingSting
+                    } else {
+                        resolutionString = datasetResolutionError
                     }
-
-                    // if on the last dataset resolution object
-                    if (i === datasetResolution.length - 1) {
-                        connectingSting = ""
-                    }
-
-                    var alongTrackString = (parseFloat(datasetResolution[i]["Dataset-AlongTrackResolution"]) * multiplier).toString()
-                    var acrossTrackString = (parseFloat(datasetResolution[i]["Dataset-AcrossTrackResolution"]) * multiplier).toString()
-                    // round resolution strings to precision of 2 without trailing zeros if too long                    
-                    if (alongTrackString.split(".")[1] && alongTrackString.split(".")[1].length > 2) {
-                        alongTrackString = parseFloat(parseFloat(alongTrackString).toFixed(2)).toString()
-                    }
-                    if (acrossTrackString.split(".")[1] && acrossTrackString.split("."[1]).length > 2) {
-                        acrossTrackString = parseFloat(parseFloat(acrossTrackString).toFixed(2)).toString()
-                    }
-                    
-                    resolutionString += alongTrackString + unit + " x " + acrossTrackString + unit + connectingSting
                 }
 
                 domAttr.set(this.metadataAlongAcrossRes, "innerHTML", resolutionString);
+            } else {
+                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
             }
-            else
-                // domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Available");
-                domAttr.set(this.metadataAlongAcrossRes, "innerHTML", "Not Applicable");
-
+                
             /* Set date range */
             var startDate = metadata["DatasetCoverage-StartTimeLong"];
             var formattedStart = "Unknown";

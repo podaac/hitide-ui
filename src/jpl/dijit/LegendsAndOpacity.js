@@ -93,7 +93,6 @@ define([
             if (this.datasets[message.datasetId]) {
                 this.removeDataset(message);
             }
-
             var laoDataset = new LegendsAndOpacityDataset({
                 _id: Math.random(),
                 datasetId: message.datasetId,
@@ -159,6 +158,9 @@ define([
             this.open = false;
         },
         handleVariablesFetched: function(message) {
+            if('global_grid' in message){
+                this.datasets[message.datasetId]['global_grid'] = message['global_grid'];
+            }
             if('multi_lon_lat' in message){
                 var new_variables = [];
                 for(var i = 0; i < message.multi_groups.length; i++){
@@ -193,6 +195,7 @@ define([
         },
         handleAddGranulePreview: function(message) {
             var laoDataset = this.datasets[message.granuleObj["Granule-DatasetId"]];
+            message['global_grid'] = laoDataset['global_grid'];
             if (laoDataset) {
                 laoDataset.addGranulePreview(message);
             }

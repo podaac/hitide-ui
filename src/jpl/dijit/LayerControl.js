@@ -23,10 +23,11 @@ define([
     "dijit/form/HorizontalRule",
     "dijit/form/HorizontalRuleLabels",
     "jpl/dijit/ui/AlertDialog",
-    "jpl/config/Config"
+    "jpl/config/Config",
+    "esri/geometry/Extent"
 ], function(declare, lang, on, domConstruct, domClass, domAttr, domStyle, topic, touch, xhr, array, _WidgetBase,
     _TemplatedMixin, template, css, Layers, LayerEvent, MapEvent, MapUtil, AnimationUtil,
-    HorizontalSlider, HorizontalRule, HorizontalRuleLabels, AlertDialog, Config) {
+    HorizontalSlider, HorizontalRule, HorizontalRuleLabels, AlertDialog, Config, Extent) {
     return declare([_WidgetBase, _TemplatedMixin], {
         templateString: template,
         widgetsInTemplate: false,
@@ -256,14 +257,33 @@ define([
                 var granuleName = obj.granuleObj["Granule-Name"];
                 var variableName = this.variableId;
                 var imageFilename = calculateImageFilename(granuleName, variableName);
-
-                
                 var relatedUrls = obj.granuleObj.umm.RelatedUrls;
                 var objectURL
                 for(var i=0; i < relatedUrls.length; i++){
                     objectURL = relatedUrls[i]['URL'];
                     if(objectURL.includes(imageFilename)){
-                        return MapUtil.prototype.createMapImage(objectURL, this.translateExtent(obj.granuleObj["Granule-Extent"]));
+                        var currentExtent = this.translateExtent(obj.granuleObj["Granule-Extent"])
+
+                        // Calculate the new extent properties based on the offset
+                        var newExtent = new Extent({
+                            xmin: currentExtent.xmin ,
+                            ymin: currentExtent.ymin ,
+                            xmax: currentExtent.xmax ,
+                            ymax: currentExtent.ymax ,
+                            spatialReference: currentExtent.spatialReference
+                        });
+                        
+                        if(obj['global_grid'] === true){
+                            newExtent = new Extent({
+                                xmin: -180 ,
+                                ymin: -90 ,
+                                xmax: 180 ,
+                                ymax: 90 ,
+                                spatialReference: currentExtent.spatialReference
+                            });
+                        }
+
+                        return MapUtil.prototype.createMapImage(objectURL, newExtent);
                     }
                 }
             }

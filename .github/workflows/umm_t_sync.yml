@@ -4,7 +4,7 @@ name: Hourly Build Sync CMR Association Text Files
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 9 * * *'
   push:
     branches:
       - develop
@@ -17,13 +17,12 @@ jobs:
     name: Build, Test, Deploy
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     steps:
       # Checkout
       - name: Checkout project to build and deploy
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.9
 
@@ -32,12 +31,13 @@ jobs:
 
       - name: Run cmr_association_diff command
         id: cmr_association_diff
+
         run: |
           update_git_message="Adding collections"
 
           OPS_COLLECTION=$(set +x; cmr_association_diff -e ops -t tool -a ${{ github.workspace }}/cmr/ops_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/ops_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_OPS}}; set -x)
           if [[ ${OPS_COLLECTION} ]]; then
-            python -u ${{ github.workspace }}/Jenkins/read_collection.py -e ops -i ${{ github.workspace }}/ops_output_json.txt -o ${{ github.workspace }}
+            python -u ${{ github.workspace }}/.github/workflows/read_collection.py -e ops -i ${{ github.workspace }}/ops_output_json.txt -o ${{ github.workspace }}
             ops_success_collection=$(cat ${{ github.workspace }}/ops_success.txt | tr -d '\n')
             update_git_message+=" OPS: $ops_success_collection"
             cat ${{ github.workspace }}/ops_success.txt >> ${{ github.workspace }}/cmr/ops_associations.txt
@@ -45,15 +45,19 @@ jobs:
 
           UAT_COLLECTION=$(set +x; cmr_association_diff -e uat -t tool -a ${{ github.workspace }}/cmr/uat_associations.txt -p POCLOUD -n 'HiTIDE' -o ${{ github.workspace }}/uat_output_json.txt --token ${{secrets.LAUNCHPAD_TOKEN_UAT}}; set -x)
           if [[ ${UAT_COLLECTION} ]]; then
-            python -u ${{ github.workspace }}/Jenkins/read_collection.py -e uat -i ${{ github.workspace }}/uat_output_json.txt -o ${{ github.workspace }}
+            python -u ${{ github.workspace }}/.github/workflows/read_collection.py -e uat -i ${{ github.workspace }}/uat_output_json.txt -o ${{ github.workspace }}
             uat_success_collection=$(cat ${{ github.workspace }}/uat_success.txt | tr -d '\n')
             update_git_message+=" UAT: $uat_success_collection"
             cat ${{ github.workspace }}/uat_success.txt >> ${{ github.workspace }}/cmr/uat_associations.txt
           fi
 
-          echo "::set-output name=ops_collection::$OPS_COLLECTION"
-          echo "::set-output name=uat_collection::$UAT_COLLECTION"
-          echo "::set-output name=update_git_message::$update_git_message"
+          echo "ops_collection=$OPS_COLLECTION" >> "$GITHUB_OUTPUT"
+          echo "uat_collection=$UAT_COLLECTION" >> "$GITHUB_OUTPUT"
+          echo "update_git_message=$update_git_message" >> "$GITHUB_OUTPUT"
+
+          #echo "::set-output name=ops_collection::$OPS_COLLECTION"
+          #echo "::set-output name=uat_collection::$UAT_COLLECTION"
+          #echo "::set-output name=update_git_message::$update_git_message"
 
       - name: Push Develop
         env:
@@ -61,7 +65,7 @@ jobs:
           UAT_COLLECTION: ${{ steps.cmr_association_diff.outputs.uat_collection }}
           UPDATE_GIT_MESSAGE: ${{ steps.cmr_association_diff.outputs.update_git_message }}
         run: |
-          if [[ -z "${{ env.UAT_COLLECTIONS }}" && -z "${{ env.OPS_COLLECTIONS }}" ]]; then
+          if [[ -z "${{ env.UAT_COLLECTION }}" && -z "${{ env.OPS_COLLECTION }}" ]]; then
             echo "No collections were different."
           else
             git config --global user.name 'hitide-ui bot'

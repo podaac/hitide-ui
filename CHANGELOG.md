@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+### Changed
+### Removed
+### Fixed
+
+
+## [4.17.0]
+### Added
 - Added global_grid configuration check to make a global extent for images.
 ### Changed
 ### Removed
@@ -15,14 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-49: Removed unused Docker and Jenkins folders/files from HiTIDE-UI
 - issue-52: Fixed missing thumbnail placeholder
 
-
 ## [4.16.2]
 ### Added
 ### Changed
 ### Removed
 ### Fixed
 - issue-38: Removed shortName retrieval operation from variable graphql query
-
 
 ## [4.16.1]
 ### Added
@@ -31,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: Removed last references to on-prem l2ss and podaac-tools
 ### Fixed
 - issue-33: Fixed collection resolution displaying multiple resolutions and scaling
-
 
 ## [4.16.0]
 ### Added
@@ -44,7 +48,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-15: Removed cut scanline option in download options tab
 ### Fixed
 - issue-15: Fixed color palette error in the legend when selecting datasets
-
 
 ## [4.15.0]
 ### Added

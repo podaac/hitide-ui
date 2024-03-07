@@ -774,27 +774,28 @@ define([
                 
                 x["source"] = "cmr";
                 
-                // if Granule not in list of currently visible footprints and preview, remove that footprint/preview from display on the map
-                var granuleName = x["Granule-Name"]
-                if (granuleName) {
-                    if (footprintKeys.length > 0) {
-                        if (footprintKeys.includes(granuleName)) {
-                            x.footprint = true
-                            // remove object from list
-                            delete currentlyVisibleFootprints[x["Granule-Name"]]
-                        } else {
-                            x.footprint = false
-                        }
-                    }
-                    if (previewKeys.length > 0) {
-                        if (previewKeys.includes(granuleName)) {
-                            x.preview = true
-                            delete currentlyVisiblePreviews[x["Granule-Name"]]
-                        } else {
-                            x.preview = false
-                        }
-                    }
-                }
+                // TODO
+                // // if Granule not in list of currently visible footprints and preview, remove that footprint/preview from display on the map
+                // var granuleName = x["Granule-Name"]
+                // if (granuleName) {
+                //     if (footprintKeys.length > 0) {
+                //         if (footprintKeys.includes(granuleName)) {
+                //             x.footprint = true
+                //             // remove object from list
+                //             delete currentlyVisibleFootprints[x["Granule-Name"]]
+                //         } else {
+                //             x.footprint = false
+                //         }
+                //     }
+                //     if (previewKeys.length > 0) {
+                //         if (previewKeys.includes(granuleName)) {
+                //             x.preview = true
+                //             delete currentlyVisiblePreviews[x["Granule-Name"]]
+                //         } else {
+                //             x.preview = false
+                //         }
+                //     }
+                // }
 
                 _context.gridStore.add(x)
             });

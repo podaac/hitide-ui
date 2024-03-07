@@ -746,6 +746,17 @@ define([
         postGranulesFetch: function(response) {
             this.availableGranules = response.hits;
             var _context = this;
+            var currentlyVisibleFootprints = {}
+            var currentlyVisiblePreviews = {}
+
+            for (var i=0; i<this.stateStore.data.length; i++) {
+                var currentVisibleGranule = this.stateStore.data[i]
+                if (currentVisibleGranule.footprint) currentlyVisibleFootprints[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
+                if (currentVisibleGranule.preview) currentlyVisiblePreviews[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
+            }
+            var footprintKeys = Object.keys(currentlyVisibleFootprints)
+            var previewKeys = Object.keys(currentlyVisiblePreviews)
+
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
                 var granule_id = x["meta"]["concept-id"];
@@ -762,9 +773,38 @@ define([
                 x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
                 
                 x["source"] = "cmr";
+                
+                // if Granule not in list of currently visible footprints and preview, remove that footprint/preview from display on the map
+                var granuleName = x["Granule-Name"]
+                if (granuleName) {
+                    if (footprintKeys.length > 0) {
+                        if (footprintKeys.includes(granuleName)) {
+                            x.footprint = true
+                            // remove object from list
+                            delete currentlyVisibleFootprints[x["Granule-Name"]]
+                        } else {
+                            x.footprint = false
+                        }
+                    }
+                    if (previewKeys.length > 0) {
+                        if (previewKeys.includes(granuleName)) {
+                            x.preview = true
+                            delete currentlyVisiblePreviews[x["Granule-Name"]]
+                        } else {
+                            x.preview = false
+                        }
+                    }
+                }
 
                 _context.gridStore.add(x)
             });
+
+            // remove footprints and previews on the map that are not being shown in the granule table
+            var objectsToRemove = Object.values(currentlyVisibleFootprints).concat(Object.values(currentlyVisiblePreviews))
+            if (objectsToRemove.length > 0) {
+                _context.toggleFootprints(objectsToRemove, false)
+                _context.togglePreviews(objectsToRemove, false)
+            }
 
             this.granulesInGrid = this.gridStore.query().length;
 
@@ -857,7 +897,6 @@ define([
             }
             return value.toISOString().slice(0, 16);
         },
-
         updateStateStoreObj: function(obj) {
             // If obj has no active states, remove it else upsert
             if (!obj.footprint && !obj.preview) {

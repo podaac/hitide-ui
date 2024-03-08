@@ -205,7 +205,6 @@ jobs:
           override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
           echo "THE_ENV=${override_env}" >> $GITHUB_ENV
           echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
-          echo "TESTING_ENV=${override_env}" >> $GITHUB_ENV
 
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v4

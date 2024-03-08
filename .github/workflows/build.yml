@@ -188,10 +188,6 @@ jobs:
         run: |
           npm install
           npm run build
-
-      - name: Make Config Files
-        run: |
-          cat ./configs/hitideConfig-${{ env.THE_ENV }}.js > ./dist/hitideConfig.js
       
       ## Deployment
       - name: Deploy Env Override
@@ -205,6 +201,11 @@ jobs:
           override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
           echo "THE_ENV=${override_env}" >> $GITHUB_ENV
           echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
+          cat ./configs/hitideConfig-override_env.js > ./dist/hitideConfig.js
+
+      - name: Make Config Files
+        run: |
+          cat ./configs/hitideConfig-${{ env.THE_ENV }}.js > ./dist/hitideConfig.js
 
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v4

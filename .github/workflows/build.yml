@@ -201,7 +201,6 @@ jobs:
           override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
           echo "THE_ENV=${override_env}" >> $GITHUB_ENV
           echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
-          cat ./configs/hitideConfig-override_env.js > ./dist/hitideConfig.js
 
       - name: Make Config Files
         run: |

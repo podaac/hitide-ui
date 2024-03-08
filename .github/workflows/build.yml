@@ -199,13 +199,13 @@ jobs:
           github.event.head_commit.message == '/deploy sit' ||
           github.event.head_commit.message == '/deploy uat'
         run: |
-          cat ./configs/hitideConfig-${{ env.THE_ENV }}.js > ./dist/hitideConfig.js
           message="${{ github.event.head_commit.message }}"
           trimmed_message=${message:1}  # Remove leading slash
           override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')
           override_env_upper=$(echo "$trimmed_message" | awk '{print toupper($NF)}')
           echo "THE_ENV=${override_env}" >> $GITHUB_ENV
           echo "TARGET_ENV_UPPERCASE=${override_env_upper}" >> $GITHUB_ENV
+          echo "TESTING_ENV=${override_env}" >> $GITHUB_ENV
 
       - name: Configure AWS credentials 
         uses: aws-actions/configure-aws-credentials@v4

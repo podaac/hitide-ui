@@ -199,6 +199,7 @@ jobs:
           github.event.head_commit.message == '/deploy sit' ||
           github.event.head_commit.message == '/deploy uat'
         run: |
+          cat ./configs/hitideConfig-${{ env.THE_ENV }}.js > ./dist/hitideConfig.js
           message="${{ github.event.head_commit.message }}"
           trimmed_message=${message:1}  # Remove leading slash
           override_env=$(echo "$trimmed_message" | grep -oE '[^[:space:]]+$')

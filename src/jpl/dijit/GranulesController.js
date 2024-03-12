@@ -746,6 +746,7 @@ define([
         postGranulesFetch: function(response) {
             this.availableGranules = response.hits;
             var _context = this;
+
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
                 var granule_id = x["meta"]["concept-id"];
@@ -765,6 +766,19 @@ define([
 
                 _context.gridStore.add(x)
             });
+
+            // remove footprints and preview from displaying on the map if they are not in the current page of the granule table
+            var currentlyVisibleFootprints = {}
+            var currentlyVisiblePreviews = {}
+
+            for (var i=0; i<this.stateStore.data.length; i++) {
+                var currentVisibleGranule = this.stateStore.data[i]
+                if (currentVisibleGranule.footprint) currentlyVisibleFootprints[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
+                if (currentVisibleGranule.preview) currentlyVisiblePreviews[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
+            }
+            
+            _context.toggleFootprints(Object.values(currentlyVisibleFootprints), false, true)
+            _context.togglePreviews(Object.values(currentlyVisiblePreviews), false, true)
 
             this.granulesInGrid = this.gridStore.query().length;
 
@@ -857,7 +871,6 @@ define([
             }
             return value.toISOString().slice(0, 16);
         },
-
         updateStateStoreObj: function(obj) {
             // If obj has no active states, remove it else upsert
             if (!obj.footprint && !obj.preview) {
@@ -906,7 +919,9 @@ define([
             }
         },
 
-        toggleFootprints: function(granuleObjs, active) {
+        toggleFootprints: function(granuleObjs, active, inStoreAlready) {
+            // if obj already in grid store, update and don't put
+            inStoreAlready = inStoreAlready || false
             for (var i = 0; i < granuleObjs.length; i++) {
                 // Update store
                 var obj = granuleObjs[i];
@@ -914,7 +929,9 @@ define([
                 if (obj.footprint != active) {
                     if(obj["Granule-Footprint"]){
                         obj.footprint = active;
-                        this.gridStore.put(obj);
+                        if (!inStoreAlready) {
+                            this.gridStore.put(obj);
+                        }
                         this.updateStateStoreObj(obj);
 
                         // Update fp
@@ -925,14 +942,18 @@ define([
             }
         },
 
-        togglePreviews: function(granuleObjs, active) {
+        togglePreviews: function(granuleObjs, active, inStoreAlready) {
+            // if obj already in grid store, update and don't put
+            inStoreAlready = inStoreAlready || false
             for (var i = 0; i < granuleObjs.length; i++) {
                 // Update store
                 var obj = granuleObjs[i];
                 if (obj.preview != active) {
                     if(obj.has_image){
                         obj.preview = active;
-                        this.gridStore.put(obj);
+                        if (!inStoreAlready) {
+                            this.gridStore.put(obj);
+                        }
                         this.updateStateStoreObj(obj);
 
                         // Update preview

@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## [4.17.1]
+### Added
+### Changed
+### Removed
+### Fixed
+- issue-44: Fixed footprints and previews stay on map when not intended
+
 ## [4.17.0]
 ### Added
 - Added global_grid configuration check to make a global extent for images.

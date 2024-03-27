@@ -252,6 +252,8 @@ define([
 
                     if(obj["Granule-Footprint"]){
                         on(btn, "click", function(evt) {
+                            console.log('footprint click')
+                            console.log('obj:', obj)
                             obj.footprint = !obj.footprint;
                             _context.gridStore.put(obj)
                             _context.updateStateStoreObj(obj);
@@ -749,36 +751,118 @@ define([
 
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
+                var currentStateStore = _context.stateStore.query()
+                var relevantStateStoreObject = {}
                 var granule_id = x["meta"]["concept-id"];
-                var fpState = _context.stateStore.get(granule_id);
-                var previewState = _context.stateStore.get(granule_id);
+                for(var i=0; i<_context.stateStore.query().length; i++) {
+                    if(granule_id === currentStateStore[i]["meta"]["concept-id"]) {
+                        relevantStateStoreObject = currentStateStore[i]
+                    }
+                }
+                var fpState = relevantStateStoreObject.footprint
+                var previewState = relevantStateStoreObject.preview
+                console.log('startup state store: ', _context.stateStore.query())
+                console.log('fpState: ',fpState)
 
                 x["Granule-DatasetId"] = _context.datasetId;
                 x["Granule-Name"] = x["meta"]["native-id"];
 
-                x.footprint = fpState ? fpState.footprint : false;
-                x.preview = previewState ? previewState.preview : false;
+                x.footprint = fpState ? fpState : false;
+                x.preview = previewState ? previewState : false;
+                console.log(fpState)
                                     
                 x["Granule-StartTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]);
                 x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
                 
                 x["source"] = "cmr";
-
+                console.log('adding: ',x)
                 _context.gridStore.add(x)
             });
-
-            // remove footprints and preview from displaying on the map if they are not in the current page of the granule table
-            var currentlyVisibleFootprints = {}
-            var currentlyVisiblePreviews = {}
-
-            for (var i=0; i<this.stateStore.data.length; i++) {
-                var currentVisibleGranule = this.stateStore.data[i]
-                if (currentVisibleGranule.footprint) currentlyVisibleFootprints[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
-                if (currentVisibleGranule.preview) currentlyVisiblePreviews[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
-            }
             
-            _context.toggleFootprints(Object.values(currentlyVisibleFootprints), false, true)
-            _context.togglePreviews(Object.values(currentlyVisiblePreviews), false, true)
+            // if visible footprint is not in the grid, remove it from list
+            // make sure that visible footprint has display set to true
+            var gridStoreList = this.gridStore.query()
+            var stateStoreList = this.stateStore.query()
+            var stateStoreItemsToRemove = []
+            var gridStoreItemsToUpdate = []
+
+            for(var i=0; i<stateStoreList.length; i++) {
+                var visibleFootprintInCurrentGrid = false
+                for(var j=0; j<gridStoreList.length; j++) {
+                    if (stateStoreList[i]["meta"]["concept-id"] === gridStoreList[j]["meta"]["concept-id"]){
+                        visibleFootprintInCurrentGrid = true
+                    }
+                }
+                if(visibleFootprintInCurrentGrid) {
+                    // update grid state to what is in state store
+                    gridStoreItemsToUpdate.push(stateStoreList[i])
+                } else {
+                    // remove item from state store
+                    stateStoreItemsToRemove.push(stateStoreList[i])
+                }
+            }
+
+            console.log(stateStoreItemsToRemove)
+            for(var k=0; k<stateStoreItemsToRemove.length; k++) {
+                var objectToRemove = stateStoreItemsToRemove[k]
+                objectToRemove.footprint = false
+                console.log(stateStoreItemsToRemove[k]["Granule-Id"])
+                _context.stateStore.remove(objectToRemove["Granule-Id"])
+                _context.toggleFootprintDisplay(objectToRemove)
+                // _context.updateStateStoreObj(objectToRemove)
+            }
+
+            for(var l=0; l<gridStoreItemsToUpdate.length; l++) {
+                console.log(_context.stateStore.query())
+                console.log(_context.gridStore.query())
+                // var stateStoreItemId = stateStoreItemsToUpdate[l]["meta"]["concept-id"]
+                // var objectToUpdate = _context.stateStore.get(gridStoreItemId)
+                var objectToUpdate = gridStoreItemsToUpdate[l]
+                console.log('object to update: ', objectToUpdate)
+                // _context.gridStore.put(objectToUpdate)
+                // _context.toggleFootprintDisplay(objectToUpdate)
+                // _context.gridStore.put(objectToUpdate)
+                // _context.updateStateStoreObj(objectToUpdate);
+                // _context.toggleFootprintDisplay(objectToUpdate);
+            }
+            console.log('updated state store: ',_context.stateStore.query())
+            console.log('updated grid store: ',_context.gridStore.query())
+
+            // for (var j=0; j<gridStoreList.length; j++) {
+            //     // go through current grid list
+            //     var currentGridGranule = gridStoreList[j]
+            //     var visibleFootprintInCurrentGrid = false
+            //     for(var i=0; i<stateStoreList.length; i++) {
+            //         // go through state store list
+            //         // if current state granule is not in the grid, remove it from map
+            //         console.log('CURRENT STATE STORE LIST GRANULE: ', stateStoreList[i])
+            //         console.log(currentGridGranule["meta"]["concept-id"], stateStoreList[i]["meta"]["concept-id"])
+            //         if (currentGridGranule["meta"]["concept-id"] === stateStoreList[i]["meta"]["concept-id"]){
+            //             console.log('EQUALLLLLLLL')
+            //             visibleFootprintInCurrentGrid = true
+            //         }
+            //         // var newObj = updatedVisibleFootprints[i]
+            //         // newObj.footprint = true
+            //         // console.log(newObj.footprint)
+            //         // newUpdatedVisibleFootprints.push(newObj)
+            //     }
+            //     if (!visibleFootprintInCurrentGrid) {
+            //         stateStoreItemsToRemove.push(gridStoreList[j])
+            //     }
+            //     var newObj = gridStoreList[j]
+            //     newObj.footprint = visibleFootprintInCurrentGrid
+            //     // _context.gridStore.put(newObj)
+            //     console.log('OBJECT OBJECT: ',newObj)
+            //     console.log('currentGridGranule.footprint: ', currentGridGranule.footprint)
+            //     console.log('visibleFootprintInCurrentGrid: ',visibleFootprintInCurrentGrid)
+            //     _context.updateStateStoreObj(newObj)
+            //     _context.toggleFootprintDisplay(newObj)
+            // }
+            // TODO
+            // console.log('currentlyVisibleFootprints: ',currentlyVisibleFootprints)
+            // console.log('currentlyVisiblePreviews: ',currentlyVisiblePreviews)
+            // _context.toggleFootprints(newUpdatedVisibleFootprints, true, true)
+            // _context.togglePreviews(Object.values(currentlyVisiblePreviews), false, true)
 
             this.granulesInGrid = this.gridStore.query().length;
 
@@ -902,6 +986,9 @@ define([
         },
 
         toggleFootprintDisplay: function(obj) {
+            console.log("toggling footprint display")
+            console.log('state store: ', this.stateStore.query())
+            console.log('grid store: ', this.gridStore.query())
             if (obj.footprint) {
                 // if (!this.footprintGraphics[obj["Granule-Id"]]) {
                 var rgb = this.hexToRgb(this.datasetColor);
@@ -920,6 +1007,8 @@ define([
         },
 
         toggleFootprints: function(granuleObjs, active, inStoreAlready) {
+            console.log('TOGGLE FOOTPRINTS FUNCTION')
+            console.log(granuleObjs)
             // if obj already in grid store, update and don't put
             inStoreAlready = inStoreAlready || false
             for (var i = 0; i < granuleObjs.length; i++) {
@@ -943,6 +1032,7 @@ define([
         },
 
         togglePreviews: function(granuleObjs, active, inStoreAlready) {
+            console.log('previews to show: ', granuleObjs)
             // if obj already in grid store, update and don't put
             inStoreAlready = inStoreAlready || false
             for (var i = 0; i < granuleObjs.length; i++) {

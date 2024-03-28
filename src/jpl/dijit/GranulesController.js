@@ -746,13 +746,32 @@ define([
         postGranulesFetch: function(response) {
             this.availableGranules = response.hits;
             var _context = this;
-
+            var currentStateStore = _context.stateStore.query()
+            var acceptableStateStoreIds = []
+            var stateStoreItemsToRemove = []
+            for(var i=0; i<response.items.length; i++) {
+                acceptableStateStoreIds.push(response.items[i]["meta"]["concept-id"])
+            }
+            for(var j=0; j<currentStateStore.length; j++) {
+                if(!(acceptableStateStoreIds.includes(currentStateStore[j]["meta"]["concept-id"]))) {
+                    stateStoreItemsToRemove.push((currentStateStore[j]))
+                }
+            }
+            for(var k=0; k<stateStoreItemsToRemove.length; k++) {
+                _context.stateStore.remove(stateStoreItemsToRemove[k]["Granule-Id"])
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
+                    granuleObj: stateStoreItemsToRemove[k]
+                });
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
+                    granuleObj: stateStoreItemsToRemove[k]
+                });
+            }
+            // clear anything from state store that is not a concept id in the response items
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
                 var currentGridStore = _context.gridStore.query()
                 var currentStateStore = _context.stateStore.query()
                 var relevantStateStoreObject = {}
-                var replacementGridGranuleAdded = false
                 var granule_id = x["meta"]["concept-id"];
                 for(var i=0; i<_context.stateStore.query().length; i++) {
                     var currentGridStoreContainsCurrentStateGranule = false
@@ -766,7 +785,6 @@ define([
                     }
                     if(!currentGridStoreContainsCurrentStateGranule && (currentStateStore[i].footprint || currentStateStore[i].preview)) {
                         _context.gridStore.put(currentStateStore[i])
-                        replacementGridGranuleAdded = true
                     }
                 }
                 var fpState = relevantStateStoreObject.footprint
@@ -782,8 +800,14 @@ define([
                 x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
                 
                 x["source"] = "cmr";
-
-                if(!replacementGridGranuleAdded) {
+                var newGridStore = _context.gridStore.query()
+                var xAlreadyInGridStore = false
+                for(var k=0; k<newGridStore.length; k++){
+                    if(x["meta"]["concept-id"] === newGridStore[k]["meta"]["concept-id"]) {
+                        xAlreadyInGridStore = true
+                    }
+                }
+                if(!xAlreadyInGridStore) {
                     _context.gridStore.add(x)
                 }
             });

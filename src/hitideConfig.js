@@ -1,4 +1,5 @@
-var hitideProfileOrigin = "https://hitide.profile.podaac.uat.earthdatacloud.nasa.gov/hitide/api";
+// var hitideProfileOrigin = "https://hitide.profile.podaac.sit.earthdatacloud.nasa.gov/hitide/api";
+var hitideProfileOrigin = "http://localhost:8080/hitide/api";
 
 window.hitideConfig = {
     paletteService: "https://hitide.podaac.earthdatacloud.nasa.gov/palettes",

@@ -29,6 +29,7 @@ define([
     }
 
     function initialLoginCheck(){
+        console.log('initial login check')
         topic.publish(MyDataEvent.prototype.LOGIN_STATUS_CHANGE, appUser);
 
         var state = extractParamFromUrl("state");
@@ -42,7 +43,9 @@ define([
         var code = extractParamFromUrl("code");
         if(code){
             removeQueryFromUrl();
+            console.log('auth code: ', code)
             loginWithAuthCode(code, urlWithoutQueryOrFragment(), function(user){
+                console.log(user)
                 if(user.error){
                     /* Handle Error (just log it for now) */
                     console.log("LoginApi.initialLoginCheck() loginWithAuthCode() error: " + user.error);
@@ -112,6 +115,7 @@ define([
             throw Error("LoginApi.safeLogin() called while already logged in");
         }
         getSessionUser(function(user){
+            console.log("USER: ",user)
             if(user.error){
                 /* handle error (for now just log error) */
                 console.log("LoginApi.safeLogin() getSessionUser() error: " + user.error);
@@ -189,6 +193,7 @@ define([
     }
 
     function getSessionUser(callback){
+        console.log("USER: ",callback)
         var xhr = new XMLHttpRequest();
         xhr.open("GET", getUserUrl);
         xhr.responseType = "json";

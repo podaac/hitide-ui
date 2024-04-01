@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-48: Fixed collection resolution error handling
 - issue-49: Removed unused Docker and Jenkins folders/files from HiTIDE-UI
 - issue-52: Fixed missing thumbnail placeholder
+- issue-44: Fixed footprints and previews stay on map when not intended
 
 ## [4.16.2]
 ### Added

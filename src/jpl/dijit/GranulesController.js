@@ -746,39 +746,71 @@ define([
         postGranulesFetch: function(response) {
             this.availableGranules = response.hits;
             var _context = this;
-
+            var currentStateStore = _context.stateStore.query()
+            var acceptableStateStoreIds = []
+            var stateStoreItemsToRemove = []
+            for(var i=0; i<response.items.length; i++) {
+                acceptableStateStoreIds.push(response.items[i]["meta"]["concept-id"])
+            }
+            for(var j=0; j<currentStateStore.length; j++) {
+                if(!(acceptableStateStoreIds.includes(currentStateStore[j]["meta"]["concept-id"]))) {
+                    stateStoreItemsToRemove.push((currentStateStore[j]))
+                }
+            }
+            for(var k=0; k<stateStoreItemsToRemove.length; k++) {
+                _context.stateStore.remove(stateStoreItemsToRemove[k]["Granule-Id"])
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
+                    granuleObj: stateStoreItemsToRemove[k]
+                });
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
+                    granuleObj: stateStoreItemsToRemove[k]
+                });
+            }
+            // clear anything from state store that is not a concept id in the response items
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
+                var currentGridStore = _context.gridStore.query()
+                var currentStateStore = _context.stateStore.query()
+                var relevantStateStoreObject = {}
                 var granule_id = x["meta"]["concept-id"];
-                var fpState = _context.stateStore.get(granule_id);
-                var previewState = _context.stateStore.get(granule_id);
+                for(var i=0; i<_context.stateStore.query().length; i++) {
+                    var currentGridStoreContainsCurrentStateGranule = false
+                    for(var j=0; j<currentGridStore.length; j++) {
+                        if(currentGridStore[j]["meta"]["concept-id"] === currentStateStore[i]["meta"]["concept-id"]) {
+                            currentGridStoreContainsCurrentStateGranule = true
+                        }
+                    }
+                    if(granule_id === currentStateStore[i]["meta"]["concept-id"]) {
+                        relevantStateStoreObject = currentStateStore[i]
+                    }
+                    if(!currentGridStoreContainsCurrentStateGranule && (currentStateStore[i].footprint || currentStateStore[i].preview)) {
+                        _context.gridStore.put(currentStateStore[i])
+                    }
+                }
+                var fpState = relevantStateStoreObject.footprint
+                var previewState = relevantStateStoreObject.preview
 
                 x["Granule-DatasetId"] = _context.datasetId;
                 x["Granule-Name"] = x["meta"]["native-id"];
 
-                x.footprint = fpState ? fpState.footprint : false;
-                x.preview = previewState ? previewState.preview : false;
+                x.footprint = fpState ? fpState : false;
+                x.preview = previewState ? previewState : false;
                                     
                 x["Granule-StartTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]);
                 x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
                 
                 x["source"] = "cmr";
-
-                _context.gridStore.add(x)
+                var newGridStore = _context.gridStore.query()
+                var xAlreadyInGridStore = false
+                for(var k=0; k<newGridStore.length; k++){
+                    if(x["meta"]["concept-id"] === newGridStore[k]["meta"]["concept-id"]) {
+                        xAlreadyInGridStore = true
+                    }
+                }
+                if(!xAlreadyInGridStore) {
+                    _context.gridStore.add(x)
+                }
             });
-
-            // remove footprints and preview from displaying on the map if they are not in the current page of the granule table
-            var currentlyVisibleFootprints = {}
-            var currentlyVisiblePreviews = {}
-
-            for (var i=0; i<this.stateStore.data.length; i++) {
-                var currentVisibleGranule = this.stateStore.data[i]
-                if (currentVisibleGranule.footprint) currentlyVisibleFootprints[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
-                if (currentVisibleGranule.preview) currentlyVisiblePreviews[currentVisibleGranule["Granule-Name"]] = currentVisibleGranule
-            }
-            
-            _context.toggleFootprints(Object.values(currentlyVisibleFootprints), false, true)
-            _context.togglePreviews(Object.values(currentlyVisiblePreviews), false, true)
 
             this.granulesInGrid = this.gridStore.query().length;
 
@@ -919,9 +951,7 @@ define([
             }
         },
 
-        toggleFootprints: function(granuleObjs, active, inStoreAlready) {
-            // if obj already in grid store, update and don't put
-            inStoreAlready = inStoreAlready || false
+        toggleFootprints: function(granuleObjs, active) {
             for (var i = 0; i < granuleObjs.length; i++) {
                 // Update store
                 var obj = granuleObjs[i];
@@ -929,9 +959,6 @@ define([
                 if (obj.footprint != active) {
                     if(obj["Granule-Footprint"]){
                         obj.footprint = active;
-                        if (!inStoreAlready) {
-                            this.gridStore.put(obj);
-                        }
                         this.updateStateStoreObj(obj);
 
                         // Update fp
@@ -942,18 +969,13 @@ define([
             }
         },
 
-        togglePreviews: function(granuleObjs, active, inStoreAlready) {
-            // if obj already in grid store, update and don't put
-            inStoreAlready = inStoreAlready || false
+        togglePreviews: function(granuleObjs, active) {
             for (var i = 0; i < granuleObjs.length; i++) {
                 // Update store
                 var obj = granuleObjs[i];
                 if (obj.preview != active) {
                     if(obj.has_image){
                         obj.preview = active;
-                        if (!inStoreAlready) {
-                            this.gridStore.put(obj);
-                        }
                         this.updateStateStoreObj(obj);
 
                         // Update preview

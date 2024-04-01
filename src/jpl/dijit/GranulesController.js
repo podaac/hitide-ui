@@ -747,10 +747,11 @@ define([
             this.availableGranules = response.hits;
             var _context = this;
             var currentStateStore = _context.stateStore.query()
+            var currentGridStore = _context.gridStore.query()
             var acceptableStateStoreIds = []
             var stateStoreItemsToRemove = []
-            for(var i=0; i<response.items.length; i++) {
-                acceptableStateStoreIds.push(response.items[i]["meta"]["concept-id"])
+            for(var i=0; i<currentGridStore.length; i++) {
+                acceptableStateStoreIds.push(currentGridStore[i]["meta"]["concept-id"])
             }
             for(var j=0; j<currentStateStore.length; j++) {
                 if(!(acceptableStateStoreIds.includes(currentStateStore[j]["meta"]["concept-id"]))) {

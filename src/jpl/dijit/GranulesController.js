@@ -746,24 +746,70 @@ define([
         postGranulesFetch: function(response) {
             this.availableGranules = response.hits;
             var _context = this;
+            var currentStateStore = _context.stateStore.query()
+            var acceptableStateStoreIds = []
+            var stateStoreItemsToRemove = []
+            for(var i=0; i<response.items.length; i++) {
+                acceptableStateStoreIds.push(response.items[i]["meta"]["concept-id"])
+            }
+            for(var j=0; j<currentStateStore.length; j++) {
+                if(!(acceptableStateStoreIds.includes(currentStateStore[j]["meta"]["concept-id"]))) {
+                    stateStoreItemsToRemove.push((currentStateStore[j]))
+                }
+            }
+            for(var k=0; k<stateStoreItemsToRemove.length; k++) {
+                _context.stateStore.remove(stateStoreItemsToRemove[k]["Granule-Id"])
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
+                    granuleObj: stateStoreItemsToRemove[k]
+                });
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
+                    granuleObj: stateStoreItemsToRemove[k]
+                });
+            }
+            // clear anything from state store that is not a concept id in the response items
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
+                var currentGridStore = _context.gridStore.query()
+                var currentStateStore = _context.stateStore.query()
+                var relevantStateStoreObject = {}
                 var granule_id = x["meta"]["concept-id"];
-                var fpState = _context.stateStore.get(granule_id);
-                var previewState = _context.stateStore.get(granule_id);
+                for(var i=0; i<_context.stateStore.query().length; i++) {
+                    var currentGridStoreContainsCurrentStateGranule = false
+                    for(var j=0; j<currentGridStore.length; j++) {
+                        if(currentGridStore[j]["meta"]["concept-id"] === currentStateStore[i]["meta"]["concept-id"]) {
+                            currentGridStoreContainsCurrentStateGranule = true
+                        }
+                    }
+                    if(granule_id === currentStateStore[i]["meta"]["concept-id"]) {
+                        relevantStateStoreObject = currentStateStore[i]
+                    }
+                    if(!currentGridStoreContainsCurrentStateGranule && (currentStateStore[i].footprint || currentStateStore[i].preview)) {
+                        _context.gridStore.put(currentStateStore[i])
+                    }
+                }
+                var fpState = relevantStateStoreObject.footprint
+                var previewState = relevantStateStoreObject.preview
 
                 x["Granule-DatasetId"] = _context.datasetId;
                 x["Granule-Name"] = x["meta"]["native-id"];
 
-                x.footprint = fpState ? fpState.footprint : false;
-                x.preview = previewState ? previewState.preview : false;
+                x.footprint = fpState ? fpState : false;
+                x.preview = previewState ? previewState : false;
                                     
                 x["Granule-StartTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]);
                 x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
                 
                 x["source"] = "cmr";
-
-                _context.gridStore.add(x)
+                var newGridStore = _context.gridStore.query()
+                var xAlreadyInGridStore = false
+                for(var k=0; k<newGridStore.length; k++){
+                    if(x["meta"]["concept-id"] === newGridStore[k]["meta"]["concept-id"]) {
+                        xAlreadyInGridStore = true
+                    }
+                }
+                if(!xAlreadyInGridStore) {
+                    _context.gridStore.add(x)
+                }
             });
 
             this.granulesInGrid = this.gridStore.query().length;
@@ -857,7 +903,6 @@ define([
             }
             return value.toISOString().slice(0, 16);
         },
-
         updateStateStoreObj: function(obj) {
             // If obj has no active states, remove it else upsert
             if (!obj.footprint && !obj.preview) {
@@ -914,7 +959,6 @@ define([
                 if (obj.footprint != active) {
                     if(obj["Granule-Footprint"]){
                         obj.footprint = active;
-                        this.gridStore.put(obj);
                         this.updateStateStoreObj(obj);
 
                         // Update fp
@@ -932,7 +976,6 @@ define([
                 if (obj.preview != active) {
                     if(obj.has_image){
                         obj.preview = active;
-                        this.gridStore.put(obj);
                         this.updateStateStoreObj(obj);
 
                         // Update preview

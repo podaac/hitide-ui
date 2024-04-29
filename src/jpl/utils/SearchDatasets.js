@@ -123,57 +123,69 @@ define([
         return datasets;
     }
 
-    function getCmrSpatialExtent(datasetObject){
-        var conceptId = datasetObject["Dataset-PersistentId"]
-        var secondURL = config.hitide.externalConfigurables.cmrCollectionSearchService + "/" + conceptId + ".umm_json"
-        return request(secondURL, {
+    function getAdditionalCmrMetadata(collectionObjectArray) {
+        var graphqlURL = config.hitide.externalConfigurables.cmrVariableService
+        var collectionIds = collectionObjectArray.map(function(collectionObject) {
+            return '"' + collectionObject["Dataset-PersistentId"] + '"'
+        })
+        var templateQuery = "{\n  collections (conceptId: [{COLLECTION_ID}]) {\n    items {\n        conceptId\n    spatialExtent\n      relatedUrls\n     }\n   }\n}"
+        var query = templateQuery.replace("{COLLECTION_ID}", collectionIds);
+        var updatedCollectionObjects = request.post(graphqlURL, {
             handleAs: 'json',
+            withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies,
             headers: {
-                "X-Requested-With": null
+                "X-Requested-With": null,
+                "Content-Type": "application/json"
             },
-            withCredentials: config.hitide.externalConfigurables.crossOriginCmrCookies
+            data: JSON.stringify({ query: query })
         }).then(function(response) {
-            datasetObject["Dataset-Resolution"] = []
-            var resolutionAndCoordinateSystemObject = response.SpatialExtent.HorizontalSpatialDomain.ResolutionAndCoordinateSystem
-            var relatedUrlsArray = response.RelatedUrls
-            if (resolutionAndCoordinateSystemObject) {
-                var resolutionObjects = resolutionAndCoordinateSystemObject.HorizontalDataResolution.GenericResolutions
-                if (resolutionObjects) {
-                    resolutionObjects.forEach(function(resolutionObject) {
-                        var acrossTrack = resolutionObject.XDimension
-                        var alongTrack = resolutionObject.YDimension
-                        var unit = resolutionObject.Unit
-                        datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
-                    });
-                } else {
-                    // Resolution not available by error
-                    datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
+            return collectionObjectArray.map(function(collectionObject) {
+                collectionObject["Dataset-ImageUrl"] = 'https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg'
+                var objectWithMetadata = response.data.collections.items.find(function (metadataItem) { return metadataItem.conceptId === collectionObject["Dataset-PersistentId"] })
+                var databaseCollectionObjectToReturn = collectionObject
+                if(objectWithMetadata) {
+                    databaseCollectionObjectToReturn = getCmrSpatialExtent(collectionObject, objectWithMetadata)
                 }
-            } else {
-                // Key [Collection]/SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem does not exist. This likely was intentional to indicate resolution is not applicable to this collection.
-                datasetObject["Dataset-Resolution"].push({"error": "Not Applicable"})
-            }
-            if (relatedUrlsArray) {
-                var urlDatasetImageUrl = 'https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg'
-                for(var i=0; i < relatedUrlsArray.length; i++) {
-                    var currentRelatedUrlObject = relatedUrlsArray[i]
-                    if (currentRelatedUrlObject['Description'] === 'Thumbnail') {
-                        urlDatasetImageUrl = currentRelatedUrlObject['URL']
-                    }
-                }
-                datasetObject["Dataset-ImageUrl"] = urlDatasetImageUrl
-            } 
-            return datasetObject
+                return databaseCollectionObjectToReturn
+            })
+        })
+        return all(updatedCollectionObjects).then(function(resolvedPromises) {
+            return resolvedPromises
         })
     }
 
-    function getAdditionalCmrMetadata(collectionObjectArray) {
-        var promises = collectionObjectArray.map(function(collectionObject) {
-            return getCmrSpatialExtent(collectionObject)
-        })
-        return all(promises).then(function(resolvedPromises) {
-            return resolvedPromises
-        })
+    function getCmrSpatialExtent(datasetObject, additionalMetadataObject){
+        datasetObject["Dataset-Resolution"] = []
+        var resolutionAndCoordinateSystemObject = additionalMetadataObject.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
+        var relatedUrlsArray = additionalMetadataObject.relatedUrls
+        if (resolutionAndCoordinateSystemObject) {
+            var resolutionObjects = resolutionAndCoordinateSystemObject.horizontalDataResolution.genericResolutions
+            if (resolutionObjects) {
+                resolutionObjects.forEach(function(resolutionObject) {
+                    var acrossTrack = resolutionObject.xdimension
+                    var alongTrack = resolutionObject.ydimension
+                    var unit = resolutionObject.unit
+                    datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
+                });
+            } else {
+                // Resolution not available by error
+                datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
+            }
+        } else {
+            // Key [Collection]/SpatialExtent/HorizontalSpatialDomain/ResolutionAndCoordinateSystem does not exist. This likely was intentional to indicate resolution is not applicable to this collection.
+            datasetObject["Dataset-Resolution"].push({"error": "Not Applicable"})
+        }
+        if (relatedUrlsArray) {
+            var urlDatasetImageUrl = 'https://podaac.jpl.nasa.gov/Podaac/thumbnails/image_not_available.jpg'
+            for(var i=0; i < relatedUrlsArray.length; i++) {
+                var currentRelatedUrlObject = relatedUrlsArray[i]
+                if (currentRelatedUrlObject.description === 'Thumbnail') {
+                    urlDatasetImageUrl = currentRelatedUrlObject.url
+                }
+            }
+            datasetObject["Dataset-ImageUrl"] = urlDatasetImageUrl
+        } 
+        return datasetObject
     }
 
     function extractCmrFacets(response) {

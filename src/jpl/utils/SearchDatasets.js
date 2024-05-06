@@ -128,7 +128,7 @@ define([
         var collectionIds = collectionObjectArray.map(function(collectionObject) {
             return '"' + collectionObject["Dataset-PersistentId"] + '"'
         })
-        var templateQuery = "{\n  collections (conceptId: [{COLLECTION_ID}]) {\n    items {\n        conceptId\n    spatialExtent\n      relatedUrls\n     }\n   }\n}"
+        var templateQuery = "{\n  collections (conceptId: [{COLLECTION_ID}], limit: 1000) {\n    items {\n        conceptId\n    spatialExtent\n      relatedUrls\n     }\n   }\n}"
         var query = templateQuery.replace("{COLLECTION_ID}", collectionIds);
         var updatedCollectionObjects = request.post(graphqlURL, {
             handleAs: 'json',

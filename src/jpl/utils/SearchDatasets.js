@@ -172,7 +172,7 @@ define([
                     datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
                 }
             } else {
-                // Resolution not available by error.
+                // Resolution not available by error
                 datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
             }
         } else {

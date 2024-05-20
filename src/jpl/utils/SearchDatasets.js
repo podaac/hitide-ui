@@ -159,14 +159,18 @@ define([
         var resolutionAndCoordinateSystemObject = additionalMetadataObject.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
         var relatedUrlsArray = additionalMetadataObject.relatedUrls
         if (resolutionAndCoordinateSystemObject) {
-            var resolutionObjects = resolutionAndCoordinateSystemObject.horizontalDataResolution.genericResolutions
+            var resolutionObjects = resolutionAndCoordinateSystemObject.horizontalDataResolution
             if (resolutionObjects) {
-                resolutionObjects.forEach(function(resolutionObject) {
-                    var acrossTrack = resolutionObject.xdimension
-                    var alongTrack = resolutionObject.ydimension
-                    var unit = resolutionObject.unit
-                    datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
-                });
+                if(resolutionObjects.genericResolutions) {
+                    resolutionObjects.genericResolutions.forEach(function(resolutionObject) {
+                        var acrossTrack = resolutionObject.xdimension
+                        var alongTrack = resolutionObject.ydimension
+                        var unit = resolutionObject.unit
+                        datasetObject["Dataset-Resolution"].push({"Dataset-AcrossTrackResolution": acrossTrack, "Dataset-AlongTrackResolution": alongTrack, "Unit": unit})
+                    });
+                } else {
+                    datasetObject["Dataset-Resolution"].push({"error": "Not Available"})
+                }
             } else {
                 // Resolution not available by error
                 datasetObject["Dataset-Resolution"].push({"error": "Not Available"})

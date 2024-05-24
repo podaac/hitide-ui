@@ -156,6 +156,10 @@ define([
 
     function getCmrSpatialExtent(datasetObject, additionalMetadataObject){
         datasetObject["Dataset-Resolution"] = []
+        if(datasetObject["Dataset-ShortName"] === "MERGED_TP_J1_OSTM_OST_CYCLES_V52") {
+            console.log('datasetObject: ',datasetObject)
+            console.log('additionalMetadataObject: ',additionalMetadataObject)
+        }
         var resolutionAndCoordinateSystemObject = additionalMetadataObject.spatialExtent.horizontalSpatialDomain.resolutionAndCoordinateSystem
         var relatedUrlsArray = additionalMetadataObject.relatedUrls
         if (resolutionAndCoordinateSystemObject) {
@@ -184,6 +188,16 @@ define([
             for(var i=0; i < relatedUrlsArray.length; i++) {
                 var currentRelatedUrlObject = relatedUrlsArray[i]
                 if (currentRelatedUrlObject.description === 'Thumbnail') {
+                    function isImgUrl(url) {
+                        var img = new Image();
+                        img.src = url;
+                        return new Promise(function(resolve) {
+                            var onloadError = img.onload
+                            var onError = img.onerror
+                        //   img.onload = () => resolve(true);
+                        //   img.onerror = () => resolve(false);
+                        });
+                      }
                     urlDatasetImageUrl = currentRelatedUrlObject.url
                 }
             }

@@ -757,15 +757,7 @@ define([
                     stateStoreItemsToRemove.push((currentStateStore[j]))
                 }
             }
-            for(var k=0; k<stateStoreItemsToRemove.length; k++) {
-                _context.stateStore.remove(stateStoreItemsToRemove[k]["Granule-Id"])
-                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
-                    granuleObj: stateStoreItemsToRemove[k]
-                });
-                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
-                    granuleObj: stateStoreItemsToRemove[k]
-                });
-            }
+
             // clear anything from state store that is not a concept id in the response items
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);

@@ -78,6 +78,7 @@ define([
         _granuleSearchInProgress: false,
         loadingGranulesMessage: '<div class="granulesControllerLoadingGranulesMessage">Loading Granules...</div>',
         noGranulesMessage: '<div class="granulesControllerNoDataMessage">No Granules Found</div>',
+        scrollLoadInProgress: false,
 
         constructor: function() {
             this.datasetVariables = {};
@@ -757,7 +758,18 @@ define([
                     stateStoreItemsToRemove.push((currentStateStore[j]))
                 }
             }
-
+            // if scroll, don't remove
+            if(!this.scrollLoadInProgress) {
+                for(var k=0; k<stateStoreItemsToRemove.length; k++) {
+                    _context.stateStore.remove(stateStoreItemsToRemove[k]["Granule-Id"])
+                    topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
+                        granuleObj: stateStoreItemsToRemove[k]
+                    });
+                    topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
+                        granuleObj: stateStoreItemsToRemove[k]
+                    });
+                }
+            }
             // clear anything from state store that is not a concept id in the response items
             response.items.map(function(x) {
                 GranuleMetadata.convertFootprintAndImageFromCMR(x);
@@ -830,6 +842,9 @@ define([
             // Show spinner 
             this.displayLoadingSpinner(false);
 
+            // set scroll back to false
+            this.scrollLoadInProgress = false;
+
         },
 
         filterGranules: function() {
@@ -884,6 +899,7 @@ define([
             // First approach, fetch more if scroll pos is 90% of way down
             if ((scrollPosTop + offsetHeight) / scrollHeight > 0.90) {
                 this.currentSolrIdx += this.itemsPerPage;
+                this.scrollLoadInProgress = true;
                 this.fetchGranules();
             }
         },

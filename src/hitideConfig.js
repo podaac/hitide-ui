@@ -1,4 +1,5 @@
 var hitideProfileOrigin = "https://hitide.profile.podaac.uat.earthdatacloud.nasa.gov/hitide/api";
+// var hitideProfileOrigin = "http://localhost:8080/hitide/api";
 
 window.hitideConfig = {
     paletteService: "https://hitide.podaac.earthdatacloud.nasa.gov/palettes",
@@ -10,7 +11,7 @@ window.hitideConfig = {
     cmrVariableService: hitideProfileOrigin + "/cmr/graphql",
     crossOriginCmrCookies: true,
 
-    authCodeUrl: "https://uat.urs.earthdata.nasa.gov/oauth/authorize",
+    authCodeUrl: "https://urs.earthdata.nasa.gov/oauth/authorize",
 
     loginUrl: hitideProfileOrigin + "/session/login",
     logoutUrl: hitideProfileOrigin + "/session/logout",
@@ -24,5 +25,5 @@ window.hitideConfig = {
     datasetSearchServiceItemsPerPage: 200,
     maxGranulesPerDownload: 999999999,
     googleTagManagerId: "GTM-M5D83V6",
-    earthDataAppClientId: "dxpH2WeN_f8IpNLgHwplsg"
+    earthDataAppClientId: "mn6VmRfej3U2Tm0UhbC1jw"
 };

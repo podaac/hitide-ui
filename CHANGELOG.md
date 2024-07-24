@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 - issue-44: Fixed footprints and previews stay on map when not intended
+- issue-65: Fixed footprints and previews disappearing from map when not intended
 
 ## [4.17.0]
 ### Added

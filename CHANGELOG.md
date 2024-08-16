@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 ### Fixed
-- issue-65: Fixed footprints and previews disappearing from map when not intended and staying on when selected but the granule is not in current list.
+- issue-65: Fixed footprints and previews disappearing from map when not intended and staying on too long.
 
 
 ## [4.17.2]

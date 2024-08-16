@@ -12,12 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - issue-65: Fixed footprints and previews disappearing from map when not intended and staying on when selected but the granule is not in current list.
 
 
-## [4.17.1]
+## [4.17.2]
 ### Added
 ### Changed
 ### Removed
 ### Fixed
 - issue-44: Fixed footprints and previews stay on map when not intended
+- issue-65: Fixed footprints and previews disappearing from map when not intended
 
 ## [4.17.0]
 ### Added

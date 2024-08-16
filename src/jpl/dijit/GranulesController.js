@@ -79,6 +79,8 @@ define([
         loadingGranulesMessage: '<div class="granulesControllerLoadingGranulesMessage">Loading Granules...</div>',
         noGranulesMessage: '<div class="granulesControllerNoDataMessage">No Granules Found</div>',
         scrollLoadInProgress: false,
+        addedFootprintStore: {},
+        addedPreviewStore: {},
 
         constructor: function() {
             this.datasetVariables = {};
@@ -762,12 +764,6 @@ define([
             if(!this.scrollLoadInProgress) {
                 for(var k=0; k<stateStoreItemsToRemove.length; k++) {
                     _context.stateStore.remove(stateStoreItemsToRemove[k]["Granule-Id"])
-                    topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
-                        granuleObj: stateStoreItemsToRemove[k]
-                    });
-                    topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
-                        granuleObj: stateStoreItemsToRemove[k]
-                    });
                 }
             }
             // clear anything from state store that is not a concept id in the response items
@@ -799,6 +795,19 @@ define([
 
                 x.footprint = fpState ? fpState : false;
                 x.preview = previewState ? previewState : false;
+
+                // if(_context.addedFootprintStore.map(function(i){
+                //     return i["Granule-Name"]
+                // }).includes(x['Granule-Name'])) {
+                //     x.footprint = true
+                // }
+                if(Object.keys(_context.addedFootprintStore).includes(x['Granule-Name'])) {
+                    x.footprint = true
+                }
+
+                if(Object.keys(_context.addedPreviewStore).includes(x['Granule-Name'])) {
+                    x.preview = true
+                }
                                     
                 x["Granule-StartTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["BeginningDateTime"]);
                 x["Granule-StopTime"] = moment.utc(x["umm"]["TemporalExtent"]["RangeDateTime"]["EndingDateTime"]);
@@ -943,7 +952,6 @@ define([
 
         toggleFootprintDisplay: function(obj) {
             if (obj.footprint) {
-                // if (!this.footprintGraphics[obj["Granule-Id"]]) {
                 var rgb = this.hexToRgb(this.datasetColor);
                 var borderColor = [rgb.r, rgb.g, rgb.b, 0.7];
                 var fillColor = [rgb.r, rgb.g, rgb.b, 0.00];
@@ -952,10 +960,20 @@ define([
                     border: borderColor,
                     fill: fillColor
                 });
+                // add to my separate store
+                this.addedFootprintStore[obj["Granule-Name"]] = obj;
             } else {
                 topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
                     granuleObj: obj
                 });
+                // remove object from addedFootprintStore
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
+                    granuleObj: obj
+                });
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
+                    granuleObj: this.addedFootprintStore[obj["Granule-Name"]]
+                });
+                delete this.addedFootprintStore[obj["Granule-Name"]];
             }
         },
 
@@ -998,10 +1016,20 @@ define([
                 topic.publish(GranuleSelectionEvent.prototype.ADD_GRANULE_PREVIEW, {
                     granuleObj: obj
                 });
+                // add to my separate store
+                this.addedPreviewStore[obj["Granule-Name"]] = obj;
             } else {
                 topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
                     granuleObj: obj
                 });
+                // remove object from addedFootprintStore
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
+                    granuleObj: obj
+                });
+                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
+                    granuleObj: this.addedPreviewStore[obj["Granule-Name"]]
+                });
+                delete this.addedPreviewStore[obj["Granule-Name"]];
             }
         },
 

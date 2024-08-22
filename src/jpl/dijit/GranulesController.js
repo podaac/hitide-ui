@@ -392,20 +392,21 @@ define([
                     var granuleObjs = selectedGranules.map(function(x) {
                         var objectData = _context.granuleGrid.row(x).data
                         if(objectData.footprint) {
+                            granuleObjNames.push(objectData["Granule-Name"])
                             objectData.footprint = false
                             _context.gridStore.put(objectData)
                             _context.updateStateStoreObj(objectData);
                             _context.toggleFootprintDisplay(objectData);
                             return objectData;
                         } else {
-                            return
+                            return null
                         }
                     }).filter(function(x) {
                         x !== null
                     })
                     // deactivate granules from addedFootprints
                     Object.values(_context.addedFootprintStore).forEach(function(x) {
-                        if(!granuleObjNames.includes(x["Granule-Name"])) {
+                        if(granuleObjNames.includes(x["Granule-Name"])) {
                             granuleObjs.push(x);
                         }
                     })
@@ -463,11 +464,11 @@ define([
                     var granuleObjs = selectedGranules.map(function(x) {
                         var objectData = _context.granuleGrid.row(x).data
                         if(objectData.preview) {
+                            granuleObjNames.push(objectData["Granule-Name"]);
                             objectData.preview = false
                             _context.gridStore.put(objectData)
                             _context.updateStateStoreObj(objectData);
                             _context.togglePreviewDisplay(objectData);
-                            granuleObjNames.push(objectData["Granule-Name"]);
                             return objectData;
                         }else {
                             return null
@@ -477,7 +478,7 @@ define([
                     })
                     // deactivate granules from addedPreviews
                     Object.values(_context.addedPreviewStore).forEach(function(x) {
-                        if(!granuleObjNames.includes(x["Granule-Name"])) {
+                        if(granuleObjNames.includes(x["Granule-Name"])) {
                             granuleObjs.push(x);
                         }
                     })

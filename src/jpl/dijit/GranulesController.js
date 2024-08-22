@@ -366,7 +366,18 @@ define([
                     var node = this.getParent().currentTarget;
                     var selectedGranules = Object.keys(_context.granuleGrid.selection);
                     var granuleObjs = selectedGranules.map(function(x) {
-                        return _context.granuleGrid.row(x).data;
+                        var objectData = _context.granuleGrid.row(x).data
+                        if(!objectData.footprint) {
+                            objectData.footprint = true
+                            _context.gridStore.put(objectData)
+                            _context.updateStateStoreObj(objectData);
+                            _context.toggleFootprintDisplay(objectData);
+                            return objectData;
+                        } else {
+                            return null
+                        }
+                    }).filter(function(x) {
+                        x !== null
                     })
                     _context.toggleFootprints(granuleObjs, true);
                 }
@@ -377,8 +388,26 @@ define([
                 onClick: function(evt) {
                     var node = this.getParent().currentTarget;
                     var selectedGranules = Object.keys(_context.granuleGrid.selection);
+                    var granuleObjNames = [];
                     var granuleObjs = selectedGranules.map(function(x) {
-                        return _context.granuleGrid.row(x).data;
+                        var objectData = _context.granuleGrid.row(x).data
+                        if(objectData.footprint) {
+                            objectData.footprint = false
+                            _context.gridStore.put(objectData)
+                            _context.updateStateStoreObj(objectData);
+                            _context.toggleFootprintDisplay(objectData);
+                            return objectData;
+                        } else {
+                            return
+                        }
+                    }).filter(function(x) {
+                        x !== null
+                    })
+                    // deactivate granules from addedFootprints
+                    Object.values(_context.addedFootprintStore).forEach(function(x) {
+                        if(!granuleObjNames.includes(x["Granule-Name"])) {
+                            granuleObjs.push(x);
+                        }
                     })
                     _context.toggleFootprints(granuleObjs, false);
                 }
@@ -387,7 +416,17 @@ define([
                 label: "Clear all footprints",
                 iconClass: "fa fa-trash color-orange",
                 onClick: function(evt) {
-                    _context.hideAllFootprints();
+                    var stateStoreObjects = Array.from(_context.gridStore.query()).concat(Object.values(_context.addedFootprintStore))
+                    .map(function(obj){
+                        obj.footprint = false
+                        _context.gridStore.put(obj)
+                        _context.updateStateStoreObj(obj);
+                        _context.toggleFootprintDisplay(obj);
+                        return obj
+                    })
+                    _context.toggleFootprints(stateStoreObjects, false);
+                    // remove from addedFootprints and from addedPreviews
+                    _context.addedFootprintStore = {};
                 }
             }));
             contextMenu.addChild(new MenuSeparator());
@@ -398,7 +437,18 @@ define([
                     var node = this.getParent().currentTarget;
                     var selectedGranules = Object.keys(_context.granuleGrid.selection);
                     var granuleObjs = selectedGranules.map(function(x) {
-                        return _context.granuleGrid.row(x).data;
+                        var objectData = _context.granuleGrid.row(x).data
+                        if(!objectData.preview) {
+                            objectData.preview = true
+                            _context.gridStore.put(objectData)
+                            _context.updateStateStoreObj(objectData);
+                            _context.togglePreviewDisplay(objectData);
+                            return objectData;
+                        }else {
+                            return null
+                        }
+                    }).filter(function(x) {
+                        x !== null
                     })
                     _context.togglePreviews(granuleObjs, true);
                 }
@@ -409,8 +459,27 @@ define([
                 onClick: function(evt) {
                     var node = this.getParent().currentTarget;
                     var selectedGranules = Object.keys(_context.granuleGrid.selection);
+                    var granuleObjNames = [];
                     var granuleObjs = selectedGranules.map(function(x) {
-                        return _context.granuleGrid.row(x).data;
+                        var objectData = _context.granuleGrid.row(x).data
+                        if(objectData.preview) {
+                            objectData.preview = false
+                            _context.gridStore.put(objectData)
+                            _context.updateStateStoreObj(objectData);
+                            _context.togglePreviewDisplay(objectData);
+                            granuleObjNames.push(objectData["Granule-Name"]);
+                            return objectData;
+                        }else {
+                            return null
+                        }
+                    }).filter(function(x) {
+                        x !== null
+                    })
+                    // deactivate granules from addedPreviews
+                    Object.values(_context.addedPreviewStore).forEach(function(x) {
+                        if(!granuleObjNames.includes(x["Granule-Name"])) {
+                            granuleObjs.push(x);
+                        }
                     })
                     _context.togglePreviews(granuleObjs, false);
                 }
@@ -419,7 +488,18 @@ define([
                 label: "Clear all image previews",
                 iconClass: "fa fa-trash color-orange",
                 onClick: function(evt) {
-                    _context.hideAllPreviews();
+                    // _context.hideAllPreviews();
+                    var stateStoreObjects = Array.from(_context.gridStore.query()).concat(Object.values(_context.addedPreviewStore))
+                    .map(function(obj){
+                        obj.preview = false
+                        _context.gridStore.put(obj)
+                        _context.updateStateStoreObj(obj);
+                        _context.togglePreviewDisplay(obj);
+                        return obj
+                    })
+                    _context.togglePreviews(stateStoreObjects, false);
+                    // remove from addedPreviews
+                    _context.addedPreviewStore = {};
                 }
             }));
         },
@@ -796,11 +876,6 @@ define([
                 x.footprint = fpState ? fpState : false;
                 x.preview = previewState ? previewState : false;
 
-                // if(_context.addedFootprintStore.map(function(i){
-                //     return i["Granule-Name"]
-                // }).includes(x['Granule-Name'])) {
-                //     x.footprint = true
-                // }
                 if(Object.keys(_context.addedFootprintStore).includes(x['Granule-Name'])) {
                     x.footprint = true
                 }
@@ -968,9 +1043,6 @@ define([
                 });
                 // remove object from addedFootprintStore
                 topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
-                    granuleObj: obj
-                });
-                topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_FOOTPRINT, {
                     granuleObj: this.addedFootprintStore[obj["Granule-Name"]]
                 });
                 delete this.addedFootprintStore[obj["Granule-Name"]];
@@ -981,7 +1053,6 @@ define([
             for (var i = 0; i < granuleObjs.length; i++) {
                 // Update store
                 var obj = granuleObjs[i];
-
                 if (obj.footprint != active) {
                     if(obj["Granule-Footprint"]){
                         obj.footprint = active;
@@ -1022,7 +1093,7 @@ define([
                 topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
                     granuleObj: obj
                 });
-                // remove object from addedFootprintStore
+                // remove object from addedPreviewStore
                 topic.publish(GranuleSelectionEvent.prototype.REMOVE_GRANULE_PREVIEW, {
                     granuleObj: obj
                 });
@@ -1034,11 +1105,13 @@ define([
         },
 
         hideAllPreviews: function() {
-            this.togglePreviews(this.stateStore.query(), false);
+            var stateStoreObjects = Array.from(this.stateStore.query()).concat(Object.values(this.addedPreviewStore))
+            this.togglePreviews(stateStoreObjects, false);
         },
 
         hideAllFootprints: function() {
-            this.toggleFootprints(this.stateStore.query(), false);
+            var stateStoreObjects = Array.from(this.stateStore.query()).concat(Object.values(this.addedFootprintStore))
+            this.toggleFootprints(stateStoreObjects, false);
         },
 
         resize: function() {

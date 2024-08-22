@@ -417,8 +417,9 @@ define([
                 label: "Clear all footprints",
                 iconClass: "fa fa-trash color-orange",
                 onClick: function(evt) {
-                    var stateStoreObjects = Array.from(_context.gridStore.query()).concat(Object.values(_context.addedFootprintStore))
-                    .map(function(obj){
+                    var stateStoreObjects = Array.from(_context.stateStore.query()).concat(Array.from(_context.gridStore.query())).concat(Object.values(_context.addedFootprintStore)).filter(function(x) {
+                        return x.footprint
+                    }).map(function(obj){
                         obj.footprint = false
                         _context.gridStore.put(obj)
                         _context.updateStateStoreObj(obj);
@@ -489,9 +490,9 @@ define([
                 label: "Clear all image previews",
                 iconClass: "fa fa-trash color-orange",
                 onClick: function(evt) {
-                    // _context.hideAllPreviews();
-                    var stateStoreObjects = Array.from(_context.gridStore.query()).concat(Object.values(_context.addedPreviewStore))
-                    .map(function(obj){
+                    var stateStoreObjects = Array.from(_context.stateStore.query()).concat(Array.from(_context.gridStore.query())).concat(Object.values(_context.addedPreviewStore)).filter(function(x) {
+                        return x.preview
+                    }).map(function(obj){
                         obj.preview = false
                         _context.gridStore.put(obj)
                         _context.updateStateStoreObj(obj);

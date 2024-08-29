@@ -416,16 +416,30 @@ define([
             contextMenu.addChild(new MenuItem({
                 label: "Clear all footprints",
                 iconClass: "fa fa-trash color-orange",
+                // .concat(Object.values(_context.addedFootprintStore))
                 onClick: function(evt) {
-                    var stateStoreObjects = Array.from(_context.stateStore.query()).concat(Array.from(_context.gridStore.query())).concat(Object.values(_context.addedFootprintStore)).map(function(obj){
+                    var stateStoreObjects = Array.from(_context.stateStore.query()).map(function(obj){
                         obj.footprint = false
                         _context.gridStore.put(obj)
                         _context.updateStateStoreObj(obj);
                         _context.toggleFootprintDisplay(obj);
                         return obj
                     })
-                    _context.toggleFootprints(stateStoreObjects, false);
-                    // remove from addedFootprints and from addedPreviews
+                    var gridStoreObjects = Array.from(_context.gridStore.query()).map(function(obj){
+                        obj.footprint = false
+                        _context.gridStore.put(obj)
+                        _context.updateStateStoreObj(obj);
+                        return obj
+                    })
+                    var addedFootprintObjects = Object.values(_context.addedFootprintStore).map(function(obj){
+                        obj.footprint = false
+                        _context.gridStore.put(obj)
+                        _context.updateStateStoreObj(obj);
+                        _context.toggleFootprintDisplay(obj);
+
+                        return obj
+                    })
+                    _context.toggleFootprints(stateStoreObjects.concat(gridStoreObjects).concat(addedFootprintObjects), false);
                     _context.addedFootprintStore = {};
                 }
             }));
@@ -488,14 +502,27 @@ define([
                 label: "Clear all image previews",
                 iconClass: "fa fa-trash color-orange",
                 onClick: function(evt) {
-                    var stateStoreObjects = Array.from(_context.stateStore.query()).concat(Array.from(_context.gridStore.query())).concat(Object.values(_context.addedPreviewStore)).map(function(obj){
+                    var stateStoreObjects = Array.from(_context.stateStore.query()).map(function(obj){
                         obj.preview = false
                         _context.gridStore.put(obj)
                         _context.updateStateStoreObj(obj);
                         _context.togglePreviewDisplay(obj);
                         return obj
                     })
-                    _context.togglePreviews(stateStoreObjects, false);
+                    var gridStoreObjects = Array.from(_context.gridStore.query()).map(function(obj){
+                        obj.preview = false
+                        _context.gridStore.put(obj)
+                        _context.updateStateStoreObj(obj);
+                        return obj
+                    })
+                    var addedPreviewObjects = Object.values(_context.addedPreviewStore).map(function(obj){
+                        obj.preview = false
+                        _context.gridStore.put(obj)
+                        _context.updateStateStoreObj(obj);
+                        _context.togglePreviewDisplay(obj);
+                        return obj
+                    })
+                    _context.togglePreviews(stateStoreObjects.concat(gridStoreObjects).concat(addedPreviewObjects), false);
                     // remove from addedPreviews
                     _context.addedPreviewStore = {};
                 }

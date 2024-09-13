@@ -679,98 +679,108 @@ define([
             this._granuleSearchInProgress = true;
         
             var withCredentials = false;
-
-            var url;
-
-            var sort 
-            if(this.granuleGrid._sort[0].attribute == "Granule-StartTime"){
-                sort = "start_date";
-            }
-            else if(this.granuleGrid._sort[0].attribute == "Granule-StopTime"){
-                sort = "end_date";
-            }
-            else if(this.granuleGrid._sort[0].attribute ==  "Granule-Name"){
-                sort = "readable_granule_name";
-            }
-
-            url = this.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
-            url += "collection_concept_id=" + this.datasetId;
-            url += "&bounding_box[]=" + (this.bbox || "");
-            // limit is ~2000 for page size
-            url += "&page_size=" + this.availableGranules;
-            url += "&offset=" + this.currentSolrIdx;
-            url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(this.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(this.endDateWidget.get("value"));
-            url += "&sort_key[]=" + (this.granuleGrid._sort[0].descending ? "-" : "%2B") + sort
-            
-            if(this.nameFilterBox.get("value")){
-                url += "&native_id[]=" + this.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
-            }
-
-            withCredentials = this.config.hitide.externalConfigurables.crossOriginCmrCookies;
-
             var _context = this;
-            var r;
-            var topicHandler = topic.subscribe(SearchEvent.prototype.CANCEL_REQUESTS, function(message) {
-                if (message.target === "*" || message.target === this.datasetId) {
-                    r.cancel();
+            var granuleNamesToReturn = [];
+            var offset = 0;
+        
+            // Function to fetch granules page by page
+            var fetchPage = function() {
+                var url;
+                var sort;
+        
+                if (_context.granuleGrid._sort[0].attribute == "Granule-StartTime") {
+                    sort = "start_date";
+                } else if (_context.granuleGrid._sort[0].attribute == "Granule-StopTime") {
+                    sort = "end_date";
+                } else if (_context.granuleGrid._sort[0].attribute == "Granule-Name") {
+                    sort = "readable_granule_name";
                 }
-            });
-            r = xhr.get(url, {
-                headers: {
-                    "X-Requested-With": null
-                },
-                handleAs: "json",
-                method: "get",
-                withCredentials: withCredentials
-            }).then(function(response) {
-                // Unsubscribe from cancel requests
-                topicHandler.remove();
-                // Update accordingly
-                if (_context.domNode) {
-                    var granuleNamesToReturn
-                    if (_context.source === 'cmr') {
-                        granuleNamesToReturn = response.items.map(function(granuleObj) {
+        
+                url = _context.config.hitide.externalConfigurables.cmrGranuleSearchService + "?";
+                url += "collection_concept_id=" + _context.datasetId;
+                url += "&bounding_box[]=" + (_context.bbox || "");
+                url += "&page_size=" + 2000;  // Limit of 2000 granules per page
+                url += "&offset=" + offset;
+                url += "&temporal[]=" + DOMUtil.prototype.dateFormatISOBeginningOfDay(_context.startDateWidget.get("value")) + "," + DOMUtil.prototype.dateFormatISOEndOfDay(_context.endDateWidget.get("value"));
+                url += "&sort_key[]=" + (_context.granuleGrid._sort[0].descending ? "-" : "%2B") + sort;
+        
+                if (_context.nameFilterBox.get("value")) {
+                    url += "&native_id[]=" + _context.nameFilterBox.get("value") + "&options[native_id][pattern]=true";
+                }
+        
+                withCredentials = _context.config.hitide.externalConfigurables.crossOriginCmrCookies;
+        
+                var r;
+                var topicHandler = topic.subscribe(SearchEvent.prototype.CANCEL_REQUESTS, function(message) {
+                    if (message.target === "*" || message.target === _context.datasetId) {
+                        r.cancel();
+                    }
+                });
+        
+                // Fetch the granules for the current page
+                r = xhr.get(url, {
+                    headers: {"X-Requested-With": null},
+                    handleAs: "json",
+                    method: "get",
+                    withCredentials: withCredentials
+                }).then(function(response) {
+                    // Unsubscribe from cancel requests
+                    topicHandler.remove();
+        
+                    if (_context.domNode) {
+                        var newGranuleNames = response.items.map(function(granuleObj) {
                             return granuleObj["meta"]["native-id"];
                         });
-                    } else {
-                        granuleNamesToReturn = response.response.docs.map(function(granuleObj) {
-                            return granuleObj['Granule-Name']
-                        })
+        
+                        // Append the new granule names to the running total
+                        granuleNamesToReturn = granuleNamesToReturn.concat(newGranuleNames);
+        
+                        // If we have retrieved all granules or less than 2000 items, we're done
+                        if (granuleNamesToReturn.length >= _context.availableGranules || newGranuleNames.length < 2000) {
+                            var startDate = moment.utc(_context.startDateWidget.getValue());
+                            var endDate = moment.utc(_context.endDateWidget.getValue());
+                            var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;
+                            var downloadQuery = {
+                                datasetId: _context.datasetId,
+                                datasetShortName: _context.datasetShortName,
+                                startDate: startDate.format("YYYY/MM/DD"),
+                                endDate: endDate.format("YYYY/MM/DD"),
+                                numSelected: _context.availableGranules,
+                                bbox: _context.bbox.toString(),
+                                notifyOnRemove: true,
+                                variables: _context.datasetVariables,
+                                granuleNames: granuleNamesToReturn,
+                                granuleNamesFilter: _context.nameFilterBox.value,
+                                queryId: queryId
+                            };
+        
+                            if (_context.source === 'cmr') downloadQuery.source = 'cmr';
+                            topic.publish(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, downloadQuery);
+                            _context.queryId = queryId;
+                            domStyle.set(_context.addMatchingBtn, "display", "none");
+                            domStyle.set(_context.matchingAddedMessage, "display", "block");
+        
+                            // Stop search
+                            _context._granuleSearchInProgress = false;
+                        } else {
+                            // Increment the offset and fetch the next page
+                            offset += 2000;
+                            fetchPage();  // Recursive call to get the next batch
+                        }
                     }
-                    var startDate = moment.utc(_context.startDateWidget.getValue());
-                    var endDate = moment.utc(_context.endDateWidget.getValue());
-                    var queryId = Math.floor(Math.random() * (9999999999 - 0)) + 0;
-                    var downloadQuery = {
-                        datasetId: _context.datasetId,
-                        datasetShortName: _context.datasetShortName,
-                        startDate: startDate.format("YYYY/MM/DD"),
-                        endDate: endDate.format("YYYY/MM/DD"),
-                        numSelected: _context.availableGranules,
-                        bbox: _context.bbox.toString(),
-                        notifyOnRemove: true,
-                        variables: _context.datasetVariables,
-                        granuleNames: granuleNamesToReturn,
-                        granuleNamesFilter: _context.nameFilterBox.value,
-                        queryId: queryId
-                    };
-                    /* add source: 'cmr' if appropriate */
-                    if(_context.source === 'cmr')
-                        downloadQuery.source = 'cmr';
-                    topic.publish(MyDataEvent.prototype.ADD_DOWNLOAD_QUERY, downloadQuery);
-                    _context.queryId = queryId;
-                    domStyle.set(_context.addMatchingBtn, "display", "none");
-                    domStyle.set(_context.matchingAddedMessage, "display", "block");
-                }
-            }, function(err) {
-                // Unsubscribe from cancel requests
-                topicHandler.remove();
-                console.log("ERROR", err);
-                // Set searching flag to false
-                _context._granuleSearchInProgress = false;
-
-                // Show spinner 
-                _context.displayLoadingSpinner(false);
-            });
+                }, function(err) {
+                    // Unsubscribe from cancel requests
+                    topicHandler.remove();
+                    console.log("ERROR", err);
+                    // Set searching flag to false
+                    _context._granuleSearchInProgress = false;
+                    // Show spinner
+                    _context.displayLoadingSpinner(false);
+                });
+            };
+        
+            // Start fetching from offset 0
+            fetchPage();
         },
 
         fetchGranules: function() {

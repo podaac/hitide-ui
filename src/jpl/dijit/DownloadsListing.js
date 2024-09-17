@@ -69,16 +69,6 @@ define([
             var variables = [];
             var all_variables = []
 
-            for (var i = 0; i < message.variables.variables.length; ++i) {
-                var variable = message.variables.variables[i];
-                // verify variable isn't a special case
-                if (message.variables.latVar != variable &&
-                    message.variables.lonVar != variable &&
-                    message.variables.timeVar != variable) {
-                    all_variables.push(message.variables.variables[i]);
-                }
-            }
-
             all_variables.sort(function (a, b) {
                 return a.toLowerCase().localeCompare(b.toLowerCase());
             });
@@ -96,7 +86,7 @@ define([
                 startDate: startDate,
                 endDate: endDate,
                 variables: variables,
-                defaultVars: [message.variables.latVar, message.variables.lonVar, message.variables.timeVar],
+                defaultVars: [message.latVar, message.lonVar, message.timeVar],
                 granuleNames: granuleNames,
                 granuleIds: granuleIds,
                 granuleNamesFilter: granuleNamesFilter,

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 ### Fixed
-- Fixed adding matching granules feature
+- Fixed adding matching granules feature.
 
 
 ## [4.17.2]

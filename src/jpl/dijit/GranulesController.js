@@ -676,6 +676,7 @@ define([
 
         fetchGranulesNames: function() {
             // Set searching flag to true
+            console.log("fetchGranulesNames function");
             this._granuleSearchInProgress = true;
         
             var withCredentials = false;
@@ -763,12 +764,14 @@ define([
                             // Stop search
                             _context._granuleSearchInProgress = false;
                         } else {
+                            console.log("Fetching next page...");
                             // Increment the offset and fetch the next page
                             offset += 2000;
                             fetchPage();  // Recursive call to get the next batch
                         }
                     }
                 }, function(err) {
+                    console.log("ERROR", err);
                     // Unsubscribe from cancel requests
                     topicHandler.remove();
                     console.log("ERROR", err);
@@ -1185,6 +1188,7 @@ define([
 
         handleDownloadMatching: function() {
             // Block 0 granule downloads
+            console.log("BUTTON CLICKED");
             if (this.availableGranules < 1) {
                 return;
             }
@@ -1199,6 +1203,7 @@ define([
             } else {
                 // 
                 var _context = this
+                console.log("fetching granules names");
                 // get the granule names and add download query
                 _context.fetchGranulesNames()
             }

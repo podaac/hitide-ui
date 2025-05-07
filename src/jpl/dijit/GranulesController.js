@@ -131,6 +131,7 @@ define([
             });
             
             // // set up button listener
+            console.log("adding listeners to matching buttons");
             on(this.addMatchingBtn, "click", lang.hitch(this, this.handleDownloadMatching));
             on(this.matchingAddedMessageUndo, "click", lang.hitch(this, this.removeMatchingDownload));
 

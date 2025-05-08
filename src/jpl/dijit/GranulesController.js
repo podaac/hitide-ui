@@ -89,6 +89,7 @@ define([
         postCreate: function() {},
 
         startup: function() {
+            console.log("STARTUP");
             this.config = Config.getInstance();
             // Set attributes
             this.setAttributes();

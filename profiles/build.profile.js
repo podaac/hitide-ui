@@ -18,7 +18,7 @@ var profile = {
     selectorEngine: 'acme',
 
     // strip all console calls
-    stripConsole: 'warn',
+    //stripConsole: 'warn',
 
     pragmas: {
         debug: false

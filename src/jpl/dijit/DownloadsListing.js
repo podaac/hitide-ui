@@ -69,7 +69,6 @@ define([
             var variables = [];
             var all_variables = [];
 
-            /*
             for (var j = 0; j < message.variables.variables.length; ++j) {
                 var variable = message.variables.variables[j];
                 if (
@@ -79,7 +78,7 @@ define([
                 ) {
                     all_variables.push(variable);
                 }
-            }*/
+            }
 
             all_variables.sort(function (a, b) {
                 return a.toLowerCase().localeCompare(b.toLowerCase());

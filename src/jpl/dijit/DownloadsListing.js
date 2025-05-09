@@ -82,6 +82,7 @@ define([
             all_variables.sort(function (a, b) {
                 return a.toLowerCase().localeCompare(b.toLowerCase());
             });
+            
             for (var i = 0; i < all_variables.length; ++i) {
                 variables.push(all_variables[i]);
                 variables.push("");
@@ -96,8 +97,8 @@ define([
                 startDate: startDate,
                 endDate: endDate,
                 variables: variables,
-                defaultVars: [message.latVar, message.lonVar, message.timeVar],
-                //defaultVars: [message.variables.latVar, message.variables.lonVar, message.variables.timeVar],
+                //defaultVars: [message.latVar, message.lonVar, message.timeVar],
+                defaultVars: [message.variables.latVar, message.variables.lonVar, message.variables.timeVar],
                 granuleNames: granuleNames,
                 granuleIds: granuleIds,
                 granuleNamesFilter: granuleNamesFilter,

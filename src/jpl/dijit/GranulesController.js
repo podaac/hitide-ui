@@ -727,6 +727,8 @@ define([
                     // Unsubscribe from cancel requests
                     topicHandler.remove();
         
+                    _context.datasetVariables.variables = _context.cmr_variables.map(function (variable) { return variable.id });
+
                     if (_context.domNode) {
                         var newGranuleNames = response.items.map(function(granuleObj) {
                             return granuleObj["meta"]["native-id"];

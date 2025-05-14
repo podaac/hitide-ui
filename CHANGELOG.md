@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 ### Fixed
-- Fixed adding matching granules feature
+- issue-79: adding matching granules feature.
+- issue-83: limit harmony call to 2000.
 - Fixed missing extraction variables selection
-
 
 ## [4.17.2]
 ### Added

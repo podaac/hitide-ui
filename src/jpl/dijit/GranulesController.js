@@ -730,6 +730,11 @@ define([
                     _context.datasetVariables.variables = _context.cmr_variables.map(function (variable) { return variable.id });
 
                     if (_context.domNode) {
+
+                        var newGranuleConceptIds = response.items.map(function(granuleObj) {
+                            return granuleObj["meta"]["concept-id"];
+                        });
+
                         var newGranuleNames = response.items.map(function(granuleObj) {
                             return granuleObj["meta"]["native-id"];
                         });
@@ -753,7 +758,8 @@ define([
                                 variables: _context.datasetVariables,
                                 granuleNames: granuleNamesToReturn,
                                 granuleNamesFilter: _context.nameFilterBox.value,
-                                queryId: queryId
+                                queryId: queryId,
+                                granuleIds: newGranuleConceptIds
                             };
         
                             if (_context.source === 'cmr') downloadQuery.source = 'cmr';

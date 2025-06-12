@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 ### Fixed
 - issue-79: Fixed "Add Matching X Granules To Download" button
-- issue-83: limit harmony call to 2000
+- issue-83: limit harmony call to 1000
 - Fixed missing extraction variables selection
 
 ## [4.17.2]

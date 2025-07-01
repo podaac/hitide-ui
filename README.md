@@ -46,8 +46,7 @@ HiTIDE UI is a web application designed to help users interactively extract, vis
   npm start
   ```
   This will serve the `src` directory on [http://localhost:8901](http://localhost:8901).
-  ```
-
+  
 ## Contributing
 
 Contributions are welcome! Please open issues or submit pull requests through GitHub.

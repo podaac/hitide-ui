@@ -3,7 +3,9 @@
 **HiTIDE UI (High Level Tool for Interactive Data Extraction)**  
 A user interface for NASA's PO.DAAC HiTIDE project, supporting interactive data extraction and visualization.
 
-![PO.DAAC Logo](https://avatars.githubusercontent.com/u/22459078?v=4)
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/22459078?v=4" alt="PO.DAAC Logo" width="120">
+</p>
 
 ## Overview
 

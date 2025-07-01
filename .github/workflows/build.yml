@@ -159,6 +159,33 @@ jobs:
           git tag -f -a "${{ env.THE_VERSION }}" -m "Version ${{ env.THE_VERSION }}"
           git push origin "${{ env.THE_VERSION }}" --force
 
+      - name: Configure AWS credentials
+        if: env.THE_ENV == 'uat' || env.THE_ENV == 'ops'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets[env.THE_ENV == 'uat' && 'AWS_ACCESS_KEY_ID_CUMULUS_UAT' || 'AWS_ACCESS_KEY_ID_CUMULUS_OPS'] }}
+          aws-secret-access-key: ${{ secrets[env.THE_ENV == 'uat' && 'AWS_SECRET_ACCESS_KEY_CUMULUS_UAT' || 'AWS_SECRET_ACCESS_KEY_CUMULUS_OPS'] }}
+          aws-region: us-west-2
+
+      - name: Get Lauchpad Token
+        id: lambda
+        if: |
+          github.ref == 'refs/heads/main'    ||
+          startsWith(github.ref, 'refs/heads/release')
+        run: |
+          OUTPUT_FILE=result.json
+
+          PAYLOAD=$(echo '{"client_id": "HitideUIGithubAction", "minimum_alive_secs": 300}' | base64)
+
+          aws lambda invoke \
+            --function-name ${{ env.THE_ENV }}-launchpad_token_dispenser \
+            --payload "$PAYLOAD" \
+            $OUTPUT_FILE > /dev/null 2>&1
+
+          RESULT=$(jq -r '.sm_token' < "$OUTPUT_FILE")
+          echo "::add-mask::$RESULT"
+          echo "result=$RESULT" >> $GITHUB_OUTPUT
+
       - name: Publish UMM-T with new version
         uses: podaac/cmr-umm-updater@0.6.0
         if: |
@@ -174,9 +201,9 @@ jobs:
           umm_type: 'umm-t'
           use_associations: 'false'
         env:
-          LAUNCHPAD_TOKEN_SIT: ${{secrets.LAUNCHPAD_TOKEN_SIT}}
-          LAUNCHPAD_TOKEN_UAT: ${{secrets.LAUNCHPAD_TOKEN_UAT}}
-          LAUNCHPAD_TOKEN_OPS: ${{secrets.LAUNCHPAD_TOKEN_OPS}}
+          LAUNCHPAD_TOKEN_SIT: ${{ steps.lambda.outputs.result }}
+          LAUNCHPAD_TOKEN_UAT: ${{ steps.lambda.outputs.result }}
+          LAUNCHPAD_TOKEN_OPS: ${{ steps.lambda.outputs.result }}
 
       # Setup Node to install and test
       - name: Setup Node

@@ -4,7 +4,7 @@
 A user interface for NASA's PO.DAAC HiTIDE project, supporting interactive data extraction and visualization.
 
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/22459078?v=4" alt="PO.DAAC Logo" width="120">
+  <img src="https://avatars.githubusercontent.com/u/22459078?v=4" alt="PO.DAAC Logo" width="300">
 </p>
 
 ## Overview

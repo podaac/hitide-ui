@@ -9,8 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 ### Removed
 ### Fixed
-- issue-79: adding matching granules feature.
-- issue-83: limit harmony call to 2000.
+
+## [4.17.3]
+### Added
+- Added a README.md file
+### Changed
+- Update github actions to use launchpad token updating umm-t
+### Removed
+### Fixed
+- issue-79: Fixed "Add Matching X Granules To Download" button
+- issue-83: limit harmony call to 1000
 - Fixed missing extraction variables selection
 
 ## [4.17.2]

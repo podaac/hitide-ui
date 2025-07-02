@@ -23,7 +23,7 @@ window.hitideConfig = {
     crossOriginCookies: true,
 
     datasetSearchServiceItemsPerPage: 200,
-    maxGranulesPerDownload: 2000,
+    maxGranulesPerDownload: 1000,
     googleTagManagerId: "GTM-WNP7MLF",
     earthDataAppClientId: "7cglnEBy7FkeXMzrflGY4Q"
 };

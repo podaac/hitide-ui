@@ -98,6 +98,7 @@ define([
                 startDate: startDate,
                 endDate: endDate,
                 variables: variables,
+                //defaultVars: [message.latVar, message.lonVar, message.timeVar],
                 defaultVars: [message.variables.latVar, message.variables.lonVar, message.variables.timeVar],
                 granuleNames: granuleNames,
                 granuleIds: granuleIds,

@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- issue-92: Added a banner to show a decommissioning message.
 ### Changed
 ### Removed
 ### Fixed

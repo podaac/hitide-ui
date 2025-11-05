@@ -24,5 +24,5 @@ window.hitideConfig = {
     datasetSearchServiceItemsPerPage: 200,
     maxGranulesPerDownload: 1000,
     googleTagManagerId: "GTM-M5D83V6",
-    earthDataAppClientId: "B8wVj-BFID-XXhLjIiKS5g"
+    earthDataAppClientId: "WNuqfswx4L5jT_4y572N5w"
 };

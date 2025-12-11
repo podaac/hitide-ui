@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+### Changed
+### Removed
+### Fixed
+
+## [4.18.0]
+### Added
 - issue-92: Added a banner to show a decommissioning message.
 ### Changed
-- Update edl application id
+- Updated edl application id
 ### Removed
 ### Fixed
 

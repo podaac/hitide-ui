@@ -28,6 +28,17 @@
     <link rel="icon" type="image/png" href="jpl/favicon/favicon-16x16.png" sizes="16x16">
 </head>
 
+<!-- Major Alert Banner shown at the top of the page -->
+<div id="infoBanner" style="width:100%;background:#b71c1c;color:#fff;padding:1.2em 1em;text-align:center;position:fixed;top:0;left:0;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,0.18);font-size:1.15em;font-weight:bold;letter-spacing:0.5px;transition:opacity 0.3s ease;">
+  <span style="display:inline-block;vertical-align:middle;">
+    <span style="font-size:1.3em;margin-right:0.5em;">&#9888;&#65039;</span>
+    Important Update: We are phasing out this PO.DAAC HiTIDE interface soon. We encourage you to start using:
+    <a href="https://search.earthdata.nasa.gov/search?portal=hitide" target="_blank" style="color:#fff;text-decoration:underline;">Earthdata Search – HiTIDE Portal.</a> For more information, visit the <a href="https://forum.earthdata.nasa.gov/viewtopic.php?t=7440" target="_blank" style="color:#fff;text-decoration:underline;">PO.DAAC Forum</a>
+  </span>
+  <span onclick="var b=document.getElementById('infoBanner'); b.style.opacity='0'; setTimeout(()=>b.style.display='none',300);" style="position:absolute;right:18px;top:12px;cursor:pointer;font-size:1.5em;line-height:1;color:#fff;">&times;</span>
+</div>
+
+
 <body class="claro">
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WNP7MLF"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -64,7 +75,13 @@
         </div>
     </div>
 
-    
+    <script>
+    document.getElementById('infoBanner').querySelector('span[onclick]').onclick = function() {
+        document.getElementById('infoBanner').style.display = 'none';
+        var navSidebar = document.getElementById('navSidebar');
+        if (navSidebar) navSidebar.style.marginTop = '0px';
+    };
+    </script>
     <script src="dojo/dojo.js?v=@@VERSION"></script>
     <script src="app/run.js?v=@@VERSION"></script>
 </body>

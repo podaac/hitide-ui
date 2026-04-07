@@ -1,5 +1,20 @@
 # HiTIDE UI
 
+## ⚠️ This Project Has Been Retired
+
+The PO.DAAC High-level Tool for Interactive Data Extraction (HiTIDE) has been officially retired and is no longer maintained or supported.
+
+### ➡️ Use Earthdata Search Instead
+
+We encourage you to use **[Earthdata Search – HiTIDE Portal](https://search.earthdata.nasa.gov/search?portal=hitide)** as the recommended alternative. This link is configured to display only the HiTIDE collections, providing a familiar experience.
+
+Please update any saved bookmarks to:
+`https://search.earthdata.nasa.gov/search?portal=hitide`
+
+If you have questions or need help getting started, visit the **[PO.DAAC Forum](https://forum.earthdata.nasa.gov/viewtopic.php?t=7440)**.
+
+---
+
 **HiTIDE UI (High Level Tool for Interactive Data Extraction)**  
 A user interface for NASA's PO.DAAC HiTIDE project, supporting interactive data extraction and visualization.
 

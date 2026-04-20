@@ -25,7 +25,7 @@
     "jasmine-core": "^2.2.0",
     "jsdoc": "^3.3.0-beta3",
     "jsdoc3-bootstrap": "^0.15.0",
-    "karma": "^0.12.31",
+    "karma": "^6.4.4",
     "karma-chrome-launcher": "^0.1.7",
     "karma-cli": "0.0.4",
     "karma-dojo": "0.0.1",
